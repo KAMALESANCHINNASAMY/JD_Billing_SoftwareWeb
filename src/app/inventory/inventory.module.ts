@@ -15,7 +15,7 @@ import { ItemGroupComponent } from './item-group/item-group.component';
 import { BrandMasterComponent } from './brand-master/brand-master.component';
 import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-
+import { ProductMasterComponent } from './product-master/product-master.component';
 
 @NgModule({
   declarations: [ItemMasterComponent,
@@ -23,7 +23,8 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
     GstMasterComponent,
     HsnGroupComponent,
     ItemGroupComponent,
-    BrandMasterComponent
+    BrandMasterComponent,
+    ProductMasterComponent
   ],
   imports: [
     RouterModule.forChild(inventoryroutes),
