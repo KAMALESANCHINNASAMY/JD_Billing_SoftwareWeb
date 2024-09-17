@@ -1,0 +1,99 @@
+<div class="container-fluid">
+    <mat-card class="mt-2 mb-2 matcard">
+        <mat-card-content>
+            <div class="row">
+                <div class="col-sm-12">
+                    <h2 class="head">Weavers Given Received Report</h2>
+                </div>
+            </div>
+            <form>
+                <div class="row ml-3">
+                    <div class="col-sm-5 mt-1" style="display: flex">
+                        <div class="labeldiv">
+                            <label class="pt-2" style="margin: auto">Customer Name <span
+                                    class="text-danger">*</span></label>
+                        </div>
+                        <div class="inputdiv">
+                            <mat-form-field class="w-55 ml-1">
+                                <mat-label>Weaver Name</mat-label>
+                                <mat-select #advw>
+                                    <mat-form-field>
+                                        <input matInput type="text" #auval (input)="suggest(auval.value)"
+                                            placeholder="Search..." />
+                                    </mat-form-field>
+                                    <mat-option *ngFor="let option of suggestions" [value]="option.weaverid">
+                                        {{ option.weaver_name }}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-2 mt-2">
+                        <button type="submit" class="btn-sm btn btn-primary" (click)="getReport(advw.value)">
+                            Search
+                        </button>
+                    </div>
+                </div>
+            </form>
+            <div class="row">
+                <button class="btn btn-info btn-sm ml-3" printSectionId="_print_section" ngxPrint
+                    [useExistingCss]="true">
+                    <mat-icon>print</mat-icon>
+                </button>
+
+                <div class="table-responsive col-sm-12" id="_print_section">
+                    <table style="width: 100%;" class="table table-bordered table-hover">
+                        <thead class="tableheadList">
+                            <tr>
+                                <th>S No</th>
+                                <th>Date</th>
+                                <th>Mode</th>
+                                <th>Weavers Name</th>
+                                <th>Brand</th>
+                                <th>Item</th>
+                                <th>Given Gram</th>
+                                <th>Given Rate</th>
+                                <th>Total</th>
+                                <th>Given Advance</th>
+                                <th>SI Code</th>
+                                <th>R-Qty</th>
+                                <th>Received Gram</th>
+                                <th>Ad Advance</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of reportsList; let i = index">
+                                <td>{{ i + 1 }}</td>
+                                <td>{{getFormattedDate(item.date)}}</td>
+                                <td>{{ item.mode }}</td>
+                                <td>{{ item.weaver_name }}</td>
+                                <td>{{ item.brand_name }}</td>
+                                <td>{{ item.item_name }}</td>
+                                <td>{{ item.g_gram }}</td>
+                                <td>{{ item.g_rate }}</td>
+                                <td>{{ item.g_total }}</td>
+                                <td>{{ item.g_advance }}</td>
+                                <td>{{ item.si_code }}</td>
+                                <td>{{ item.qty }}</td>
+                                <td>{{ item.r_gram }}</td>
+                                <td>{{ item.r_advance }}</td>
+                            </tr>
+                            <tr>
+                                <th style="text-align: right;font-size: 17px;" class="pr-3 head" colspan="6">Total</th>
+                                <th>{{TotGgram()}}</th>
+                                <th></th>
+                                <th>{{TotTot()}}</th>
+                                <th>{{TotGAdvance()}}</th>
+                                <th></th>
+                                <th>{{TotQty()}}</th>
+                                <th>{{TotRgram()}}</th>
+                                <th>{{TotRad()}}</th>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>

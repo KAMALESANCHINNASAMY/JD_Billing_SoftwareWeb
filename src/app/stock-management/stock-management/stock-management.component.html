@@ -1,0 +1,173 @@
+<div class="container-fluid">
+  <mat-card class="matcard">
+    <mat-card-content>
+      <div class="row">
+        <div class="col-12">
+          <h2 class="head">Stock Details</h2>
+        </div>
+      </div>
+      <form [formGroup]="reportForm" (ngSubmit)="search()">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="mr-3 subhead">
+              <label>Search Type</label>
+            </div>
+
+            <div style="display: flex;" class="mt-2">
+              <div class="form-check mr-2">
+                <input formControlName="type" value="date" class="form-check-input" type="radio">
+                <label class="form-check-label">
+                  Date Wise
+                </label>
+              </div>
+              <div class="form-check ml-2">
+                <input formControlName="type" value="sicode" class="form-check-input" type="radio">
+                <label class="form-check-label">
+                  Si Code
+                </label>
+              </div>
+
+              <div class="form-check ml-2">
+                <input formControlName="type" value="Weavers" class="form-check-input" type="radio">
+                <label class="form-check-label">
+                  Weavers Wise
+                </label>
+              </div>
+
+              <div class="form-check ml-2">
+                <input formControlName="type" value="ThirdPartyGst" class="form-check-input" type="radio">
+                <label class="form-check-label">
+                  ThirdParty GST Wise
+                </label>
+              </div>
+
+              <div class="form-check ml-2">
+                <input formControlName="type" value="ThirdPartyNonGst" class="form-check-input" type="radio">
+                <label class="form-check-label">
+                  ThirdParty Non GST Wise
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-12 mt-4" style="display: flex">
+            <div *ngIf="reportForm.value.type=='date'">
+              <div>
+                <label>From Date</label>
+              </div>
+              <div>
+                <input formControlName="fromdate" type="date" class="form-control">
+              </div>
+            </div>
+
+            <div class="ml-2" *ngIf="reportForm.value.type=='date'">
+              <div>
+                <label>To Date</label>
+              </div>
+              <div>
+                <input formControlName="todate" type="date" class="form-control">
+              </div>
+            </div>
+
+            <div *ngIf="reportForm.value.type=='sicode'">
+              <div>
+                <label>Si Code</label>
+              </div>
+              <div>
+                <input formControlName="si_code" type="text" class="form-control">
+              </div>
+            </div>
+
+            <div *ngIf="reportForm.value.type=='Weavers'" class="mt-3">
+              <div>
+                <mat-form-field class="w-55 ml-1">
+                  <mat-label>Weaver Name</mat-label>
+                  <mat-select formControlName="weaverid">
+                    <mat-form-field>
+                      <input matInput type="text" #auval (input)="suggest(auval.value)" placeholder="Search..." />
+                    </mat-form-field>
+                    <mat-option [value]=0>
+                      Select All
+                    </mat-option>
+                    <mat-option *ngFor="let option of suggestions" [value]="option.weaverid">
+                      {{ option.weaver_name }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div *ngIf="reportForm.value.type=='ThirdPartyGst' || reportForm.value.type=='ThirdPartyNonGst'"
+              class="mt-3">
+              <mat-form-field>
+                <mat-label>Third Party Name</mat-label>
+                <mat-select formControlName="third_partyid">
+                  <mat-form-field>
+                    <input matInput type="text" #auval (input)="suggestParty(auval.value)" placeholder="Search..." />
+                  </mat-form-field>
+                  <mat-option [value]=0>
+                    Select All
+                  </mat-option>
+                  <mat-option [value]="option.third_partyid" *ngFor="let option of suggestionsParty">
+                    {{ option.party_name }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <div class="pt-4">
+              <button type="submit" class="btn btn-sm btn-primary ml-3 mt-2">Search</button>
+            </div>
+          </div>
+        </div>
+      </form>
+
+      <div class="table-responsive mt-4">
+        <div>
+          <button class="m-1 btn btn-info" printSectionId="_print_section" ngxPrint [useExistingCss]="true">
+            <mat-icon>print</mat-icon>
+          </button>
+        </div>
+
+        <div id="_print_section">
+          <table class="col-sm-12 table-sm table table-hover table-bordered">
+            <thead class="tableheadList">
+              <tr>
+                <th>S.No</th>
+                <th>Si Code</th>
+                <th>Brand Name</th>
+                <th>Item Name</th>
+                <th>Purchase From</th>
+                <th>Third Party / Weavers Name</th>
+                <th>Purchase Date</th>
+                <th>Total Qty</th>
+                <th>Sold With GST Qty</th>
+                <th>Sold WithOut GST Qty</th>
+                <th>Avail Qty</th>
+                <th>Sold To</th>
+                <th>Bill No</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of stockDetails;let i=index">
+                <td>{{i+1}}</td>
+                <td>{{item.si_code}}</td>
+                <td>{{item.brand_name}}</td>
+                <td>{{item.item_name}}</td>
+                <td>{{item.p_from}}</td>
+                <td>{{item.party_name}}</td>
+                <td>{{item.date}}</td>
+                <td>{{item.total_qty}}</td>
+                <td>{{item.sold_qty_gst}}</td>
+                <td>{{item.sold_qty_nogst}}</td>
+                <td>{{item.avail_qty}}</td>
+                <td>{{item.customer_name}}</td>
+                <td>{{item.bill_no}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

@@ -1,0 +1,128 @@
+<div class="container-fluid">
+  <mat-card class="mt-2 matcard mb-2">
+    <mat-card-content>
+      <div class="row">
+        <div #tableTop class="col-12">
+          <h2 class="ml-1 head">GST Master</h2>
+        </div>
+      </div>
+      <form [formGroup]="gstMasterDetails" (submit)="save()">
+        <div class="row ml-3">
+          <!-- <div class="col-sm-6 mt-3" style="display: flex">
+            <div class="labeldiv">
+              <label class="pt-2" style="margin: auto">GST ID</label>
+            </div>
+            <div class="inputdiv" *ngFor="let code of MaxId" style="width: 250px">
+              <input class="form-control" type="text" required readonly [placeholder]="
+                  (code.gstid < 10 ? '00' : code.gstid < 100 ? '0' : '') +
+                  code.gstid
+                " />
+            </div>
+          </div> -->
+          <div class="col-sm-6 mt-3" style="display: flex">
+            <div class="labeldiv">
+              <label class="pt-2" style="margin: auto">GST %<span class="text-danger">*</span></label>
+            </div>
+            <div class="input-group" style="max-width: 250px">
+              <input (paste)="preventPasteNumber($event)" [ngClass]="{
+                  'is-invalid':
+                    gstMasterDetails.controls.gst_percentage.touched &&
+                    gstMasterDetails.controls.gst_percentage.errors
+                }" formControlName="gst_percentage" class="form-control" type="text" required (keyup)="calculateGST()"
+                (keypress)="numberOnly($event)" />
+              <div class="input-group-append">
+                <span class="input-group-text">%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row ml-3">
+          <div class="col-sm-6 mt-3" style="display: flex">
+            <div class="labeldiv">
+              <label class="pt-2" style="margin: auto">IGST</label>
+            </div>
+            <div class="input-group" style="max-width: 250px">
+              <input class="form-control" type="text" required formControlName="igst_percentage" readonly />
+              <div class="input-group-append">
+                <span class="input-group-text">%</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6 mt-3" style="display: flex">
+            <div class="labeldiv">
+              <label class="pt-2" style="margin: auto">CGST</label>
+            </div>
+            <div class="input-group" style="max-width: 250px">
+              <input class="form-control" type="text" required formControlName="c_gst" readonly />
+              <div class="input-group-append">
+                <span class="input-group-text">%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row ml-3">
+          <div class="col-sm-6 mt-3" style="display: flex">
+            <div class="labeldiv">
+              <label class="pt-2" style="margin: auto">SGST</label>
+            </div>
+            <div class="input-group" style="max-width: 250px">
+              <input class="form-control" type="text" required formControlName="s_gst" readonly />
+              <div class="input-group-append">
+                <span class="input-group-text">%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row justify-content-center mt-3">
+          <div class="col-sm-6">
+            <div class="d-flex justify-content-center">
+              <div style="width: 250px; display: flex; align-items: center">
+                <button type="submit" style="width: 80px;" class="btn btn-success mr-3 btn-sm mt-4">
+                  <span> {{ gstMasterDetails.value.gstid ==0 ? 'Save' :
+                    'Edit'}}</span></button>
+                <input (click)="cancelClick()" type="button" style="width: 80px" class="btn btn-info mt-4 btn-sm mr-3"
+                  value="Clear" />
+                <input (click)="backButton()" type="button" style="width: 80px" class="btn btn-danger btn-sm mt-4"
+                  value="Close" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+
+
+  <mat-card class="mt-3 matcardlist">
+    <mat-card-content>
+      <div class="table-responsive">
+        <table class="col-sm-12 table table-hover table-bordered table-sm">
+          <thead class="tableheadList">
+            <th>S.No</th>
+            <th>GST %</th>
+            <th>IGST %</th>
+            <th>CGST %</th>
+            <th>SGST %</th>
+            <th>Action</th>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of gstMasterList; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td>{{ item.gst_percentage }}</td>
+              <td>{{ item.igst_percentage }}</td>
+              <td>{{ item.c_gst }}</td>
+              <td>{{ item.s_gst }}</td>
+              <td class="tdoption">
+                <span class="m-2 editbutton text-success" (click)="updateGetClick(item)"><b
+                    style="cursor: pointer">edit</b></span>
+                <span>||</span>
+                <span class="m-2 deletebutton text-danger" (click)="deleteClick(item.gstid)"><b
+                    style="cursor: pointer">delete</b></span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

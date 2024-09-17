@@ -1,0 +1,152 @@
+<div class="container-fluid">
+    <mat-card class="matcard mt-2 mb-2">
+        <mat-card-content>
+            <div class="row">
+                <div class="col-12">
+                    <h2 class="ml-1 head">Supplier Ledger</h2>
+                </div>
+            </div>
+            <form [formGroup]="reportForm" (ngSubmit)="search()">
+                <div class="row ml-3 mt-2">
+                    <div class="col-sm-4" style="display: flex">
+                        <div class="labeldiv">
+                            <label class="pt-2" style="margin: auto">Name<span class="text-danger">*</span></label>
+                        </div>
+                        <div class="inputdiv ml-3">
+                            <mat-form-field>
+                                <mat-label>Supplier Name</mat-label>
+                                <mat-select [ngClass]="{
+                      'is-invalid':
+                      reportForm.controls.supplierid.touched &&
+                      reportForm.controls.supplierid.errors
+                    }" formControlName="supplierid" #advw required>
+                                    <mat-form-field>
+                                        <input matInput type="text" #auval (input)="suggest(auval.value)"
+                                            placeholder="Search..." />
+                                    </mat-form-field>
+
+                                    <mat-option [value]="option.supplierid" *ngFor="let option of suggestions">
+                                        {{ option.supplier_name }}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-3 mt-1" style="display: flex">
+                        <div class="labeldiv">
+                            <label class="pt-2" style="margin: auto">From<span class="text-danger">*</span></label>
+                        </div>
+                        <div class="inputdiv">
+                            <input formControlName="fromdate" class="form-control" type="date" required />
+                        </div>
+                    </div>
+                    <div class="col-sm-3 mt-2" style="display: flex">
+                        <div class="labeldiv">
+                            <label class="pt-1" style="margin: auto">To<span class="text-danger">*</span></label>
+                        </div>
+                        <div class="inputdiv">
+                            <input formControlName="todate" class="form-control" type="date" required />
+                        </div>
+                    </div>
+
+                    <div class="col-sm-2">
+                        <button class="btn btn-info btn-sm mt-2" type="submit">Search</button>
+
+                        <button class="btn btn-primary btn-sm mt-2 ml-2" printSectionId="_print_sectionsa" ngxPrint
+                            [useExistingCss]="true">
+                            Print
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+            <hr>
+
+            <div id="_print_sectionsa">
+                <div style="text-align: center;">
+                    <div style="font-size: 22px;" class="head">{{companyDetailsList?.display_name}}</div>
+                    <div class="head" style="color: #018749;">
+                        {{companyDetailsList?.door_no}},{{companyDetailsList?.street_name}},
+                        {{companyDetailsList?.post}},{{companyDetailsList?.taluk}},{{companyDetailsList?.district}}.
+                    </div>
+                    <div style="color: #018749;font-weight: 500;"><span class="head">Mobile :</span>
+                        {{companyDetailsList?.mobile}} ,
+                        {{companyDetailsList?.office_phno}}.</div>
+                    <div class="head">Debtor Ledger Account</div>
+                </div>
+
+                <div>
+                    <div class="row">
+                        <div class="col-sm-3 head" style="text-align: right;color: #004953;">Debtor Name :</div>
+                        <div class="head" style="text-align: left;color: #018749;">
+                            {{customerDet?.supplier_name}}</div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-3 head" style="text-align: right;color: #004953;">GSTIN :</div>
+                        <div class="head" style="text-align: left;color: #018749;font-family: sans-serif;">
+                            {{customerDet?.gst_in}}</div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-3 head" style="text-align: right;color: #004953;">Address :</div>
+                        <div class="head" style="text-align: left;color: #018749;">{{customerDet?.address}}
+                        </div>
+                    </div>
+                </div>
+
+                <div style="text-align: center;" class="head">
+                    <p>From <span
+                            style="color: #004953;font-weight: 600;font-family: sans-serif;">{{getFormattedDate(reportForm.value.fromdate
+                            || '')}}</span> To
+                        <span
+                            style="color: #004953;font-weight: 600;font-family: sans-serif;">{{getFormattedDate(reportForm.value.todate
+                            ||
+                            '')}}</span>
+                    </p>
+                </div>
+
+                <div class="row table-responsive pl-4">
+                    <table class="table table-sm table-bordered col-sm-12">
+                        <thead class="tablehead">
+                            <tr>
+                                <th style="text-align: left;">Date</th>
+                                <th style="text-align: left;">Particulars</th>
+                                <th style="text-align: right;">Credit</th>
+                                <th style="text-align: right;">Debit</th>
+                                <th style="text-align: right;">Closing Balance</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let sales of salesList;let i=index">
+                                <td style="text-align: left;font-weight: 600;font-family: sans-serif;">
+                                    {{getFormattedDate(sales.date)}}</td>
+                                <td
+                                    style="text-align: left;font-weight: 600;font-family: Georgia, 'Times New Roman', Times, serif;">
+                                    {{sales.descrip_tion}} <span
+                                        style="font-family: sans-serif;">{{sales.bill_no}}</span></td>
+                                <td style="text-align: right;font-weight: 600;font-family: sans-serif;">
+                                    {{sales.debit.toFixed(2)}}</td>
+                                <td style="text-align: right;font-weight: 600;font-family: sans-serif;">
+                                    {{sales.credit.toFixed(2)}}</td>
+                                <td style="text-align: right;font-weight: 600;font-family: sans-serif;">
+                                    {{calcSumUpToIndex(i).toFixed(2)}}</td>
+                            </tr>
+
+                            <tr class="tableheadList">
+                                <th colspan="2" class="text-right pr-2" style="font-size: 17px;">Total</th>
+                                <td style="text-align: right;font-weight: 600;font-family: sans-serif;">
+                                    {{getdebit().toFixed(2)}}</td>
+                                <td style="text-align: right;font-weight: 600;font-family: sans-serif;">
+                                    {{getcredit().toFixed(2)}}</td>
+                                <td style="text-align: right;font-weight: 600;font-family: sans-serif;">
+                                    {{getclobal().toFixed(2)}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>

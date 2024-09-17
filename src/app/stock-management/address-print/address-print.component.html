@@ -1,0 +1,69 @@
+<div class="container-fluid" style="margin: auto;">
+    <div class="row">
+        <h2 class="head">Print Customer Address</h2>
+    </div>
+    <div class="row">
+        <div class="col-sm-4" style="display: flex">
+            <div class="labeldiv">
+                <label class="pt-3" style="margin: auto">Customer Name</label>
+            </div>
+            <div class="inputdiv">
+                <mat-form-field>
+                    <mat-label>Customer Name</mat-label>
+                    <mat-select>
+                        <mat-form-field>
+                            <input matInput (input)="suggest(auval.value)" type="text" #auval placeholder="Search..." />
+                        </mat-form-field>
+
+                        <mat-option (click)="setData(option)" [value]="option" *ngFor="let option of suggestions">
+                            {{ option.customer_name }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="col-sm-4 mt-2" style="display: flex">
+            <div class="labeldiv">
+                <label class="pt-2" style="margin: auto"> How many copies</label>
+            </div>
+            <div class="inputdiv">
+                <input type="number" #conum (input)="setval(conum.value)" [readOnly]="!data" class="form-control">
+            </div>
+        </div>
+
+        <div class="col-sm-2 pt-2" *ngIf="countArray">
+            <button class="btn btn-primary btn-sm mr-2" style="width: 99px;" printSectionId="_print_sectionsa" ngxPrint
+                [useExistingCss]="true">
+                Print
+            </button>
+        </div>
+    </div>
+
+    <div id="_print_sectionsa">
+        <div *ngFor="let item of countArray" class="heading">
+            <div class="row">
+                <div class="col-sm-6"
+                    style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;font-weight: 600;">
+                    <div><u> From :</u></div>
+                    <div>{{companyDetailsList?.company_name || ''}},</div>
+                    <div>{{companyDetailsList?.door_no || ''}},{{companyDetailsList?.street_name || ''}},</div>
+                    <div>{{companyDetailsList?.post || ''}},{{companyDetailsList?.taluk || ''}},</div>
+                    <div>{{companyDetailsList?.district || ''}} - {{companyDetailsList?.pincode}}.</div>
+                    <div>Mobile : {{companyDetailsList?.mobile || ''}} , {{companyDetailsList?.office_phno || ''}}.
+                    </div>
+                </div>
+                <div class="col-sm-6"
+                    style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;font-weight: 600;">
+                    <div><u>To :</u></div>
+                    <div>{{data?.customer_name || ''}},</div>
+                    <div *ngFor="let segment of data.address.split(','); let i = index; let last = last">
+                        {{ segment }}<span *ngIf="!last">,</span><span *ngIf="last">.</span>
+                    </div>
+                    <div>Mobile : {{data?.mobile_no || ''}}</div>
+                </div>
+            </div>
+            <hr>
+        </div>
+    </div>
+</div>

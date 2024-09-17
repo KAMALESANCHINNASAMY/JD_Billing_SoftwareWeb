@@ -1,0 +1,40 @@
+.matcard {
+  border: 2px solid lightblue;
+  }
+  td
+  {
+    padding: 6px;
+    text-align:center;
+  }
+  th
+  {
+    padding: 8px;
+    text-align: center;
+  }
+
+::ng-deep {
+  .mdc-text-field--filled:not(.mdc-text-field--disabled) {
+      background-color: white !important;
+  }
+
+  .mat-mdc-text-field-wrapper {
+      height: 50px !important;
+  }
+
+  .cdk-overlay-pane {
+      margin-top: 0 !important;
+  }
+
+  div.mat-mdc-select-panel {
+      padding: 0px 0 !important;
+  }
+
+}
+
+.scrollme {
+  overflow-x: auto;
+}
+
+div span{
+  font-size: medium;
+}

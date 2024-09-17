@@ -1,0 +1,108 @@
+<mat-tab-group animationDuration="0ms" mat-stretch-tabs="false" mat-align-tabs="start">
+  <mat-tab label="Purchase Payment With GST Report">
+    <div class="container-fluid">
+      <mat-card class="matcard mt-4">
+        <mat-card-content>
+          <div class="row">
+            <div class="col-12">
+              <h2 class="ml-1">Purchase Payment With GST Reports</h2>
+            </div>
+          </div>
+          <div class="row ml-3 mb-2">
+            <div class="col-sm-4 mt-2" style="display: flex">
+              <div class="labeldiv">
+                <label class="pt-2" style="margin: auto">From Date<span class="text-danger">*</span></label>
+              </div>
+              <div class="inputdiv">
+                <input type="date" #fromdate class="form-control" />
+              </div>
+            </div>
+            <div class="col-sm-4 mt-2" style="display: flex">
+              <div class="labeldiv">
+                <label class="pt-2" style="margin: auto">To Date<span class="text-danger">*</span></label>
+              </div>
+              <div class="inputdiv">
+                <input type="date" #todate class="form-control" />
+              </div>
+            </div>
+            <div class="col-sm-3 ml-3 mt-2 d-flex">
+              <button class="btn-sm btn btn-primary" (click)="getSalesPaymentReports(fromdate.value, todate.value)">
+                Get Reports
+              </button>
+            </div>
+          </div>
+          <div class="row ml-3">
+            <div class="col-sm-4 mt-3" style="display: flex">
+              <div class="labeldiv">
+                <label class="pt-2" style="margin: auto">Filter Customer</label>
+              </div>
+              <div class="inputdiv">
+                <mat-form-field>
+                  <mat-label>Customer Name</mat-label>
+                  <mat-select (valueChange)="showCustomerReturnReport(advw.value)" #advw>
+                    <mat-form-field>
+                      <input matInput (input)="suggest(auval.value)" type="text" #auval placeholder="Search..." />
+                    </mat-form-field>
+                    <mat-option (click)="getSalesPaymentReports(fromdate.value,todate.value)">
+                      Select All
+                    </mat-option>
+                    <mat-option [value]="option.third_partyid" *ngFor="let option of suggestions">
+                      {{ option.party_name }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+          <div class="table-responsive row pl-4">
+            <div style="text-align: right;">
+              <button class="mr-2" mat-raised-button color="accent" printSectionId="_print_section" ngxPrint
+                [useExistingCss]="true">
+                <mat-icon>print</mat-icon> Print
+              </button>
+            </div>
+            <div id="_print_section">
+              <table class="table table-bordered table-hover col-sm-12">
+                <thead>
+                  <tr>
+                    <th>S No</th>
+                    <th>Payment Date</th>
+                    <th>Invoice No</th>
+                    <th>Party Name</th>
+                    <th>Si code</th>
+                    <th>Ref Code</th>
+                    <th>Payment Type</th>
+                    <th>Total</th>
+                    <th>Deduction Amount</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of PaymentReports; let i = index">
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ getFormattedDate(item.date) }}</td>
+                    <td>{{ item.bill_no }}</td>
+                    <td>{{ item.party_name }}</td>
+                    <td>{{ item.si_code }}</td>
+                    <td>{{ item.ref_code }}</td>
+                    <td>{{item.payment_type}}</td>
+                    <td>{{ item.total_amount }}</td>
+                    <td>{{item.deduction_amount}}</td>
+                  </tr>
+                  <tr>
+                    <th colspan="7" style="border: none; text-align: end">
+                      Total
+                    </th>
+                    <th>{{ totalTotal() }}</th>
+                    <th>{{ totalnettotal() }}</th>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </mat-tab>
+  <mat-tab label="Purchase Payment WithOut GST Report">
+    <app-third-party-nongst-payments-report></app-third-party-nongst-payments-report>
+  </mat-tab>

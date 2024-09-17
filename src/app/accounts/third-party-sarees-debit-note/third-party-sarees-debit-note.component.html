@@ -1,0 +1,241 @@
+<div class="container-fluid">
+  <mat-card class="matcard mt-2">
+    <mat-card-content>
+      <div class="row">
+        <div class="col-12">
+          <h2 class="head">Third Party <span style="color: orangered;">NON-GST</span> Purchase debit-note</h2>
+        </div>
+      </div>
+      <form [formGroup]="thirdPartyNonGstDebitForm" (submit)="save()">
+        <div class="row ml-3">
+          <div class="col-sm-4" style="display: flex">
+            <div class="labeldiv">
+              <label class="pt-2" style="margin: auto">Third Party Name<span class="text-danger">*</span></label>
+            </div>
+            <div class="inputdiv">
+              <mat-form-field>
+                <mat-label>Third Party Name</mat-label>
+                <mat-select (valueChange)="setThirdPartyDetails(advw.value)"
+                  [ngClass]="{'is-invalid':thirdPartyNonGstDebitForm.controls.third_partyid.touched && thirdPartyNonGstDebitForm.controls.third_partyid.errors}"
+                  formControlName="third_partyid" #advw required>
+                  <mat-form-field>
+                    <input matInput type="text" #auval (input)="suggest(auval.value)" placeholder="Search...">
+                  </mat-form-field>
+
+                  <mat-option [disabled]="thirdPartyNonGstDebitForm.value.thirdPartyDebitid != 0"
+                    [value]="option.third_partyid" *ngFor="let option of suggestions">
+                    {{option.party_name}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="col-sm-4" style="display: flex">
+            <div class="labeldiv">
+              <label class="pt-2" style="margin: auto">Invoice No</label>
+            </div>
+            <div class="inputdiv">
+              <mat-form-field>
+                <mat-label>Select Bill No</mat-label>
+                <mat-select (valueChange)="setNested(purid.value)" #purid
+                  [ngClass]="{'is-invalid':thirdPartyNonGstDebitForm.controls.purchaseid.touched && thirdPartyNonGstDebitForm.controls.purchaseid.errors}"
+                  formControlName="purchaseid" required>
+                  <mat-form-field>
+                    <input matInput type="text" #billva (input)="Billsuggest(billva.value)" placeholder="Search...">
+                  </mat-form-field>
+
+                  <mat-option [disabled]="thirdPartyNonGstDebitForm.value.thirdPartyDebitid != 0"
+                    [value]="option.purchaseid" *ngFor="let option of billNoSuggestionList">
+                    {{option.bill_no}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="col-sm-4" style="display: flex">
+            <div class="labeldiv">
+              <label class="pt-2" style="margin: auto">Invoice Date</label>
+            </div>
+            <div class="inputdiv">
+              <input
+                [ngClass]="{'is-invalid':thirdPartyNonGstDebitForm.controls.invoice_date.touched && thirdPartyNonGstDebitForm.controls.invoice_date.errors}"
+                formControlName="invoice_date" class="form-control" type="date" required />
+            </div>
+          </div>
+        </div>
+        <div class="row ml-3">
+          <div class="col-sm-4" style="display: flex">
+            <div class="labeldiv">
+              <label class="pt-2" style="margin: auto">Return No<span class="text-danger">*</span></label>
+            </div>
+            <div class="inputdiv">
+              <input readonly formControlName="return_no" class="form-control" type="text" required />
+            </div>
+          </div>
+
+          <div class="col-sm-4" style="display: flex">
+            <div class="labeldiv">
+              <label class="pt-2" style="margin: auto">Return Date<span class="text-danger">*</span></label>
+            </div>
+            <div class="inputdiv">
+              <input
+                [ngClass]="{'is-invalid':thirdPartyNonGstDebitForm.controls.return_date.touched && thirdPartyNonGstDebitForm.controls.return_date.errors}"
+                formControlName="return_date" class="form-control" type="date" required />
+            </div>
+          </div>
+        </div>
+
+        <div class="table-responsive scrollme mt-4">
+          <table class="col-sm-12 table table-hover table-bordered table-sm table-no-border">
+            <thead class="tablehead">
+              <tr>
+                <th>#</th>
+                <th>Ref Code</th>
+                <th>SI Code</th>
+                <th>Brand Name</th>
+                <th>Item Name</th>
+                <th>Price</th>
+                <th>Dis %</th>
+                <th>Qty</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            <tbody formArrayName="thirdPartyNonGst_Debit_nested">
+              <tr *ngFor="let chid of getCommonControls(); let i = index" formGroupName="{{ i }}">
+                <td>{{ i + 1 }}</td>
+                <td style="min-width: 130px;">
+                  <input formControlName="ref_code" class="form-control" readonly required />
+                </td>
+                <td style="min-width: 130px;">
+                  <input [ngClass]="{ 'is-invalid': isSiCodeControlInvalid(i) }" readonly formControlName="si_code"
+                    class="form-control" required />
+                </td>
+                <td style="min-width: 180px;">
+                  <select formControlName="brandid" class="form-control" required readonly>
+                    <option disabled [ngValue]="null" selected>
+                      Please select
+                    </option>
+                    <option disabled [ngValue]="item.brandid" *ngFor="let item of brandList">
+                      {{ item.brand_name }}
+                    </option>
+                  </select>
+                </td>
+                <td style="min-width: 180px;">
+                  <select formControlName="itemid" class="form-control" required readonly>
+                    <option disabled [ngValue]="null" selected>
+                      Please select
+                    </option>
+                    <option disabled [ngValue]="item.itemid" *ngFor="
+                  let item of newItemList[chid.get('brandid')?.value]">
+                      {{ item.item_name }}
+                    </option>
+                  </select>
+                </td>
+                <td style="min-width: 80px;">
+                  <input formControlName="price" class="form-control" required readonly />
+                </td>
+                <td style="min-width: 80px;">
+                  <input type="text" formControlName="discount" class="form-control" required readonly />
+                </td>
+                <td style="min-width: 100px;">
+                  <input formControlName="qty" class="form-control" required readonly />
+                  <div class="mt-1">
+                    <input [ngClass]="{ 'is-invalid': isQtyControlInvalid(i) }" formControlName="return_qty"
+                      class="form-control" (input)="colculation(i)" required />
+                  </div>
+                </td>
+                <td style="min-width: 140px;">
+                  <input formControlName="total" class="form-control" readonly />
+                  <div class="mt-1">
+                    <input formControlName="return_total" class="form-control" required readonly />
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+            <tbody>
+              <tr>
+                <th style="text-align: right;color: #005f69;font-family: Georgia, 'Times New Roman', Times, serif;"
+                  class="pr-5 pt-3" colspan="8">
+                  <b>Total</b>
+                </th>
+                <td>
+                  <input formControlName="total" class="form-control" readonly />
+                </td>
+              </tr>
+
+              <tr>
+                <th style="text-align: right;color: #005f69;font-family: Georgia, 'Times New Roman', Times, serif;"
+                  class="pr-5 pt-3" colspan="8">
+                  <b>Return Total</b>
+                </th>
+                <td>
+                  <input formControlName="return_total" class="form-control" readonly />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="row">
+          <div class="col-sm-12" style="display: flex">
+            <div style="margin: auto">
+              <button type="submit" style="width: 80px" class="btn btn-success mr-3 btn-sm mt-2">
+                <span>
+                  {{thirdPartyNonGstDebitForm.value.thirdPartyDebitid == 0 ? "Save" : "Edit"}}</span>
+              </button>
+              <input type="button" style="width: 80px" (click)="cancelClick()" class="btn btn-primary mr-3 btn-sm mt-2"
+                value="Clear" />
+              <input type="button" style="width: 80px" class="btn btn-danger btn-sm mt-2" (click)="backButton()"
+                value="Close" />
+            </div>
+          </div>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+  <mat-card class="mt-3 mb-2 matcardlist">
+    <mat-card-content>
+      <div class="row">
+        <div class="col-sm-12" style="display: flex;">
+          <div>
+            <input #ds (change)="getThirdPartyNongstpurchaseDebitList(ds.value)" style="max-width: 180px" type="date"
+              class="form-control" />
+          </div>
+          <div>
+            <button class="btn btn-info ml-2" (click)="getThirdPartyNongstpurchaseDebitList('All')">GET All
+              DATE</button>
+          </div>
+        </div>
+
+        <div class="table-responsive mt-2">
+          <table class="table table-hover table-bordered col-sm-12">
+            <thead class="tableheadList">
+              <tr>
+                <th>Third Party Name</th>
+                <th>Purchase Date</th>
+                <th>return Date</th>
+                <th>Return No</th>
+                <th>Return Qty</th>
+                <th>Return Total</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of ThirdPartyPurchaseNonGstDebitList; let i = index">
+                <td>{{ item.party_name }}</td>
+                <td>{{item.purchase_date}}</td>
+                <td>{{ item.return_date }}</td>
+                <td>{{ item.return_no }}</td>
+                <th>{{item.return_qtyn}}</th>
+                <td>{{ item.return_totaln }}</td>
+                <td>
+                  <button class="btn btn-success btn-sm" (click)="getReport(item)">Preview</button>
+                  <button class="btn btn-sm ml-1 btn-primary" (click)="update(item)">Edit</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

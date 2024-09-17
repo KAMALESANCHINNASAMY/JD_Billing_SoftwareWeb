@@ -1,0 +1,129 @@
+<div class="sidebar" [class.sidebar-close]="!openSidebar">
+  <div class="logo-details">
+    <div class="logo"></div>
+  </div>
+  <ul class="nav-links" id="nav-links">
+    <li *ngFor="let item of filteredMenu" #itemEl routerLinkActive="active">
+      <div *ngIf="item.sub_menu.length == 0" class="dropdown-title">
+        <a [routerLink]="[item.link]">
+          <i [class]="item.icon"></i>
+          <!-- dashboard -->
+          <mat-icon style="color: white; position: absolute; left: +20px" svgIcon="dashboard"></mat-icon>
+          <span class="link_name" style="margin-left: 2px">{{
+            item.link_name
+            }}</span>
+        </a>
+      </div>
+      <div *ngIf="item.sub_menu.length > 0" class="dropdown-title pointer;" (click)="showSubmenu(itemEl)">
+        <a>
+          <i [class]="item.icon"></i>
+          <!-- menu -->
+          <mat-icon style="color: white !important; position: absolute; left: +20px" [svgIcon]="item.icon"></mat-icon>
+          <span class="link_name" style="margin-left: 2px">{{
+            item.link_name
+            }}</span>
+        </a>
+        <!-- <i class="bx bxs-chevron-down arrow"></i> -->
+      </div>
+      <ul class="sub-menu" [class.blank]="item.sub_menu.length == 0">
+        <li>
+          <a class="link_name">{{ item.link_name }}</a>
+        </li>
+        <li *ngFor="let item_sub of item.sub_menu" routerLinkActive="active">
+          <!-- submenu -->
+          <div>
+            <!-- <mat-icon style="color: white;" svgIcon="dashboard"></mat-icon> -->
+            <a [routerLink]="[item_sub.link]">{{ item_sub.link_name }}</a>
+          </div>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+<section class="home-section">
+  <div class="home-header">
+    <div class="hamburger-menu col-sm-1">
+      <input type="checkbox" id="checkbox-hamburger-menu" [(ngModel)]="openSidebar" />
+      <label class="label-hamburger-menu" for="checkbox-hamburger-menu">
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+      </label>
+    </div>
+    <div class="col-sm-3" style="color: white;">{{CompanyName}}</div>
+    <div class="col-sm-3" style="color: white;">FINANCIAL YEAR : {{activeFinyr}}</div>
+    <div class="col-sm-3" style="color:white;text-align: right;"> <span>{{userName}}</span></div>
+    <div class="col-sm-1" style="text-align: right;"><mat-icon title="Back UP DataBase" (click)="BackUpDB()"
+        style="width: 30px;height: 30px;background-color: rgb(222, 240, 246);border-radius: 10px;cursor: pointer;"
+        svgIcon="database"></mat-icon>
+    </div>
+    <div class="col-sm-1" style="display: flex;">
+      <div [matMenuTriggerFor]="mainmenu" style="cursor: pointer;display:flex;justify-content: center;align-items: center;background-color: rgb(222, 240, 246);color:#004eff;border-radius: 50px;padding: 15px;font-family: sans-serif;
+        width: 25px;
+        height: 25px; ">
+        <div> {{ userName.slice(0,2).toUpperCase() }}</div>
+      </div>
+      <div>
+        <mat-icon [matMenuTriggerFor]="mainmenu" class="ml-4"
+          style="cursor: pointer;color:white;font-size: 30px;">more_vert</mat-icon>
+      </div>
+    </div>
+    <mat-menu #mainmenu="matMenu">
+      <button mat-menu-item [matMenuTriggerFor]="subMenu"><mat-icon
+          style="background-color: rgb(222, 240, 246);border-radius: 10px;cursor: pointer;color: blue;">business</mat-icon>
+        <span>Switch Company</span></button>
+      <button mat-menu-item disabled>
+        <mat-icon>business</mat-icon>
+        <span>Check voice mail</span>
+      </button>
+      <button mat-menu-item [matMenuTriggerFor]="FinancialYearMenu">
+        <mat-icon
+          style="background-color: rgb(222, 240, 246);border-radius: 10px;cursor: pointer;color: blue;">date_range</mat-icon>
+        <span>Financial Year</span>
+      </button>
+      <button (click)="BackUpDB()" mat-menu-item>
+        <mat-icon
+          style="width: 30px;height: 30px;background-color: rgb(222, 240, 246);border-radius: 10px;cursor: pointer;"
+          svgIcon="database"></mat-icon>
+        <span>Back Up DataBase</span>
+      </button>
+      <button (click)="logout()" mat-menu-item>
+        <mat-icon
+          style="width: 30px;height: 30px;background-color:rgb(222, 240, 246);border-radius: 10px;cursor: pointer;padding-left: 1px;"
+          svgIcon="logoutd"></mat-icon>
+        <span>Log Out</span>
+      </button>
+    </mat-menu>
+    <mat-menu #subMenu="matMenu">
+      <button (click)="changeCompany(item.companyid)" *ngFor="let item of companyDetailsList" mat-menu-item>
+        <div style="display: flex;align-items: center;gap:4px;">
+          <span style="cursor: pointer;display:flex;justify-content: center;align-items: center;background-color: rgb(222, 240, 246);border-radius: 50px;padding: 15px;font-family: sans-serif;
+        width: 25px;
+        height: 25px;font-size: 14px;color:whitesmoke;" [style.backgroundColor]="item.color">
+            {{item.company_name.slice(0,2).toLocaleUpperCase()}}
+          </span>
+          <span style="font-size: 15px;">{{item.display_name}}</span>
+          <span *ngIf="companyID == item.companyid"><mat-icon
+              style="color:green;display: flex;align-items: center;">check_circle</mat-icon></span>
+        </div>
+      </button>
+    </mat-menu>
+
+    <mat-menu #FinancialYearMenu="matMenu">
+      <button (click)="ActiveStatusClick(item.finyearid)" *ngFor="let item of financialYearList" mat-menu-item>
+        <div style="display: flex;align-items: center;">
+          <span><mat-icon style="border-radius: 10px;cursor: pointer;color: red;"
+              *ngIf="!item.status">event_busy</mat-icon><mat-icon
+              style="border-radius: 10px;cursor: pointer;color: green;"
+              *ngIf="item.status">event_available</mat-icon></span>
+          <span style="font-size: 15px;">{{item.finyear}}</span>
+          <span *ngIf="item.status"><mat-icon
+              style="color:green;display: flex;align-items: center;">check_circle</mat-icon></span>
+        </div>
+      </button>
+    </mat-menu>
+  </div>
+  <div class="body home-view">
+    <router-outlet></router-outlet>
+  </div>
+</section>

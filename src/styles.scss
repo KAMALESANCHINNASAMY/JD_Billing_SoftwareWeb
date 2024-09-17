@@ -1,0 +1,171 @@
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.required::after {
+  content: "*";
+  color: red;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  //  overflow: hidden;
+}
+
+body {
+  position: relative;
+  font-family: "Roboto", sans-serif;
+  // overflow-y: hidden
+}
+
+.ap-container {
+  @import "app/styles/form-styles.scss";
+  overflow-y: hidden;
+  overflow-x: hidden;
+}
+
+textarea {
+  resize: none !important;
+  height: 80px;
+}
+
+.main-label {
+  font-weight: 500;
+}
+
+.check-box {
+  margin: 0 10px !important;
+}
+
+thead {
+  background-color: aliceblue;
+}
+
+.mat-success {
+  background-color: green !important;
+  color: white !important;
+}
+
+.mat-warn-btn {
+  background-color: #f44336 !important;
+  color: white !important;
+}
+
+a {
+  color: #f8f9fa;
+  text-decoration: none;
+  background-color: transparent;
+}
+
+a:hover {
+  color: red;
+  text-decoration: underline;
+  font-weight: 500;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+._pop_up_container {
+  border: 2px solid rgb(25, 103, 210);
+  border-radius: 6px;
+
+  .mat-dialog-container {
+    padding: 0 !important;
+  }
+
+  ._header_flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px;
+  }
+
+  ._pop_up_header {
+    background-color: rgb(25, 103, 210);
+  }
+}
+
+.simple-notification-wrapper {
+  z-index: 9999 !important;
+}
+
+._pop_up_container_normal {
+  border-radius: 6px;
+
+  .mat-dialog-container {
+    padding: 0 !important;
+  }
+
+  ._header_flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px;
+  }
+
+  ._pop_up_header {
+    background-color: rgb(25, 103, 210);
+  }
+}
+
+.mat-input-element:disabled,
+.mat-form-field-type-mat-native-select.mat-form-field-disabled .mat-form-field-infix::after {
+  color: black !important;
+}
+
+.disableFont {
+  color: black;
+}
+
+.mat-header-cell {
+  background-color: #dee2e6;
+  color: black;
+}
+
+td.mat-cell,
+td.mat-footer-cell {
+  border-bottom-width: 1px;
+  border-bottom-color: rgb(29, 2, 2);
+  border-bottom-style: solid;
+}
+
+///////////-----------Billing Software----------
+.labeldiv {
+  float: left;
+  width: 150px;
+  text-align: left;
+}
+
+.inputdiv {
+  float: left;
+  width: 250px;
+}
+
+.matcard {
+  //box-shadow: 0px 0px 6px 5px rgb(165, 202, 220);
+  border: 2px solid blue;
+}
+
+h2 {
+  color: rgb(6, 20, 144);
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}

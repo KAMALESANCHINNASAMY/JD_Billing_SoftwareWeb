@@ -1,0 +1,42 @@
+<div class="_login">
+  <div class="split left"></div>
+  <div class="split right" fxLayoutAlign="center center">
+    <div class="wrapper">
+      <header class="section header">
+        <div class="trapezoid"></div>
+        <div class="header__text">
+          <h1>LOGIN</h1>
+        </div>
+      </header>
+      <section class="section sign-in">
+        <form [formGroup]="loginForm" (ngSubmit)="login()">
+          <div class="input-group mb-4 mt-4">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><mat-icon>email</mat-icon></span>
+            </div>
+            <input [ngClass]="{'is-invalid': loginForm.controls.email.touched && loginForm.controls.email.errors}"
+              type="text" placeholder="User E-mail" class="form-control" formControlName="email" required />
+          </div>
+          <div class="input-group mb-4">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><mat-icon>lock</mat-icon></span>
+            </div>
+            <input [ngClass]="{'is-invalid': loginForm.controls.password.touched && loginForm.controls.password.errors}"
+              type="password" placeholder="Password" class="form-control" formControlName="password" required />
+          </div>
+          <div class="text-center">
+            <!-- Centering container -->
+            <button class="btn btn-primary m-2" style="min-width: 150px" type="submit">
+              Login
+            </button>
+          </div>
+          <!-- <div class="text-center mt-4">
+            <button class="btn btn-info" style="min-width: 150px" type="button">
+              Generate OTP
+            </button>
+          </div> -->
+        </form>
+      </section>
+    </div>
+  </div>
+</div>

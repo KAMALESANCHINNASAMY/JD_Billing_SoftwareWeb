@@ -1,0 +1,112 @@
+<div class="container-fluid">
+  <mat-card class="matcard mt-4">
+    <mat-card-content>
+      <form [formGroup]="form">
+      <div class="row mt-2">
+        <div class="col-12" style="display: flex">
+          <div style="float: left; width: 300px" style="display: flex">
+            <h2 class="ml-1">Saree Wise Sales WithOut GST Report</h2>
+          </div>
+        </div>
+      </div>
+      <div class="row ml-3 mt-3 mb-2">
+        <!-- <div class="col-sm-4 mt-1" style="display: flex">
+          <div class="labeldiv">
+            <label class="pt-2" style="margin: auto"
+              >Customer Name</label
+            >
+          </div>
+          <div class="inputdiv">
+            <mat-form-field>
+              <mat-label>Customer Name</mat-label>
+              <mat-select
+              (valueChange)="showCustomerSalesReport(advw.value)"
+                #advw
+                formControlName="customerid"
+              >
+                <mat-form-field>
+                  <input
+
+                    matInput
+                    (input)="suggest(auval.value)"
+                    type="text"
+                    #auval
+                    placeholder="Search..."
+                  />
+                </mat-form-field>
+
+                <mat-option
+                [value]="option.customerid"
+                *ngFor="let option of suggestions"
+                >
+                {{ option.customer_name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div> -->
+        <div class="col-sm-4 mt-3" style="display: flex">
+          <div class="labeldiv">
+            <label class="pt-2" style="margin: auto"
+              >Si_Code</label
+            >
+          </div>
+          <div class="inputdiv">
+            <input type="text" #si_code formControlName="si_code"
+            (input)="getSalesReportbySicode(si_code.value)"
+            class="form-control" />
+          </div>
+        </div>
+        <div class="col-sm-4 mt-3" style="display: flex">
+          <div class="labeldiv">
+            <label class="pt-2" style="margin: auto"
+              >Ref_Code</label
+            >
+          </div>
+          <div class="inputdiv">
+            <input type="text" #ref_code formControlName="ref_code"
+            (input)="getSalesReportbyRefcode(ref_code.value)"
+            class="form-control" />
+          </div>
+        </div>
+      </div>
+    </form>
+
+      <div class="table-responsive mt-5" *ngIf="salesReports.length>0">
+        <table
+          class="table table-responsive table-bordered table-hover col-sm-12"
+        >
+          <thead>
+            <tr>
+              <th>S No</th>
+              <th>Date</th>
+              <th>Bill No</th>
+              <th>Customer Name</th>
+              <th>Si code</th>
+              <th>Ref Code</th>
+              <th>Qty</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of salesReports; let i = index" >
+              <td>{{ i + 1 }}</td>
+              <td>{{ item.bill_date }}</td>
+              <td>{{ item.bill_no}}</td>
+              <td>{{ item.customer_name }}</td>
+              <td>{{ item.si_code }}</td>
+              <td>{{ item.ref_code }}</td>
+              <td>{{ item.qty }}</td>
+              <td>{{ item.total }}</td>
+            </tr>
+            <tr>
+              <th colspan="6" style="border: none; text-align: end">Total</th>
+              <th>{{ total_Qty }}</th>
+              <th>{{ total_Total }}</th>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

@@ -1,0 +1,106 @@
+<div class="container-fluid">
+  <mat-card class="matcard mt-2 mb-2">
+    <mat-card-content>
+      <div class="row">
+        <div class="col-sm-12">
+          <h2 class="head">Sales Payment WithOut GST</h2>
+        </div>
+      </div>
+      <form [formGroup]="reportForm">
+        <div class="row ml-3">
+          <div class="col-sm-3 mt-2" style="display: flex">
+            <div class="labeldiv">
+              <label class="pt-2" style="margin: auto">From<span class="text-danger">*</span></label>
+            </div>
+            <div class="inputdiv">
+              <input type="date" formControlName="fromdate" class="form-control" required />
+            </div>
+          </div>
+
+          <div class="col-sm-3 mt-2" style="display: flex">
+            <div class="labeldiv">
+              <label class="pt-2" style="margin: auto">To<span class="text-danger">*</span></label>
+            </div>
+            <div class="inputdiv">
+              <input type="date" formControlName="todate" class="form-control" required />
+            </div>
+          </div>
+
+          <div class="col-sm-4" style="display: flex">
+            <div class="labeldiv">
+              <label class="pt-2 mt-2" style="margin: auto">Customer<span class="text-danger">*</span></label>
+            </div>
+            <div class="inputdiv">
+              <mat-form-field>
+                <mat-label>Customer Name</mat-label>
+                <mat-select formControlName="customerid" required>
+                  <mat-form-field>
+                    <input matInput (input)="suggest(auval.value)" type="text" #auval placeholder="Search..." />
+                  </mat-form-field>
+                  <mat-option [value]=0>
+                    Select All
+                  </mat-option>
+                  <mat-option [value]="option.customerid" *ngFor="let option of suggestions">
+                    {{ option.customer_name }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="col-sm-2 mt-2">
+            <button class="btn-sm btn btn-primary" (click)="getSalesPaymentReports()">
+              Search
+            </button>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-9">
+            <button class="btn btn-info btn-sm ml-3" printSectionId="_print_section" ngxPrint [useExistingCss]="true">
+              <mat-icon>print</mat-icon>
+            </button>
+          </div>
+
+          <div class="col-sm-3 pr-4" style="text-align: right;">
+            <input formControlName="ischeck" (click)="filtervaildAmount($event)" type="checkbox"> <label
+              class="ml-2 head">Avoid Zero Deduction
+            </label>
+          </div>
+
+          <div class="table-responsive col-sm-12" id="_print_section">
+            <table style="width: 100%;" class="table table-bordered table-hover">
+              <thead class="tableheadList">
+                <tr>
+                  <th>S No</th>
+                  <th>Payment Date</th>
+                  <th>Invoice No</th>
+                  <th>Customer Name</th>
+                  <th>Payment Type</th>
+                  <th style="text-align: right;">Total</th>
+                  <th style="text-align: right;">Deduction Amount</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of PaymentReports; let i = index">
+                  <td>{{ i + 1 }}</td>
+                  <td>{{getFormattedDate(item.date)}}</td>
+                  <td>{{ item.bill_no }}</td>
+                  <td>{{ item.customer_name }}</td>
+                  <td>{{item.payment_type}}</td>
+                  <td style="text-align: right;">{{ item.total_amount }}</td>
+                  <td style="text-align: right;">{{ item.deduction_amount ||0 }}</td>
+                </tr>
+                <tr>
+                  <th style="text-align: right;font-size: 17px;" class="pr-3 head" colspan="5">Total</th>
+                  <th style="text-align: right;">{{ total_amount().toFixed(2) }}</th>
+                  <th style="text-align: right;">{{ deduction_amount().toFixed(2) }}</th>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

@@ -1,0 +1,33 @@
+<div style="margin: auto;">
+    <div class="mt-4">
+        <label style="font-family: Georgia, 'Times New Roman', Times, serif;color: #006A4E;"><b>Captcha <span
+                    class="text-danger">*</span></b></label>
+        <div style="display: flex;">
+            <span class="input-group captcha-textbox">
+                <span style="height: 45px">
+                    <span class="pt-3 captcha">{{ captcha }}</span>
+                </span>
+            </span>
+
+            <span [ngClass]="{'refreshbutton': isRefreshing}" class="pt-2 ml-3 mt-1 refreshbutton"><mat-icon
+                    (click)="refresh()">replay</mat-icon></span>
+        </div>
+    </div>
+
+    <div class="mt-4 mb-4">
+        <div class="pl-2 pr-2">
+            <label style="font-family: Georgia, 'Times New Roman', Times, serif;color: #006A4E;"><b>Type the number
+                    displayed above <span class="text-danger">*</span></b></label>
+        </div>
+
+        <div>
+            <input #numcap class="form-control">
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <button (click)="checkcap(numcap.value)" class="btn btn-sm btn-info mr-5">Submit</button>
+
+        <button (click)="closedialog()" class="btn btn-sm btn-secondary ml-5">Cancel</button>
+    </div>
+</div>

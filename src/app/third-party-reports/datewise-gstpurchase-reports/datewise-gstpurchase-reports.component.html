@@ -1,0 +1,102 @@
+<mat-tab-group animationDuration="0ms" mat-stretch-tabs="false" mat-align-tabs="start">
+  <mat-tab label="Datewise Purchase With GST">
+    <div class="container-fluid">
+      <mat-card class="matcard mt-2 mb-2">
+        <mat-card-content>
+          <div class="row">
+            <div class="col-sm-12">
+              <h2 class="head">Datewise Purchase With GST</h2>
+            </div>
+          </div>
+          <form [formGroup]="reportForm">
+            <div class="row ml-3 mb-2">
+              <div class="col-sm-3 mt-2" style="display: flex">
+                <div class="labeldiv">
+                  <label class="pt-2" style="margin: auto">From<span class="text-danger">*</span></label>
+                </div>
+                <div class="inputdiv">
+                  <input formControlName="fromdate" type="date" class="form-control" required />
+                </div>
+              </div>
+              <div class="col-sm-3 mt-2" style="display: flex">
+                <div class="labeldiv">
+                  <label class="pt-2" style="margin: auto">To<span class="text-danger">*</span></label>
+                </div>
+                <div class="inputdiv">
+                  <input type="date" formControlName="todate" class="form-control" required />
+                </div>
+              </div>
+
+              <div class="col-sm-4" style="display: flex">
+                <div class="labeldiv">
+                  <label class="pt-2 mt-2" style="margin: auto">Third Party</label>
+                </div>
+                <div class="inputdiv">
+                  <mat-form-field>
+                    <mat-label>Party Name</mat-label>
+                    <mat-select formControlName="third_partyid" required>
+                      <mat-form-field>
+                        <input matInput (input)="suggest(auval.value)" type="text" #auval placeholder="Search..." />
+                      </mat-form-field>
+                      <mat-option [value]=0>
+                        Select All
+                      </mat-option>
+                      <mat-option [value]="option.third_partyid" *ngFor="let option of suggestions">
+                        {{ option.party_name }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="col-sm-2 mt-2">
+                <button class="btn-sm btn btn-primary" (click)="getThirdPartyPurReportByFromTodate()">
+                  search
+                </button>
+              </div>
+            </div>
+          </form>
+
+          <div class="row">
+            <button class="btn btn-info btn-sm ml-3" printSectionId="_print_section" ngxPrint [useExistingCss]="true">
+              <mat-icon>print</mat-icon>
+            </button>
+            <div class="table-responsive col-sm-12" id="_print_section">
+              <table style="width: 100%;" class="table table-bordered table-hover">
+                <thead class="tableheadList">
+                  <tr>
+                    <th>S No</th>
+                    <th>Date</th>
+                    <th>Bill No</th>
+                    <th>Party Name</th>
+                    <th>Si code</th>
+                    <th>Qty</th>
+                    <th style="text-align: right;">Net Total</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of purchaseReports; let i = index">
+                    <td>{{ i + 1 }}</td>
+                    <td>{{getFormattedDate(item.date)}}</td>
+                    <td>{{item.bill_no}}</td>
+                    <td>{{ item.party_name }}</td>
+                    <td>{{ item.si_code }}</td>
+                    <td>{{ item.qty }}</td>
+                    <td style="text-align: right;">{{ item.total }}</td>
+                  </tr>
+                  <tr>
+                    <th style="text-align: right;font-size: 17px;" class="pr-3 head" colspan="5">Total</th>
+                    <th>{{ totalQty() }}</th>
+                    <th style="text-align: right;">{{ total_nettotal() }}</th>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </mat-tab>
+  <mat-tab
+    label="Datewise Purchase WithOut GST"><app-datewise-nongstpurchase-reports></app-datewise-nongstpurchase-reports></mat-tab>
+</mat-tab-group>

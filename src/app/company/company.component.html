@@ -1,0 +1,462 @@
+<div class="container-fluid mt-2">
+  <mat-card class="mt-2 matcard mb-2">
+    <mat-card-content>
+      <div class="row">
+        <div #tableTop class="col-12">
+          <h2 class="ml-1 head">Company Details</h2>
+        </div>
+      </div>
+      <form [formGroup]="companyDetails" (ngSubmit)="save()">
+        <div class="col-sm-6 mt-3 ml-3" style="display: flex">
+          <div class="labeldiv">
+            <label class="pt-2" style="margin: auto">Logo</label>
+          </div>
+          <div class="drag-drop-element">
+            <div *ngIf="editableImage">
+              <img [src]="editableImage" alt="No image found" width="200" height="200" />
+              <span class="pl-2" style="cursor: pointer">
+                <mat-icon class="icons" style="padding-left: 2px" svgIcon="roundDelete" matTooltip="Delete"
+                  (click)="deleteImage()"></mat-icon>
+              </span>
+            </div>
+            <div *ngIf="!editableImage" class="custom-dropzone" ngx-dropzone [accept]="'image/*'"
+              (change)="onSelect($event)" style="border: 2px dashed grey; margin-right: 10px">
+              <ngx-dropzone-label>
+                <div>
+                  <span style="margin: 8px">Click to upload or Drag & Drop !</span>
+                </div>
+              </ngx-dropzone-label>
+              <ngx-dropzone-image-preview *ngFor="let f of files" [file]="f" [removable]="true" (removed)="onRemove(f)">
+                <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+              </ngx-dropzone-image-preview>
+            </div>
+          </div>
+        </div>
+        <div class="row ml-3">
+          <div class="col-sm-6 mt-3" style="display: flex">
+            <div class="labeldiv">
+              <label class="pt-2" style="margin: auto">Company Name<span class="text-danger">*</span></label>
+            </div>
+            <div class="inputdiv">
+              <input [ngClass]="{
+                  'is-invalid':
+                    companyDetails.controls.company_name.touched &&
+                    companyDetails.controls.company_name.errors
+                }" class="form-control" type="text" required formControlName="company_name" />
+              <span class="text-danger" *ngIf="
+                  companyDetails.controls.company_name.touched &&
+                  companyDetails.controls.company_name.errors
+                ">
+                <div *ngIf="
+                    companyDetails.controls.company_name.touched &&
+                    companyDetails.controls.company_name.errors['required']
+                  ">
+                  Company Name is required
+                </div>
+              </span>
+            </div>
+          </div>
+          <div class="col-sm-6 mt-3" style="display: flex">
+            <div class="labeldiv">
+              <label class="pt-2" style="margin: auto">Display Name<span class="text-danger">*</span></label>
+            </div>
+            <div class="inputdiv">
+              <input [ngClass]="{
+                  'is-invalid':
+                    companyDetails.controls.display_name.touched &&
+                    companyDetails.controls.display_name.errors
+                }" class="form-control" type="text" required formControlName="display_name" />
+              <span class="text-danger" *ngIf="
+                  companyDetails.controls.display_name.touched &&
+                  companyDetails.controls.display_name.errors
+                ">
+                <div *ngIf="
+                    companyDetails.controls.display_name.touched &&
+                    companyDetails.controls.display_name.errors['required']
+                  ">
+                  Display Name is required
+                </div>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="row ml-3">
+          <div class="col-sm-6 mt-3" style="display: flex">
+            <div class="labeldiv">
+              <label class="pt-2" style="margin: auto">Door No</label>
+            </div>
+            <div class="inputdiv">
+              <input class="form-control" type="text" formControlName="door_no" />
+            </div>
+          </div>
+          <div class="col-sm-6 mt-3" style="display: flex">
+            <div class="labeldiv">
+              <label class="pt-2" style="margin: auto">Building Name</label>
+            </div>
+            <div class="inputdiv">
+              <input class="form-control" type="text" formControlName="building_name" />
+            </div>
+          </div>
+        </div>
+
+        <div class="row ml-3">
+          <div class="col-sm-6 mt-3" style="display: flex">
+            <div class="labeldiv">
+              <label class="pt-2" style="margin: auto">Street Name<span class="text-danger">*</span></label>
+            </div>
+            <div class="inputdiv">
+              <input [ngClass]="{
+                  'is-invalid':
+                    companyDetails.controls.street_name.touched &&
+                    companyDetails.controls.street_name.errors
+                }" class="form-control" type="text" required formControlName="street_name" />
+              <span class="text-danger" *ngIf="
+                  companyDetails.controls.street_name.touched &&
+                  companyDetails.controls.street_name.errors
+                ">
+                <div *ngIf="
+                    companyDetails.controls.street_name.touched &&
+                    companyDetails.controls.street_name.errors['required']
+                  ">
+                  Street Name is required
+                </div>
+              </span>
+            </div>
+          </div>
+          <div class="col-sm-6 mt-3" style="display: flex">
+            <div class="labeldiv">
+              <label class="pt-2" style="margin: auto">Street Name2</label>
+            </div>
+            <div class="inputdiv">
+              <input class="form-control" type="text" formControlName="streent_name1" />
+            </div>
+          </div>
+        </div>
+        <div class="row ml-3">
+          <div class="col-sm-6 mt-3" style="display: flex">
+            <div class="labeldiv">
+              <label class="pt-2" style="margin: auto">Email</label>
+            </div>
+            <div class="inputdiv">
+              <input class="form-control" type="text" formControlName="email" />
+            </div>
+          </div>
+          <div class="col-sm-6 mt-3" style="display: flex">
+            <div class="labeldiv">
+              <label class="pt-2" style="margin: auto">Location<span class="text-danger">*</span></label>
+            </div>
+            <div class="inputdiv">
+              <textarea [ngClass]="{
+                  'is-invalid':
+                    companyDetails.controls.c_location.touched &&
+                    companyDetails.controls.c_location.errors
+                }" class="form-control" type="text" required formControlName="c_location"></textarea>
+              <span class="text-danger" *ngIf="
+                  companyDetails.controls.c_location.touched &&
+                  companyDetails.controls.c_location.errors
+                ">
+                <div *ngIf="
+                    companyDetails.controls.c_location.touched &&
+                    companyDetails.controls.c_location.errors['required']
+                  ">
+                  Location is required
+                </div>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="row ml-3">
+          <div class="col-sm-6 mt-3" style="display: flex">
+            <div class="labeldiv">
+              <label class="pt-2" style="margin: auto">Pincode<span class="text-danger">*</span></label>
+            </div>
+            <div class="inputdiv">
+              <input [ngClass]="{
+                  'is-invalid':
+                    companyDetails.controls.pincode.touched &&
+                    companyDetails.controls.pincode.errors
+                }" class="form-control" type="text" formControlName="pincode" (keypress)="numberOnlyPincode($event)"
+                (paste)="preventPasteNumber($event)" required />
+              <span class="text-danger" *ngIf="
+                  companyDetails.controls.pincode.touched &&
+                  companyDetails.controls.pincode.errors
+                ">
+                <div *ngIf="
+                    companyDetails.controls.pincode.touched &&
+                    companyDetails.controls.pincode.errors['required']
+                  ">
+                  Pincode is required
+                </div>
+              </span>
+            </div>
+          </div>
+          <div class="col-sm-6 mt-3" style="display: flex">
+            <div class="labeldiv">
+              <label class="pt-2" style="margin: auto">Post<span class="text-danger">*</span></label>
+            </div>
+            <div class="inputdiv">
+              <input [ngClass]="{
+                  'is-invalid':
+                    companyDetails.controls.post.touched &&
+                    companyDetails.controls.post.errors
+                }" class="form-control" type="text" formControlName="post" required />
+              <span class="text-danger" *ngIf="
+                  companyDetails.controls.post.touched &&
+                  companyDetails.controls.post.errors
+                ">
+                <div *ngIf="
+                    companyDetails.controls.post.touched &&
+                    companyDetails.controls.post.errors['required']
+                  ">
+                  Post is required
+                </div>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="row ml-3">
+          <div class="col-sm-6 mt-3" style="display: flex">
+            <div class="labeldiv">
+              <label class="pt-2" style="margin: auto">Taluk</label>
+            </div>
+            <div class="inputdiv">
+              <input class="form-control" formControlName="taluk" type="text" />
+            </div>
+          </div>
+          <div class="col-sm-6 mt-3" style="display: flex">
+            <div class="labeldiv">
+              <label class="pt-2" style="margin: auto">District<span class="text-danger">*</span></label>
+            </div>
+            <div class="inputdiv">
+              <input [ngClass]="{
+                  'is-invalid':
+                    companyDetails.controls.district.touched &&
+                    companyDetails.controls.district.errors
+                }" class="form-control" type="text" formControlName="district" required />
+              <span class="text-danger" *ngIf="
+                  companyDetails.controls.district.touched &&
+                  companyDetails.controls.district.errors
+                ">
+                <div *ngIf="
+                    companyDetails.controls.district.touched &&
+                    companyDetails.controls.district.errors['required']
+                  ">
+                  District is required
+                </div>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="row ml-3">
+          <div class="col-sm-6 mt-3" style="display: flex">
+            <div class="labeldiv">
+              <label class="pt-2" style="margin: auto">Website</label>
+            </div>
+            <div class="inputdiv">
+              <input class="form-control" type="text" formControlName="website" />
+            </div>
+          </div>
+          <div class="col-sm-6 mt-3" style="display: flex">
+            <div class="labeldiv">
+              <label class="pt-2" style="margin: auto">Owner Name</label>
+            </div>
+            <div class="inputdiv">
+              <input class="form-control" type="text" formControlName="owner_name" (keypress)="stringOnly($event)"
+                (paste)="preventPasteString($event)" />
+            </div>
+          </div>
+        </div>
+        <div class="row ml-3">
+          <div class="col-sm-6 mt-3" style="display: flex">
+            <div class="labeldiv">
+              <label class="pt-2" style="margin: auto">Mobile No<span class="text-danger">*</span></label>
+            </div>
+            <div class="inputdiv">
+              <input [ngClass]="{
+                  'is-invalid':
+                    companyDetails.controls.mobile.touched &&
+                    companyDetails.controls.mobile.errors
+                }" class="form-control" type="text" required (keypress)="numberOnly($event)"
+                (paste)="preventPasteNumber($event)" formControlName="mobile" />
+              <span class="text-danger" *ngIf="
+                  companyDetails.controls.mobile.touched &&
+                  companyDetails.controls.mobile.errors
+                ">
+                <div *ngIf="
+                    companyDetails.controls.mobile.touched &&
+                    companyDetails.controls.mobile.errors['required']
+                  ">
+                  Mobile is required
+                </div>
+              </span>
+            </div>
+          </div>
+          <div class="col-sm-6 mt-3" style="display: flex">
+            <div class="labeldiv">
+              <label class="pt-2" style="margin: auto">Office Ph No<span class="text-danger">*</span></label>
+            </div>
+            <div class="inputdiv">
+              <input [ngClass]="{
+                  'is-invalid':
+                    companyDetails.controls.office_phno.touched &&
+                    companyDetails.controls.office_phno.errors
+                }" class="form-control" type="text" required (keypress)="numberOnly($event)"
+                (paste)="preventPasteNumber($event)" formControlName="office_phno" />
+              <span class="text-danger" *ngIf="
+                  companyDetails.controls.office_phno.touched &&
+                  companyDetails.controls.office_phno.errors
+                ">
+                <div *ngIf="
+                    companyDetails.controls.office_phno.touched &&
+                    companyDetails.controls.office_phno.errors['required']
+                  ">
+                  Office Phone Number is required
+                </div>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="row ml-3">
+          <div class="col-sm-6 mt-3" style="display: flex">
+            <div class="labeldiv">
+              <label class="pt-2" style="margin: auto">Company Start Date</label>
+            </div>
+            <div class="inputdiv">
+              <input class="form-control" formControlName="company_sdate" type="date" />
+            </div>
+          </div>
+
+          <div class="col-sm-6 mt-3" style="display: flex">
+            <div class="labeldiv">
+              <label class="pt-2" style="margin: auto">GST IN<span class="text-danger">*</span></label>
+            </div>
+            <div class="inputdiv">
+              <input class="form-control" [ngClass]="{'is-invalid':companyDetails.controls.gst_in.touched &&
+              companyDetails.controls.gst_in.errors}" formControlName="gst_in" type="text" required />
+            </div>
+          </div>
+        </div>
+
+        <div class="row mt-3">
+          <div class="col-12">
+            <h2 class="ml-1 head">Bank Details</h2>
+          </div>
+        </div>
+
+        <div class="row ml-3">
+          <div class="col-sm-6 mt-2" style="display: flex">
+            <div class="labeldiv">
+              <label class="pt-2" style="margin: auto">Bank Name<span class="text-danger">*</span></label>
+            </div>
+            <div class="inputdiv">
+              <input [ngClass]="{'is-invalid':companyDetails.controls.bank_name.touched &&
+                  companyDetails.controls.bank_name.errors}" class="form-control" formControlName="bank_name"
+                type="text" required />
+            </div>
+          </div>
+
+          <div class="col-sm-6 mt-2" style="display: flex">
+            <div class="labeldiv">
+              <label class="pt-2" style="margin: auto">Account Holder Name<span class="text-danger">*</span></label>
+            </div>
+            <div class="inputdiv">
+              <input [ngClass]="{'is-invalid':companyDetails.controls.ac_holder_name.touched &&
+              companyDetails.controls.ac_holder_name.errors}" class="form-control" formControlName="ac_holder_name"
+                type="text" required />
+            </div>
+          </div>
+        </div>
+
+        <div class="row ml-3">
+          <div class="col-sm-6 mt-2" style="display: flex">
+            <div class="labeldiv">
+              <label class="pt-2" style="margin: auto">Account Number<span class="text-danger">*</span></label>
+            </div>
+            <div class="inputdiv">
+              <input [ngClass]="{'is-invalid':companyDetails.controls.ac_no.touched &&
+              companyDetails.controls.ac_no.errors}" class="form-control" formControlName="ac_no" type="text"
+                required />
+            </div>
+          </div>
+
+          <div class="col-sm-6 mt-2" style="display: flex">
+            <div class="labeldiv">
+              <label class="pt-2" style="margin: auto">IFSC Code<span class="text-danger">*</span></label>
+            </div>
+            <div class="inputdiv">
+              <input [ngClass]="{'is-invalid':companyDetails.controls.ifsc_code.touched &&
+              companyDetails.controls.ifsc_code.errors}" class="form-control" formControlName="ifsc_code" type="text"
+                required />
+            </div>
+          </div>
+        </div>
+
+        <div class="row justify-content-center mt-3">
+          <div class="col-sm-6">
+            <div class="d-flex justify-content-center">
+              <div style="width: 250px; display: flex; align-items: center">
+                <input type="submit" style="width: 80px" class="btn btn-success mt-4 btn-sm mr-3" value="{{
+                    companyDetails.value.companyid == 0 ? 'Save' : 'Edit'
+                  }}" />
+                <input (click)="cancelClick()" type="button" style="width: 80px" class="btn btn-info mt-4 btn-sm mr-3"
+                  value="Clear" />
+                <input (click)="backButton()" type="button" style="width: 80px" class="btn btn-danger btn-sm mt-4"
+                  value="Close" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="mt-3 matcardlist">
+    <mat-card-content>
+      <div class="table-responsive">
+        <table class="col-sm-12 table table-hover table-bordered table-sm">
+          <thead class="tableheadList">
+            <tr>
+              <th>S.No</th>
+              <th style="text-align: left;">Company Name</th>
+              <th style="text-align: left;">Display Name</th>
+              <th style="text-align: left;">Email</th>
+              <th style="text-align: left;">Website</th>
+              <th style="text-align: left;">Owner Name</th>
+              <th style="text-align: left;">Mobile</th>
+              <th>LOGO</th>
+              <th>Active</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of companyDetailsList; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td style="text-align: left;">{{ item.company_name }}</td>
+              <td style="text-align: left;">{{ item.display_name }}</td>
+              <td style="text-align: left;">{{ item.email || "-" }}</td>
+              <td style="text-align: left;">{{ item.website || "-" }}</td>
+              <td style="text-align: left;">{{ item.owner_name || "-" }}</td>
+              <td style="text-align: left;">{{ item.mobile }}</td>
+              <td>
+                <img [src]="item.logo" style="object-fit: cover" height="30px" width="30px" />
+              </td>
+              <td style="text-align: center">
+                <input [checked]="item.activestatus" (click)="ActiveStatusClick(item.companyid)"
+                  style="width: 20px; height: 20px" class="mt-1" type="checkbox" />
+              </td>
+              <td class="tdoption">
+                <span class="m-2 editbutton text-success" (click)="UpdateGetClick(item)"><b
+                    style="cursor: pointer">edit</b></span>
+                <span *ngIf="item.activestatus == false">||</span>
+                <span *ngIf="item.activestatus == false" class="m-2 deletebutton text-danger"
+                  (click)="deleteClick(item.companyid)"><b style="cursor: pointer">delete</b></span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

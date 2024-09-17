@@ -1,0 +1,228 @@
+<div class="container-fluid mt-3">
+  <div id="_print_section">
+    <div style="display: flex;" class="row">
+      <div class="col-sm-3">
+        <span class=""><b>Invoice No:</b> {{ invoice_no }}</span>
+      </div>
+
+      <div class="col-sm-5" style="       
+        color: green;
+        text-align: center;
+        font-size: 19px;
+      ">
+        Third party Non-GST purchase
+      </div>
+
+      <div class="col-sm-3" style="text-align: right;"><span class=""><b>Invoice Date: </b>{{ date }}</span></div>
+      <div class="col-sm-1"><mat-icon (click)="closedialog()" title="Click to close"
+          style="color: red;cursor: pointer;">close_circle</mat-icon></div>
+
+    </div>
+    <div class="row">
+      <div class="col-sm-12 mt-3">
+        <div class="table-responsive">
+          <table class="table table-sm table-bordered">
+            <thead>
+              <tr>
+                <th colspan="7" style="text-align: center;">
+                  DETAILS OF SELLER
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th colspan="3">PARTY NAME</th>
+                <td colspan="4">{{ party_name}}</td>
+              </tr>
+              <tr>
+                <th colspan="3">BILLING ADDRESS</th>
+                <td colspan="4">{{shipping_address || cust_ship_address}}</td>
+              </tr>
+              <tr>
+                <th colspan="3">GST IN</th>
+                <td colspan="4">{{gst_in}}</td>
+              </tr>
+              <tr>
+                <th colspan="3">STATE</th>
+                <td colspan="4">{{state}}</td>
+              </tr>
+              <tr colspan="3">
+                <th colspan="3">STATE CODE</th>
+                <td colspan="4">{{state_code}}</td>
+              </tr>
+
+              <tr>
+                <th>S.No</th>
+                <th>Item Code</th>
+                <th>HSN/SAC</th>
+                <th>Dis %</th>
+                <th>Qty</th>
+                <th>Price</th>
+                <th>Total</th>
+              </tr>
+
+              <tr *ngFor="let item of thirdPartyNongstPurchaseReports; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{ item.si_code }}</td>
+                <td>{{ item.hsn_number }}</td>
+                <td>{{ item.discount }} %</td>
+                <td>{{ item.qty }}</td>
+                <td>{{ item.price }}</td>
+                <td>{{ item.n_total }}</td>
+              </tr>
+
+              <tr>
+                <th style="text-align: right;" class="pr-2" colspan="4">Total</th>
+                <td>{{totalQty}}</td>
+                <td>{{totalPrice}}</td>
+                <td>{{totalAmount}}</td>
+              </tr>
+
+              <tr>
+                <td rowspan="2" colspan="3"><b>Total Invoice Amount in Words : </b>{{numberInWords}}</td>
+                <th style="text-align: right;" class="pr-2">Total Discount</th>
+                <td colspan="3">{{totalDiscountAmount}}</td>
+              </tr>
+              <tr>
+                <th style="text-align: right;" class="pr-2">Net Total</th>
+                <td colspan="3">{{netTotal}}</td>
+              </tr>
+              <tr style="height: 100px;">
+                <th colspan="4"><span style="color: gray;" *ngFor="let item of activeCompanyDetails">For {{
+                    item.company_name }}</span></th>
+                <td colspan="3">Authorised Signatory</td>
+              </tr>
+            </tbody>
+          </table>
+          <!-- <table class="table table-bordered" style="margin-bottom: 0">
+        <thead>
+          <tr style="height: 30px">
+            <th colspan="2" style="width: 50%; text-align: center">
+              DETAILS OF SELLER
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th style="text-align: left">PARTY NAME</th>
+            <td>
+              <span class="ml-1">{{ party_name | uppercase }}</span>
+            </td>
+          </tr>
+          <tr>
+            <th style="text-align: left">BILLING ADDRESS</th>
+            <td>
+              <span class="ml-1">{{
+                shipping_address || cust_ship_address | uppercase
+                }}</span>
+            </td>
+          </tr>
+          <tr>
+            <th style="text-align: left">GST IN</th>
+            <td>
+              <span class="ml-1">{{ gst_in }}</span>
+            </td>
+          </tr>
+          <tr>
+            <th style="text-align: left">STATE</th>
+            <td>
+              <span class="ml-1">{{ state }}</span>
+            </td>
+          </tr>
+          <tr>
+            <th style="text-align: left">STATE CODE</th>
+            <td>
+              <span class="ml-1">{{ state_code }}</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <table class="table table-bordered table-sm table-responsive" style="margin-bottom: 0">
+        <thead>
+          <tr>
+            <th>S.No</th>
+            <th>Item Code</th>
+            <th>HSN/SAC</th>
+            <th>Dis %</th>
+            <th>Qty</th>
+            <th>Price</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of thirdPartyNongstPurchaseReports; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ item.si_code }}</td>
+            <td>{{ item.hsn_number }}</td>
+            <td>{{ item.discount }} %</td>
+            <td>{{ item.qty }}</td>
+            <td>{{ item.price }}</td>
+            <td>{{ item.n_total }}</td>
+          </tr>
+        </tbody>
+        <tbody>
+          <tr>
+            <th style="text-align: right; padding: 8px !important" class="pr-5 text-primary" colspan="4">
+              Total
+            </th>
+            <td style="text-align: center; vertical-align: middle">
+              {{ totalQty }}
+            </td>
+            <td style="text-align: center; vertical-align: middle">
+              {{ totalPrice }}
+            </td>
+            <td style="text-align: center; vertical-align: middle">
+              {{ totalAmount }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <table class="table table-bordered table-sm" style="margin-bottom: 0">
+        <tbody>
+          <tr>
+            <th style="text-align: center; vertical-align: middle" rowspan="2">
+              <span class="text-info">Total Invoice Amount in Words : </span>{{ numberInWords | uppercase }}
+            </th>
+            <td style="width: 15%; text-align: right">
+              <span class="text-primary font-weight-bold">Total Discount</span>
+            </td>
+            <td style="width: 15%; padding-top: 1.5%; padding: 8px !important">
+              <span class="font-weight-bold ml-2">{{
+                totalDiscountAmount
+                }}</span>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: right; padding: 8px !important">
+              <span class="text-primary font-weight-bold">Net Total</span>
+            </td>
+            <td>
+              <span class="font-weight-bold ml-2">{{ netTotal }}</span>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="3" style="height: 110px;">
+              <span class="font-weight-bold text-danger" *ngFor="let item of activeCompanyDetails">For {{
+                item.company_name }}</span>
+
+              <span style="position: absolute; bottom: 0; left:40%">Authorised Signatory</span>
+            </td>
+          </tr>
+        </tbody>
+      </table> -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row mb-3">
+    <div class="col-sm-12" style="text-align: center;">
+      <button class="btn btn-sm btn-primary mr-2" printSectionId="_print_section" ngxPrint [useExistingCss]="true">
+        Print
+      </button>
+
+      <button (click)="closedialog()" class="btn btn-danger btn-sm ml-2">
+        Cancel
+      </button>
+    </div>
+  </div>
+</div>

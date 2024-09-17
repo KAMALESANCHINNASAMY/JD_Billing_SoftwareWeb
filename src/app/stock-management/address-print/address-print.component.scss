@@ -1,0 +1,75 @@
+.matcard {
+    border: 2px solid lightblue;
+}
+
+td {
+    text-align: center;
+}
+
+th {
+    text-align: center;
+}
+
+::ng-deep {
+    .mdc-text-field--filled:not(.mdc-text-field--disabled) {
+      background-color: white !important;
+    }
+  
+    .mat-mdc-text-field-wrapper {
+      height: 50px !important;
+    }
+  
+    .cdk-overlay-pane {
+      margin-top: 0 !important;
+    }
+  
+    div.mat-mdc-select-panel {
+      padding: 0px 0 !important;
+    }
+  
+  
+    div.mat-mdc-select-panel::-webkit-scrollbar {
+      width: 4px;
+    }
+  
+    div.mat-mdc-select-panel::-webkit-scrollbar-track {
+      background: lightblue;
+      border-radius: 6px;
+    }
+  
+    div.mat-mdc-select-panel::-webkit-scrollbar-thumb {
+      background: #005f69;
+      border-radius: 7px;
+    }
+  
+    div.mat-mdc-select-panel::-webkit-scrollbar-thumb:hover {
+      background: #005f69;
+    }
+  
+    .mat-mdc-form-field {
+      display: block !important;
+    }
+  }
+  
+
+.heading {
+    width: 70%;
+    margin: auto;
+}
+
+.head {
+    color: #006A4E;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-weight: 600;
+}
+
+@media print {
+    .heading {
+        page-break-inside: avoid;
+        display: inline-block;
+        vertical-align: top;
+        font-size: 25px;
+        width: 99%;
+        margin: auto;
+    }
+}

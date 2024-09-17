@@ -1,0 +1,97 @@
+<div class="container-fluid">
+  <mat-card class="matcard mt-2 mb-2">
+    <mat-card-content>
+      <div class="row">
+        <div class="col-sm-12">
+          <h2 class="head">Datewise Sales Return WithOut GST</h2>
+        </div>
+      </div>
+      <form [formGroup]="reportForm">
+        <div class="row ml-3">
+          <div class="col-sm-3 mt-2" style="display: flex">
+            <div class="labeldiv">
+              <label class="pt-2" style="margin: auto">From<span class="text-danger">*</span></label>
+            </div>
+            <div class="inputdiv">
+              <input type="date" formControlName="fromdate" class="form-control" required />
+            </div>
+          </div>
+
+          <div class="col-sm-3 mt-2" style="display: flex">
+            <div class="labeldiv">
+              <label class="pt-2" style="margin: auto">To<span class="text-danger">*</span></label>
+            </div>
+            <div class="inputdiv">
+              <input type="date" formControlName="todate" class="form-control" required />
+            </div>
+          </div>
+
+          <div class="col-sm-4" style="display: flex">
+            <div class="labeldiv">
+              <label class="pt-2 mt-2" style="margin: auto">Customer<span class="text-danger">*</span></label>
+            </div>
+            <div class="inputdiv">
+              <mat-form-field>
+                <mat-label>Customer Name</mat-label>
+                <mat-select formControlName="customerid" required>
+                  <mat-form-field>
+                    <input matInput (input)="suggest(auval.value)" type="text" #auval placeholder="Search..." />
+                  </mat-form-field>
+                  <mat-option [value]=0>
+                    Select All
+                  </mat-option>
+                  <mat-option [value]="option.customerid" *ngFor="let option of suggestions">
+                    {{ option.customer_name }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="col-sm-2 mt-2">
+            <button class="btn-sm btn btn-primary" (click)="getSalesReturnReports()">
+              Search
+            </button>
+          </div>
+        </div>
+      </form>
+
+      <div class="row">
+        <button class="btn btn-info btn-sm ml-3" printSectionId="_print_section" ngxPrint [useExistingCss]="true">
+          <mat-icon>print</mat-icon>
+        </button>
+        <div class="table-responsive col-sm-12" id="_print_section">
+          <table style="width: 100%;" class="table table-bordered table-hover">
+            <thead class="tableheadList">
+              <tr>
+                <th>S No</th>
+                <th>Return Date</th>
+                <th>Invoice No</th>
+                <th>Return No</th>
+                <th>Customer Name</th>
+                <th>Return Qty</th>
+                <th style="text-align: end;">Return Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of returnReports; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{getFormattedDate(item.return_date) }}</td>
+                <td>{{ item.invoice_no }}</td>
+                <td>{{item.return_no}}</td>
+                <td>{{ item.customer_name }}</td>
+                <td>{{ item.return_qty }}</td>
+                <td style="text-align:end;">{{ item.return_total }}</td>
+              </tr>
+              <tr>
+                <th style="text-align: right;font-size: 17px;" class="pr-3 head" colspan="5">Total</th>
+                <th>{{ totalQty() }}</th>
+                <th style="text-align:end;">{{ totalnet_total().toFixed(2) }}</th>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

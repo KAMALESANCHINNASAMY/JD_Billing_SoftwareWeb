@@ -1,0 +1,113 @@
+::ng-deep {
+  .mdc-dialog__surface::-webkit-scrollbar {
+    width: 6px;
+    cursor: pointer;
+  }
+
+  .mdc-dialog__surface::-webkit-scrollbar-track {
+    margin: 2px 0px 2px 0px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .mdc-dialog__surface::-webkit-scrollbar-thumb {
+    background: blue;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .mdc-dialog__surface::-webkit-scrollbar-thumb:hover {
+    background: blue;
+    cursor: pointer;
+  }
+}
+
+.border {
+  border-right: 2px solid #006A4E !important;
+  border-left: 2px solid #006A4E !important;
+  border-top: 0px !important; //
+  border-bottom: 0px !important; //
+}
+
+.borderem {
+  border-right: 2px solid #006A4E !important;
+  border-left: 2px solid #006A4E !important;
+  border-top: 0px !important; //
+  border-bottom: 0px !important; //
+  padding: 0 !important;
+}
+
+.tables {
+  border: 2px solid #006A4E;
+  font-weight: 600;
+}
+
+.boderleft {
+  border-left: 0px !important; //
+}
+
+.boderlright {
+  border-right: 0px !important; //
+}
+
+.sidiv {
+  max-width: 22px !important;
+  padding-left: 1px !important;
+  margin-right: 1px !important;
+}
+
+.refnow{
+  white-space: pre-wrap !important;
+}
+
+@media print {
+  .companylogo {
+    height: 184px !important;
+    width: 173px !important;
+  }
+
+  .border {
+    border-right: 2px solid #006A4E !important;
+    border-left: 2px solid #006A4E !important;
+    border-top: 0px !important; //
+    border-bottom: 0px !important; //
+  }
+
+  .borderem {
+    border-right: 2px solid #006A4E !important;
+    border-left: 2px solid #006A4E !important;
+    border-top: 0px !important; //
+    border-bottom: 0px !important; //
+    padding: 15px !important;
+  }
+
+  .tables {
+    border: 2px solid #006A4E;
+    font-size: 19px;
+    font-weight: 600;
+  }
+
+  .boderleft {
+    border-left: 0px !important; //
+  }
+
+  .boderlright {
+    border-right: 0px !important; //
+  }
+
+  .headcomname {
+    font-size: 46px !important;
+    font-family: Georgia, 'Times New Roman', Times, serif !important;
+  }
+
+  .nontbl {
+    font-size: 19px !important;
+    font-weight: 600 !important;
+  }
+
+  .sidiv {
+    max-width: 38px !important;
+    padding-left: 1px !important;
+    margin-right: 1px !important;
+  }
+}

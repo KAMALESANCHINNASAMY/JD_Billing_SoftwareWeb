@@ -1,0 +1,114 @@
+<div class="container-fluid mt-3" style="page-break-after: avoid">
+  <div class="row">
+    <div class="col-sm-12">
+      <div id="_print_section" class="table-responsive">
+        <div
+          style="text-align: center;color: green;font-size: 19px;font-family: Georgia, 'Times New Roman', Times, serif;">
+          <b>Debit Note</b>
+        </div>
+        <table class="table table-sm table-bordered">
+          <tbody>
+            <tr>
+              <td colspan="5" style="text-align: center;width: 50%;">
+                <div><b>{{parent?.party_name}}</b></div>
+                <div>
+                  <address>{{parent?.address}}</address>
+                </div>
+                <div>GSTIN: {{parent?.gst_in}}</div>
+                <div>CELL: {{parent?.mobile}}</div>
+              </td>
+              <td colspan="5" style="width: 50%;">
+                <div class="ml-2"> Supplier:</div>
+                <div class="ml-4"><b>{{companyDetailsList.display_name}}</b></div>
+                <div class="ml-4">
+                  {{companyDetailsList.door_no}},{{companyDetailsList.street_name}}</div>
+                <div class="ml-4">{{companyDetailsList.post}}</div>
+                <div class="ml-4">{{companyDetailsList.taluk}}</div>
+                <div class="ml-4">TamilNadu-{{companyDetailsList.pincode}}</div>
+                <div class="ml-4">CELL:{{companyDetailsList.mobile}} /
+                  {{companyDetailsList.office_phno}}</div>
+                <div class="ml-4">GSTIN: {{companyDetailsList?.gst_in || ''}}</div>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="5">Return No : {{parent?.return_no}}</td>
+              <td colspan="5">Return Date : {{parent?.return_date}}</td>
+            </tr>
+            <tr>
+              <td colspan="5">Invoice No : {{parent?.invoice_no}}</td>
+              <td colspan="5">Invoice Date : {{parent?.invoice_date}}</td>
+            </tr>
+
+            <tr>
+              <th>S.No</th>
+              <th>ProductCode</th>
+              <th colspan="2">Description</th>
+              <th>HSN/SAC</th>
+              <th>Qty</th>
+              <th>Dis%</th>
+              <th>Gst%</th>
+              <th style="text-align: right;">Pur.Rate</th>
+              <th style="text-align: right;">Amount</th>
+            </tr>
+            <tr *ngFor="let child of childArray; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td>{{ child.ref_code }}</td>
+              <td colspan="2">{{ child.item_name }}</td>
+              <td>{{ child.hsn_number }}</td>
+              <td>{{ child.return_qty }}</td>
+              <td>{{child.discount}} %</td>
+              <td>{{ child.gst_percentage }} %</td>
+              <td style="text-align: right;">{{ child.price }}</td>
+              <td style="text-align: right;">{{+child.price * +child.return_qty}}</td>
+            </tr>
+            <tr>
+              <td colspan="5" style="text-align: right;" class="mr-2">Sub Total</td>
+              <td>{{getRetTotQty()}}</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td style="text-align: right;">{{getRetTotAmount()}}</td>
+            </tr>
+
+            <tr>
+              <td colspan="2">CGST : {{getTotCGST()}}</td>
+              <td colspan="2">SGST : {{getTotSGST()}}</td>
+              <td colspan="2">IGST : {{getTotIGST()}}</td>
+              <td colspan="2"></td>
+              <td style="text-align: right;">Amount</td>
+              <td style="text-align: right;">{{getRetTotAmount()}}</td>
+            </tr>
+            <tr>
+              <td rowspan="3" colspan="8"><b>Amount In Words :</b> {{getnumberInWords() | uppercase}}</td>
+              <td style="text-align: right;">Discount</td>
+              <td style="text-align: right;">{{getTotDis()}}</td>
+            </tr>
+            <tr>
+              <td style="text-align: right;">Gst</td>
+              <td style="text-align: right;">{{getTotGst()}}</td>
+            </tr>
+            <tr>
+              <td style="text-align: right;">Net Amount</td>
+              <td style="text-align: right;">{{getTotNetTot()}}</td>
+            </tr>
+            <tr>
+              <td colspan="5">Terms & Conditions</td>
+              <td colspan="5" style="text-align: center;">
+                <div class="pb-5">For {{companyDetailsList.display_name}}</div>
+                <div class="pb-0">Authorised Signatory</div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div style="display: flex;margin: auto;text-align: center;">
+      <button mat-raised-button color="primary" printSectionId="_print_section" ngxPrint [useExistingCss]="true">
+        Print
+      </button>
+      <button (click)="closedialog()" class="btn btn-danger ml-2">Cancel</button>
+    </div>
+  </div>
+</div>

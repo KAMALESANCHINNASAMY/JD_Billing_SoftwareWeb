@@ -1,0 +1,192 @@
+<div class="container-fluid">
+  <mat-card class="mt-4 matcard">
+    <mat-card-content>
+      <div class="row">
+        <div class="col-12" style="display: flex">
+          <div style="float: left; width: 300px">
+            <h2 class="ml-1">GST Saree History</h2>
+          </div>
+        </div>
+      </div>
+      <div class="row ml-3 mt-3">
+        <div class="col-sm-4 mt-1" style="display: flex">
+          <div class="labeldiv">
+            <label class="pt-2 ml-3">Si_code</label>
+          </div>
+          <div class="inputdiv">
+            <input
+            [readOnly]="ref_code.value"
+              type="text"
+              (input)="getSareegstHistorybysi_code(si_code.value)"
+              #si_code
+              class="form-control"
+            />
+          </div>
+        </div>
+        <div class="col-sm-4 mt-1" style="display: flex">
+          <div class="labeldiv">
+            <label class="pt-2 ml-3">Ref_Code</label>
+          </div>
+          <div class="inputdiv">
+            <input
+            [readOnly]="si_code.value"
+              type="text"
+              (input)="getSareegstHistorybyref_code(ref_code.value)"
+              #ref_code
+              class="form-control"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="row ml-3 mt-5" *ngIf="historyOfSaree.length > 0">
+        <div class="col-sm-6">
+          <span class="font-weight-bold text-primary"> Purchased Reports </span>
+          <div class="table-reponsive mt-2 scrollme">
+            <table class="table table-bordered table-hover">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Purchased Date</th>
+                  <th>Party/Weaver</th>
+                  <th>Si_code</th>
+                  <th>Ref_code</th>
+                  <th>Qty</th>
+                  <th>Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of historyOfSaree; let i = index">
+                  <td>{{ i + 1 }}</td>
+                  <td>{{ item.date }}</td>
+                  <td>{{ item.party_name || item.weaver_name }}</td>
+                  <td>{{ item.si_code }}</td>
+                  <td>{{ item.ref_code }}</td>
+                  <td>{{ item.purchase_qty || 0 }}</td>
+                  <td>{{ item.purchase_net_total || 0 }}</td>
+                </tr>
+                <tr>
+                  <td colspan="5" style="border: none; text-align: end">
+                    <div class="font-weight-bold">Total</div>
+                  </td>
+                  <td>{{ totalPurchaseQty }}</td>
+                  <td>{{ totalPurchaseNetTotal }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <span class="font-weight-bold text-primary"> Sales Reports </span>
+          <div class="table-reponsive mt-2 scrollme">
+            <table class="table table-bordered table-hover">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Sold Date</th>
+                  <th>customer Name</th>
+                  <th>Si_code</th>
+                  <th>Ref_code</th>
+                  <th>Qty</th>
+                  <th>Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of historyOfSaree; let i = index">
+                  <td>{{ i + 1 }}</td>
+                  <td>{{ item.sold_date }}</td>
+                  <td>{{ item.customer_name }}</td>
+                  <td>{{ item.si_code }}</td>
+                  <td>{{ item.ref_code }}</td>
+                  <td>{{ item.sold_qty }}</td>
+                  <td>{{ item.sold_net_total }}</td>
+                </tr>
+                <tr>
+                  <th colspan="5" style="border: none; text-align: end">
+                    <div class="font-weight-bold">Total</div>
+                  </th>
+                  <td>{{ totalSalesQty }}</td>
+                  <td>{{ soldNettotal }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="row ml-3 mt-5" *ngIf="historyOfSaree.length > 0">
+        <div class="col-sm-6">
+          <span class="font-weight-bold text-primary"> Purchase Return </span>
+          <div class="table-reponsive mt-2 scrollme">
+            <table class="table table-bordered table-hover">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Return Date</th>
+                  <th>Party/Weaver</th>
+                  <th>Si_code</th>
+                  <th>Ref_code</th>
+                  <th>Qty</th>
+                  <th>Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of historyOfSaree; let i = index">
+                  <td>{{ i + 1 }}</td>
+                  <td>{{ item.purchase_return_date }}</td>
+                  <td>{{ item.party_name }}</td>
+                  <td>{{ item.si_code }}</td>
+                  <td>{{ item.ref_code }}</td>
+                  <td>{{ item.purchase_return_qty }}</td>
+                  <td>{{ item.purchase_return_nettotal }}</td>
+                </tr>
+                <tr>
+                  <th colspan="5" style="border: none; text-align: end">
+                    <div class="font-weight-bold">Total</div>
+                  </th>
+                  <td>{{ totalPurchaseReturnQty }}</td>
+                  <td>{{ totalPurchaseReturnNettotal }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <span class="font-weight-bold text-primary"> Sales Return </span>
+          <div class="table-reponsive mt-2 scrollme">
+            <table class="table table-bordered table-hover">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Return Date</th>
+                  <th>customer Name</th>
+                  <th>Si_code</th>
+                  <th>Ref_code</th>
+                  <th>Qty</th>
+                  <th>Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of historyOfSaree; let i = index">
+                  <td>{{ i + 1 }}</td>
+                  <td>{{ item.sales_return_date }}</td>
+                  <td>{{ item.customer_name }}</td>
+                  <td>{{ item.si_code }}</td>
+                  <td>{{ item.ref_code }}</td>
+                  <td>{{ item.sales_return_qty }}</td>
+                  <td>{{ item.sales_return_net_total }}</td>
+                </tr>
+                <tr>
+                  <th colspan="5" style="border: none; text-align: end">
+                    <div class="font-weight-bold">Total</div>
+                  </th>
+                  <td>{{ totalSalesReturnQty }}</td>
+                  <td>{{ totalSalesReturnNettotal }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

@@ -1,0 +1,78 @@
+::ng-deep {
+    .mdc-dialog__surface::-webkit-scrollbar {
+        width: 6px;
+        cursor: pointer;
+    }
+
+    .mdc-dialog__surface::-webkit-scrollbar-track {
+        background: lightblue;
+        margin: 2px 0px 2px 0px;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .mdc-dialog__surface::-webkit-scrollbar-thumb {
+        background: blue;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .mdc-dialog__surface::-webkit-scrollbar-thumb:hover {
+        background: blue;
+        cursor: pointer;
+    }
+}
+
+.border {
+    border-right: 2px solid lightgray !important;
+    border-left: 2px solid lightgray !important;
+    border-top: 0px !important;
+    border-bottom: 0px !important;
+}
+
+.borderbot {
+    border-top: 0px !important;
+    border-bottom: 0px !important;
+    border-right: 0px !important;
+    border-left: 2px solid lightgray !important;
+}
+
+.tables {
+    border: 2px solid lightgray;
+}
+
+.emptyDis {
+    height: 0px !important;
+}
+
+@media print {
+
+    .border {
+        border-right: 2px solid black !important;
+        border-left: 2px solid black !important;
+        border-top: 0px !important;
+        border-bottom: 0px !important;
+    }
+
+    .borderbot {
+        border-top: 0px !important;
+        border-bottom: 0px !important;
+        border-right: 0px !important;
+        border-left: 2px solid black !important;
+    }
+
+    .font {
+        font-size: 25px;
+        font-weight: 800;
+    }
+
+    .tables {
+        border: 2px solid black;
+        font-size: 22px;
+        font-weight: 600;
+    }
+
+    .emptyDis {
+        height: 40px !important;
+    }
+}

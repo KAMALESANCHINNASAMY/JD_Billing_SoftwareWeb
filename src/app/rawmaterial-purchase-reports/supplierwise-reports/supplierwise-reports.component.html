@@ -1,0 +1,82 @@
+<div class="container-fluid">
+  <mat-card class="matcard mt-2">
+    <mat-card-content>
+      <div class="row">
+        <div class="col-sm-12">
+          <h2 class="head">Supplier Wise Purchase</h2>
+        </div>
+      </div>
+
+      <div class="row ml-3">
+        <div class="col-sm-5" style="display: flex">
+          <div class="labeldiv">
+            <label class="mt-2" style="margin: auto">Supplier Name <span class="text-danger">*</span></label>
+          </div>
+          <div class="inputdiv">
+            <mat-form-field>
+              <mat-label>Supplier Name</mat-label>
+              <mat-select #supVal required>
+                <mat-form-field>
+                  <input matInput (input)="suggest(auval.value)" type="text" #auval placeholder="Search..." />
+                </mat-form-field>
+                <mat-option [value]=0>
+                  Select All
+                </mat-option>
+                <mat-option [value]="option.supplierid" *ngFor="let option of suggestions">
+                  {{ option.supplier_name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="col-sm-2 mt-2">
+          <button type="submit" class="btn-sm btn btn-primary" (click)="getRawMatPurReportBySupplierid(supVal.value)">
+            Search
+          </button>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-9">
+          <button class="btn btn-info btn-sm ml-3" printSectionId="_print_section" ngxPrint [useExistingCss]="true">
+            <mat-icon>print</mat-icon>
+          </button>
+        </div>
+
+        <div class="table-responsive col-sm-12" id="_print_section">
+          <table style="width: 100%;" class="table table-bordered table-hover">
+            <thead class="tableheadList">
+              <tr>
+                <th>S No</th>
+                <th>Date</th>
+                <th>Bill No</th>
+                <th>Supplier Name</th>
+                <th>Supplier Bill No</th>
+                <th>Qty</th>
+                <th style="text-align: right;">Net Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of purchaseReports; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{getFormattedDate(item.date)}}</td>
+                <td>{{item.bill_no}}</td>
+                <td>{{ item.supplier_name }}</td>
+                <td>{{item.supplier_bill_no}}</td>
+                <td>{{ item.qty }}</td>
+                <td style="text-align: right;">{{ item.net_total }}</td>
+              </tr>
+              <tr>
+                <th style="text-align: right;font-size: 17px;" class="pr-3 head" colspan="5">Total
+                </th>
+                <th>{{ totalQty().toFixed(2) }}</th>
+                <th style="text-align: right;">{{ total_nettotal().toFixed(2) }}</th>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

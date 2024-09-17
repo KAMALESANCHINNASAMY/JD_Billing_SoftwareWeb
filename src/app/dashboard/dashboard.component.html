@@ -1,0 +1,63 @@
+<div style="float: right;" class="ml-2">
+    <mat-accordion>
+        <mat-expansion-panel style="width:400px;border-left: 2px solid #E52B50;" (opened)="panelOpenState.set(true)"
+            (closed)="panelOpenState.set(false)" [expanded]="panelOpenState()">
+            <mat-expansion-panel-header>
+                <div class="head" style="width: 100%;"><span>Customer Payment Reminder With GST</span>
+                    <span *ngIf="customerPaymentRemminderList.length >0"
+                        class="badge ml-2">{{customerPaymentRemminderList.length}}</span>
+                </div>
+                <div class="mr-3 text-secondary">
+                    {{panelOpenState() ? 'Close' : 'Open'}}
+                </div>
+            </mat-expansion-panel-header>
+            <hr>
+            <div class="scrool" style="overflow-y: scroll;max-height: 72vh;">
+                <div *ngFor="let item of customerPaymentRemminderList">
+                    <div class="reminderdiv mt-2 mb-2" title="Click to get report" (click)="getReport(item.entryid)">
+                        <div class="name">{{item.customer_name}}</div>
+                        <div style="display: flex;"><span>Bill No : {{item.bill_no}}</span><span class="pl-2">Date :
+                                {{getFormattedDate(item.date)}}</span> <span class="ml-3"><b>{{item.total|
+                                    currency: 'INR'}}</b></span> <span class="ml-2"
+                                style="color: red;">{{item.days_count}}Days
+                                Passed</span></div>
+                    </div>
+                    <hr>
+                </div>
+            </div>
+        </mat-expansion-panel>
+    </mat-accordion>
+</div>
+
+<div style="float: right;" class="mr-2">
+    <mat-accordion>
+        <mat-expansion-panel style="width:400px;border-left: 2px solid #E52B50;"
+            (opened)="panelOpenStatewithoutgst.set(true)" (closed)="panelOpenStatewithoutgst.set(false)"
+            [expanded]="panelOpenStatewithoutgst()">
+            <mat-expansion-panel-header>
+                <div class="head" style="width: 100%;"><span>Customer Payment Reminder With out GST</span>
+                    <span *ngIf="customerPaymentNongstRemminderList.length >0"
+                        class="badge ml-2">{{customerPaymentNongstRemminderList.length}}</span>
+                </div>
+                <div class="mr-3 text-secondary">
+                    {{panelOpenStatewithoutgst() ? 'Close' : 'Open'}}
+                </div>
+            </mat-expansion-panel-header>
+            <hr>
+            <div class="scrool" style="overflow-y: scroll;max-height: 72vh;">
+                <div *ngFor="let item of customerPaymentNongstRemminderList">
+                    <div class="reminderdiv mt-2 mb-2" title="Click to get report"
+                        (click)="getReportNonGst(item.entryid)">
+                        <div class="name">{{item.customer_name}}</div>
+                        <div style="display: flex;"><span>Bill No : {{item.bill_no}}</span><span class="pl-2">Date :
+                                {{getFormattedDate(item.date)}}</span> <span class="ml-3"><b>{{item.total|
+                                    currency: 'INR'}}</b></span> <span class="ml-2"
+                                style="color: red;">{{item.days_count}}Days
+                                Passed</span></div>
+                    </div>
+                    <hr>
+                </div>
+            </div>
+        </mat-expansion-panel>
+    </mat-accordion>
+</div>

@@ -1,0 +1,260 @@
+<div class="container-fluid">
+  <mat-card class="mt-3 matcard mb-2">
+    <mat-card-content>
+      <div class="row">
+        <div class="col-12">
+          <h2 class="head">Supplier Debit-Note</h2>
+        </div>
+      </div>
+      <form [formGroup]="SupplierDebitForm" (submit)="save()">
+        <div class="row">
+          <div class="col-sm-4" style="display: flex">
+            <div class="labeldiv">
+              <label class="pt-2" style="margin: auto">Supplier Name<span class="text-danger">*</span></label>
+            </div>
+            <div class="inputdiv">
+              <mat-form-field>
+                <mat-label>Supplier Name</mat-label>
+                <mat-select (valueChange)="setSupplierDetails(advw.value)" [ngClass]="{
+                    'is-invalid':
+                      SupplierDebitForm.controls.supplierid.touched &&
+                      SupplierDebitForm.controls.supplierid.errors
+                  }" formControlName="supplierid" #advw required>
+                  <mat-form-field>
+                    <input matInput type="text" #auval (input)="suggest(auval.value)" placeholder="Search..." />
+                  </mat-form-field>
+
+                  <mat-option [value]="option.supplierid" *ngFor="let option of suggestions">
+                    {{ option.supplier_name }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="col-sm-4" style="display: flex">
+            <div class="labeldiv">
+              <label class="pt-2" style="margin: auto">Supplier Bill No</label>
+            </div>
+            <div class="inputdiv">
+              <mat-form-field>
+                <mat-label>Supplier Bill No</mat-label>
+                <mat-select [ngClass]="{
+                  'is-invalid':
+                    SupplierDebitForm.controls.purchaseid.touched &&
+                    SupplierDebitForm.controls.purchaseid.errors
+                }" formControlName="purchaseid" required>
+                  <mat-option *ngFor="let option of RawMaterialPurchaseList"
+                    (click)="onBillNoSelected(option.purchaseid)" [value]="option.purchaseid">
+                    {{ option.supplier_bill_no }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="col-sm-4" style="display: flex">
+            <div class="labeldiv">
+              <label class="pt-2" style="margin: auto">Purchased Date</label>
+            </div>
+            <div class="inputdiv">
+              <input type="date" formControlName="date" class="form-control" readonly required />
+            </div>
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col-sm-4" style="display: flex">
+            <div class="labeldiv">
+              <label class="pt-2" style="margin: auto">Return No</label>
+            </div>
+            <div class="inputdiv">
+              <input
+                [ngClass]="{'is-invalid':SupplierDebitForm.controls.return_no.touched && SupplierDebitForm.controls.return_no.errors}"
+                class="form-control" readonly formControlName="return_no" required />
+            </div>
+          </div>
+          <div class="col-sm-4" style="display: flex">
+            <div class="labeldiv">
+              <label class="pt-2" style="margin: auto">Return Date</label>
+            </div>
+            <div class="inputdiv">
+              <input
+                [ngClass]="{'is-invalid':SupplierDebitForm.controls.return_date.touched && SupplierDebitForm.controls.return_date.errors}"
+                class="form-control" type="date" formControlName="return_date" required />
+            </div>
+          </div>
+        </div>
+        <div class="table-responsive scrollme mt-4">
+          <table class="col-sm-12 table table-hover table-bordered table-sm table-no-border">
+            <thead class="tablehead">
+              <tr>
+                <th>#</th>
+                <th>Brand Name</th>
+                <th>Item Name</th>
+                <!-- <th>HSN NO</th>
+                <th>GST %</th> -->
+                <th>Price</th>
+                <th>Discount %</th>
+                <th>Qty</th>
+                <th>Total</th>
+                <!-- <th>CGST Amount</th>
+                <th>SGST Amount</th>
+                <th>IGST Amount</th> -->
+                <th>Total GST</th>
+                <th>Net Total</th>
+              </tr>
+            </thead>
+            <tbody formArrayName="SupplierDebit_nested">
+              <tr *ngFor="let chid of getCommonControls(); let i = index" formGroupName="{{ i }}">
+                <td>{{i+1}}</td>
+                <td style="min-width: 130px">
+                  <select formControlName="brandid" class="form-control" required readonly>
+                    <option disabled [ngValue]="null" selected>
+                      Please select
+                    </option>
+                    <option disabled [ngValue]="item.brandid" *ngFor="let item of brandList">
+                      {{ item.brand_name }}
+                    </option>
+                  </select>
+                </td>
+                <td style="min-width: 130px">
+                  <select formControlName="itemid" class="form-control" required readonly>
+                    <option disabled [ngValue]="null" selected>
+                      Please select
+                    </option>
+                    <option disabled [ngValue]="item.itemid" *ngFor="let item of itemMasterList">
+                      {{ item.item_name }}
+                    </option>
+                  </select>
+                </td>
+                <!-- <td style="min-width: 130px">
+                  <input formControlName="hsn_number" class="form-control" readonly />
+                </td>
+                <td style="min-width: 80px">
+                  <input formControlName="gst_percentage" class="form-control" readonly />
+                </td> -->
+                <td style="min-width: 120px">
+                  <input formControlName="price" class="form-control" required readonly />
+                </td>
+                <td style="min-width: 50px">
+                  <input type="text" formControlName="discount" class="form-control" required readonly />
+                </td>
+                <td style="min-width: 70px">
+                  <input formControlName="qty" class="form-control" required readonly />
+                  <input [ngClass]="{ 'is-invalid': isQtyControlInvalid(i) }" (input)="colculation(i)"
+                    formControlName="return_qty" class="form-control" required />
+                </td>
+                <td style="min-width: 140px">
+                  <input formControlName="total" class="form-control" readonly />
+                  <input formControlName="return_total" class="form-control" required readonly />
+                </td>
+                <!-- <td style="min-width: 130px">
+                  <input formControlName="cgst_amount" class="form-control" readonly />
+                  <input formControlName="return_cgst_amount" class="form-control" readonly />
+                </td>
+                <td style="min-width: 130px">
+                  <input formControlName="sgst_amount" class="form-control" readonly />
+                  <input formControlName="return_sgst_amount" class="form-control" readonly />
+                </td>
+                <td style="min-width: 140px">
+                  <input formControlName="igst_amount" class="form-control" readonly />
+                  <input formControlName="return_igst_amount" class="form-control" readonly />
+                </td> -->
+                <td>
+                  <div>{{+chid.get('cgst_amount')?.value + +chid.get('sgst_amount')?.value +
+                    +chid.get('igst_amount')?.value}}</div>
+                  <hr>
+                  <div>{{+chid.get('return_cgst_amount')?.value + +chid.get('return_sgst_amount')?.value +
+                    +chid.get('return_igst_amount')?.value}}</div>
+                </td>
+                <td style="min-width: 140px">
+                  <input formControlName="net_total" class="form-control" readonly />
+                  <input formControlName="return_net_total" class="form-control" readonly />
+                </td>
+              </tr>
+            </tbody>
+            <tbody>
+              <tr>
+                <th style="text-align: right;color: #005f69;font-family: Georgia, 'Times New Roman', Times, serif;"
+                  class="pr-5 pt-3" colspan="8">
+                  <b>Total</b>
+                </th>
+                <td>
+                  <input formControlName="total" class="form-control" readonly />
+                </td>
+              </tr>
+            </tbody>
+            <tbody>
+              <tr>
+                <th style="text-align: right;color: #005f69;font-family: Georgia, 'Times New Roman', Times, serif;"
+                  class="pr-5 pt-3" colspan="8">
+                  <b>Return Total</b>
+                </th>
+                <td>
+                  <input formControlName="return_total" class="form-control" readonly />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="row">
+          <div class="col-sm-12" style="display: flex">
+            <div style="margin: auto">
+              <button type="submit" style="width: 80px" class="btn btn-success mr-3 btn-sm mt-2">
+                <span>{{SupplierDebitForm.value.s_debitid == 0 ? "Save" : "Edit"}}</span>
+              </button>
+              <input type="button" style="width: 80px" (click)="cancelClick()" class="btn btn-primary mr-3 btn-sm mt-2"
+                value="Clear" />
+              <input type="button" style="width: 80px" class="btn btn-danger btn-sm mt-2" (click)="backButton()"
+                value="Close" />
+            </div>
+          </div>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+  <mat-card class="mt-3 mb-2 matcardlist">
+    <mat-card-content>
+      <div class="row">
+        <div class="col-sm-12" style="display: flex;">
+          <div>
+            <input #ds (change)="getSupplierDebitList(ds.value)" style="max-width: 180px;" type="date"
+              class="form-control" />
+          </div>
+          <div>
+            <button class="btn btn-info ml-2" (click)="getSupplierDebitList('All')">GET All DATE</button>
+          </div>
+        </div>
+        <div class="table-responsive mt-2">
+          <table class="table table-hover table-bordered col-sm-12">
+            <thead class="tableheadList">
+              <tr>
+                <th style="text-align: left;">Supplier Name</th>
+                <th>Purchased Date</th>
+                <th>Bill No</th>
+                <th>Return No</th>
+                <th>return Date</th>
+                <th>Return Qty</th>
+                <th>Return Amount</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of supplierDebitList;let i=index">
+                <td style="text-align: left;">{{item.supplier_name}}</td>
+                <td>{{item.date}}</td>
+                <td>{{item.supplier_bill_no}}</td>
+                <td>{{item.return_no}}</td>
+                <td>{{item.return_date}}</td>
+                <td>{{item.return_qty}}</td>
+                <td>{{item.return_total}}</td>
+                <td style="width: 140px;"><button class="btn btn-sm btn-success"
+                    (click)="getReport(item)">Preview</button>
+                  <button class="btn btn-sm ml-1 btn-primary" (click)="update(item)">Edit</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

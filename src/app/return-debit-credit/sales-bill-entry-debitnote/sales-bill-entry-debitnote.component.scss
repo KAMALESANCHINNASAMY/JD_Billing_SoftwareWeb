@@ -1,0 +1,97 @@
+.matcard {
+  box-shadow: 0px 0px 6px 3px lightblue;
+}
+
+.matcardlist {
+  box-shadow: 0px 0px 6px 3px lightgrey;
+}
+
+td {
+  text-align: center;
+}
+
+th {
+  text-align: center;
+}
+
+::ng-deep {
+  .mdc-text-field--filled:not(.mdc-text-field--disabled) {
+    background-color: white !important;
+  }
+
+  .mat-mdc-text-field-wrapper {
+    height: 50px !important;
+  }
+
+  .cdk-overlay-pane {
+    margin-top: 0 !important;
+  }
+
+  div.mat-mdc-select-panel {
+    padding: 0px 0 !important;
+  }
+
+  div.mat-mdc-select-panel::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  div.mat-mdc-select-panel::-webkit-scrollbar-track {
+    background: lightblue;
+    border-radius: 6px;
+  }
+
+  div.mat-mdc-select-panel::-webkit-scrollbar-thumb {
+    background: #005f69;
+    border-radius: 7px;
+  }
+
+  div.mat-mdc-select-panel::-webkit-scrollbar-thumb:hover {
+    background: #005f69;
+  }
+
+  .mat-mdc-form-field {
+    display: block !important;
+  }
+}
+
+.head {
+  color: #006A4E;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-weight: 600;
+}
+
+.tablehead {
+  background-color: #006A4E;
+  color: whitesmoke;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.tableheadList {
+  background-color: #005f69;
+  color: whitesmoke;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.istherebuttong {
+  box-shadow: 0px 0px 2px 2px lightgreen;
+  background-color: green;
+
+  float: left;
+  color: white;
+  padding: 0px 5px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.istherebuttonr {
+  box-shadow: 0px 0px 2px 2px lightpink;
+  background-color: red;
+
+  float: left;
+  color: white;
+  padding: 0px 5px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+}

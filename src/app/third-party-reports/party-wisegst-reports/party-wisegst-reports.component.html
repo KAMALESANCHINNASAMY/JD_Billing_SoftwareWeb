@@ -1,0 +1,91 @@
+<mat-tab-group animationDuration="0ms" mat-stretch-tabs="false" mat-align-tabs="start">
+  <mat-tab label="Third Party Purchase With GST">
+    <div class="container-fluid">
+      <mat-card class="matcard mt-2 mb-2">
+        <mat-card-content>
+          <div class="row">
+            <div class="col-sm-12">
+              <h2 class="head">Third Party Purchase With GST</h2>
+            </div>
+          </div>
+
+          <div class="row ml-3">
+            <div class="col-sm-5" style="display: flex">
+              <div class="labeldiv">
+                <label class="pt-2" style="margin: auto">Party Name<span class="text-danger">*</span></label>
+              </div>
+              <div class="inputdiv">
+                <mat-form-field>
+                  <mat-label>Third Party Name</mat-label>
+                  <mat-select #advw required>
+                    <mat-form-field>
+                      <input matInput type="text" #auval (input)="suggest(auval.value)" placeholder="Search..." />
+                    </mat-form-field>
+                    <mat-option [value]=0>
+                      Select All
+                    </mat-option>
+                    <mat-option [value]="option.third_partyid" *ngFor="let option of suggestions">
+                      {{ option.party_name }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="col-sm-2 mt-2">
+              <button type="submit" class="btn-sm btn btn-primary" (click)="setThirdPartyDetails(advw.value)">
+                Search
+              </button>
+            </div>
+          </div>
+
+          <div class="row">
+            <button class="btn btn-info btn-sm ml-3" printSectionId="_print_section" ngxPrint [useExistingCss]="true">
+              <mat-icon>print</mat-icon>
+            </button>
+
+            <div class="table-responsive col-sm-12" id="_print_section">
+              <table style="width: 100%;" class="table table-bordered table-hover">
+                <thead class="tableheadList">
+                  <tr>
+                    <th>S No</th>
+                    <th>Date</th>
+                    <th>Bill No</th>
+                    <th>Party Name</th>
+                    <th>Si code</th>
+                    <th>Qty</th>
+                    <th style="text-align: right;">Net Total</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of thirdPartyPurchaseList; let i = index">
+                    <td>{{ i + 1 }}</td>
+                    <td>{{getFormattedDate(item.date)}}</td>
+                    <td (click)="getReport(item.purchaseid)">
+                      <div
+                        style="cursor: pointer;background-color: orangered;color:white;border-radius: 2px;font-size: 10px;line-height: 10px;padding: 4px 0px 2px 0px;">
+                        Click To get
+                        Report</div>
+                      {{item.bill_no}}
+                    </td>
+                    <td>{{ item.party_name }}</td>
+                    <td>{{ item.si_code }}</td>
+                    <td>{{ item.qty }}</td>
+                    <td style="text-align: right;">{{ item.total }}</td>
+                  </tr>
+                  <tr>
+                    <th style="text-align: right;font-size: 17px;" class="pr-3 head" colspan="5">Total</th>
+                    <th>{{ totalQty() }}</th>
+                    <th style="text-align: right;">{{ total_nettotal() }}</th>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </mat-tab>
+  <mat-tab
+    label="Third Party Purchase WithOut GST"><app-party-wise-nongstpurchase-reports></app-party-wise-nongstpurchase-reports></mat-tab>
+</mat-tab-group>

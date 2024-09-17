@@ -1,0 +1,210 @@
+<div class="container-fluid">
+  <mat-card class="mt-2 matcard mb-2">
+    <mat-card-content>
+      <div class="row">
+        <div #tableTop class="col-12">
+          <h2 class="ml-1 head">Weaver Master</h2>
+        </div>
+      </div>
+      <form [formGroup]="weaverForm" (ngSubmit)="Save()">
+        <div class="row ml-3">
+          <div class="col-sm-6 mt-3" style="display: flex">
+            <div class="labeldiv">
+              <label class="pt-2" style="margin: auto">Name<span class="text-danger">*</span></label>
+            </div>
+            <div class="inputdiv">
+              <input [ngClass]="{
+                  'is-invalid':
+                    weaverForm.controls.weaver_name.touched &&
+                    weaverForm.controls.weaver_name.errors
+                }" class="form-control" formControlName="weaver_name" type="text" required />
+
+              <span class="text-danger" *ngIf="
+                  weaverForm.controls.weaver_name.touched &&
+                  weaverForm.controls.weaver_name.errors
+                ">
+                <div *ngIf="
+                    weaverForm.controls.weaver_name.touched &&
+                    weaverForm.controls.weaver_name.errors['required']
+                  ">
+                  Name is required
+                </div>
+              </span>
+            </div>
+          </div>
+
+          <div class="col-sm-6 mt-3" style="display: flex">
+            <div class="labeldiv">
+              <label class="pt-2" style="margin: auto">Short Code<span class="text-danger">*</span></label>
+            </div>
+            <div class="inputdiv">
+              <input [ngClass]="{
+                  'is-invalid':
+                    weaverForm.controls.short_code.touched &&
+                    weaverForm.controls.short_code.errors
+                }" class="form-control" formControlName="short_code" type="text" required />
+
+              <span class="text-danger" *ngIf="
+                  weaverForm.controls.short_code.touched &&
+                  weaverForm.controls.short_code.errors
+                ">
+                <div *ngIf="
+                    weaverForm.controls.short_code.touched &&
+                    weaverForm.controls.short_code.errors['required']
+                  ">
+                  Short Code is required
+                </div>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="row ml-3">
+          <div class="col-sm-6 mt-3" style="display: flex">
+            <div class="labeldiv">
+              <label class="pt-2" style="margin: auto">State<span class="text-danger">*</span></label>
+            </div>
+            <div class="inputdiv">
+              <input (keypress)="stringOnly($event)" (paste)="preventPasteString($event)" [ngClass]="{
+                  'is-invalid':
+                    weaverForm.controls.state.touched &&
+                    weaverForm.controls.state.errors
+                }" formControlName="state" class="form-control" type="text" required />
+
+              <span class="text-danger" *ngIf="
+                  weaverForm.controls.state.touched &&
+                  weaverForm.controls.state.errors
+                ">
+                <div *ngIf="
+                    weaverForm.controls.state.touched &&
+                    weaverForm.controls.state.errors['required']
+                  ">
+                  State is required
+                </div>
+              </span>
+            </div>
+          </div>
+          <div class="col-sm-6 mt-3" style="display: flex">
+            <div class="labeldiv">
+              <label class="pt-2" style="margin: auto">State Code<span class="text-danger">*</span></label>
+            </div>
+            <div class="inputdiv">
+              <input (paste)=" preventPasteNumber($event)" [ngClass]="{
+                  'is-invalid':
+                    weaverForm.controls.state_code.touched &&
+                    weaverForm.controls.state_code.errors
+                }" formControlName="state_code" class="form-control" type="text" required
+                (keypress)="numberOnlyStateCode($event)" />
+
+              <span class="text-danger" *ngIf="
+                  weaverForm.controls.state_code.touched &&
+                  weaverForm.controls.state_code.errors
+                ">
+                <div *ngIf="
+                    weaverForm.controls.state_code.touched &&
+                    weaverForm.controls.state_code.errors['required']
+                  ">
+                  State Code is required
+                </div>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="row ml-3">
+          <div class="col-sm-6 mt-3" style="display: flex">
+            <div class="labeldiv">
+              <label class="pt-2" style="margin: auto">Mobile No</label>
+            </div>
+            <div class="inputdiv">
+              <input (paste)=" preventPasteNumber($event)" (keypress)="numberOnly($event)" formControlName="mobile"
+                class="form-control" type="text" />
+            </div>
+          </div>
+          <div class="col-sm-6 mt-3" style="display: flex">
+            <div class="labeldiv">
+              <label class="pt-2" style="margin: auto;color: red;"><b>Opening Balance</b><span
+                  class="text-danger">*</span></label>
+            </div>
+            <div class="inputdiv">
+              <input (blur)="setTwoDigitBalance()" [ngClass]="{
+                'is-invalid':
+                  weaverForm.controls.balance.touched &&
+                  weaverForm.controls.balance.errors
+              }" formControlName="balance" class="form-control" type="text" />
+              <span class="text-danger" *ngIf="
+                  weaverForm.controls.balance.touched &&
+                  weaverForm.controls.balance.errors
+                ">
+                <div *ngIf="
+                    weaverForm.controls.balance.touched &&
+                    weaverForm.controls.balance.errors['required']
+                  ">
+                  Opening Balance is required
+                </div>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="row ml-3">
+          <div class="col-sm-6 mt-3" style="display: flex">
+            <div class="labeldiv">
+              <label class="pt-2" style="margin: auto">Address</label>
+            </div>
+            <div class="inputdiv">
+              <textarea formControlName="address" rows="4" class="form-control">
+              </textarea>
+            </div>
+          </div>
+        </div>
+        <div class="row justify-content-center mt-3">
+          <div class="col-sm-6">
+            <div class="d-flex justify-content-center">
+              <div style="width: 250px; display: flex; align-items: center">
+                <input type="submit" style="width: 80px" class="btn btn-success mt-4 btn-sm mr-3"
+                  value="{{ weaverForm.value.weaverid == 0 ? 'Save' : 'Edit' }}" />
+                <input (click)="cancelClick()" type="button" style="width: 80px" class="btn btn-info mt-4 btn-sm mr-3"
+                  value="Clear" />
+                <input (click)="backButton()" type="button" style="width: 80px" class="btn btn-danger btn-sm mt-4"
+                  value="Close" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="mt-3 matcardlist">
+    <mat-card-content>
+      <div class="table-responsive">
+        <table class="col-sm-12 table table-hover table-bordered table-sm">
+          <thead class="tableheadList">
+            <tr>
+              <th>S.No</th>
+              <th style="text-align: left;">Name</th>
+              <th>Short Code</th>
+              <th>Mobile No</th>
+              <th>Opening Balance</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of weaverDetailsList; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td style="text-align: left;">{{ item.weaver_name }}</td>
+              <td>{{ item.short_code }}</td>
+              <td>{{ item.mobile }}</td>
+              <td>{{ item.balance }}</td>
+              <td class="tdoption">
+                <span class="m-2 editbutton text-success" (click)="UpdateGetClick(item)"><b
+                    style="cursor: pointer">edit</b></span>
+                <span>||</span>
+                <span class="m-2 deletebutton text-danger" (click)="deleteClick(item.weaverid)"><b
+                    style="cursor: pointer">delete</b></span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

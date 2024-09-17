@@ -1,0 +1,163 @@
+<div id="_print_section">
+  <div class="container-fluid">
+    <div style="text-align: center;" class="font"><b>Debit Note</b></div>
+
+    <table class="tables table-sm">
+      <tbody class="tables">
+        <tr class="tables">
+          <td class="tables" colspan="5" style="width: 50%;height: 200px;">
+            <div class="ml-3" style="line-height: 23px;">
+              <div><b style="font-size: 25px;">{{companyDetailsList?.company_name || ''}}</b></div>
+              <div>{{companyDetailsList?.door_no || ''}},{{companyDetailsList?.street_name || ''}},</div>
+              <div>{{companyDetailsList?.post || ''}},{{companyDetailsList?.taluk || ''}},</div>
+              <div>{{companyDetailsList?.district || ''}} - {{companyDetailsList?.pincode}}.</div>
+              <div>CELL : {{companyDetailsList?.mobile || ''}} , {{companyDetailsList?.office_phno || ''}}</div>
+              <div>GSTIN : {{companyDetailsList?.gst_in || ''}}</div>
+            </div>
+          </td>
+
+          <td class="tables" colspan="5" style="width: 50%;height: 200px;line-height: 25px;">
+            <div>Supplier :</div>
+            <div style="text-align: center;"><b style="font-size: 23px;">{{supplierDetail?.supplier_name || ''}}</b>
+            </div>
+            <div style="text-align:center;">
+              <address>{{supplierDetail?.address || ''}}</address>
+            </div>
+            <div style="text-align:center;">GSTIN : {{supplierDetail?.gst_in || ''}}</div>
+            <div style="text-align:center;">PHONE : {{supplierDetail?.mobile_no || ''}}</div>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="tables" colspan="5">Return No <b>{{this.parent?.return_no}}</b></td>
+          <td class="tables" colspan="5">Return Date <b>{{this.parent?.return_date}}</b></td>
+        </tr>
+
+        <tr>
+          <td class="tables" colspan="5">Invoice No <b>{{this.parent?.supplier_bill_no}}</b></td>
+          <td class="tables" colspan="5">Invoice Date <b>{{this.parent?.supplier_bill_no}}</b></td>
+        </tr>
+
+        <tr>
+          <th style="padding: 0px;" class="tables">SNo</th>
+          <th class="tables" colspan="2">Item Name</th>
+          <th class="tables" style="text-align: center;">HSN/SAC</th>
+          <th class="tables" style="text-align: center;">Qty</th>
+          <th class="tables" style="text-align: center;">Disc%</th>
+          <th class="tables" style="text-align: center;">Gst%</th>
+          <th class="tables" style="text-align: right;">Pur.Rate</th>
+          <th class="tables" colspan="2" style="text-align: right;">Amount</th>
+        </tr>
+
+        <tr *ngFor="let child of childArray; let i = index">
+          <td class="border">{{i + 1}}</td>
+          <td colspan="2" class="border">{{ child.item_name }}</td>
+          <td class="border" style="text-align: center;">{{ child.hsn_number }}</td>
+          <td class="border" style="text-align: center;">{{ (+child.return_qty).toFixed(2) }}</td>
+          <td class="border" style="text-align: center;">{{ (+child.discount).toFixed(2) }} %</td>
+          <td class="border" style="text-align: center;">{{ (+child.gst_percentage).toFixed(2) }} %
+          </td>
+          <td class="border" style="text-align: right;">{{ child.price }}</td>
+          <td colspan="2" class="border" style="text-align: right;">{{ (+child.return_qty *
+            +child.price).toFixed(2)}}
+          </td>
+        </tr>
+
+        <tr class="emptyDis" *ngFor="let empty of emptyArray;let i=index;">
+          <td class="border"></td>
+          <td colspan="2" class="border"></td>
+          <td class="border"></td>
+          <td class="border"></td>
+          <td class="border"></td>
+          <td class="border"></td>
+          <td class="border"></td>
+          <td class="border" colspan="2"></td>
+        </tr>
+
+        <tr>
+          <th class="tables"></th>
+          <th class="tables" colspan="2"></th>
+          <th class="tables" style="text-align: right;">Sub Total</th>
+          <th class="tables" style="text-align: center;">{{getTotQty().toFixed(2)}}</th>
+          <th class="tables"></th>
+          <th class="tables"></th>
+          <th class="tables"></th>
+          <th colspan="2" class="tables" style="text-align: right;">{{getTotAmount().toFixed(2)}}</th>
+        </tr>
+
+        <tr>
+          <th class="borderbot" style="text-align: right;"></th>
+          <th class="tables">HSN</th>
+          <th class="tables" style="text-align: center;">GST%</th>
+          <th class="tables" style="text-align: right;font-size: 15px;">Taxable Value</th>
+          <th class="tables" style="text-align: right;">CGST</th>
+          <th class="tables" style="text-align: right;">SGST</th>
+          <th class="tables" style="text-align: right;">IGST</th>
+          <th class="tables" style="text-align: right;">Total</th>
+          <th class="border" style="text-align: right;">Amount</th>
+          <th class="border" style="text-align: right;">{{getTotAmount().toFixed(2)}}</th>
+        </tr>
+
+        <tr>
+          <th class="borderbot" style="text-align: right;"></th>
+          <th class="tables">{{childArray[0]?.hsn_number}}</th>
+          <th class="tables" style="text-align: center;">{{getgst()}}%</th>
+          <th class="tables" style="text-align: right;">{{getTaxableVal().toFixed(2)}}</th>
+          <th class="tables" style="text-align: right;">{{gettotalCgstAmount()}}</th>
+          <th class="tables" style="text-align: right;">{{gettotalSgstAmount()}}</th>
+          <th class="tables" style="text-align: right;">{{gettotalIgstAmount()}}</th>
+          <th class="tables" style="text-align: right;">{{gettotalGstAmount().toFixed(2)}}</th>
+          <th class="border" style="text-align: right;">Discount {{getDis()}} %</th>
+          <th class="border" style="text-align: right;">{{gettotalDis().toFixed(2)}}</th>
+        </tr>
+
+        <tr>
+          <th class="borderbot" style="text-align: right;"></th>
+          <th class="tables" rowspan="2"></th>
+          <th class="tables" rowspan="2" style="text-align: center;"></th>
+          <th class="tables" rowspan="2" style="text-align: right;"></th>
+          <th class="tables" rowspan="2" style="text-align: right;"></th>
+          <th class="tables" rowspan="2" style="text-align: right;"></th>
+          <th class="tables" rowspan="2" style="text-align: right;"></th>
+          <th class="tables" rowspan="2" style="text-align: right;"></th>
+          <th class="border" style="text-align: right;">Gst</th>
+          <th class="border" style="text-align: right;">{{gettotalGstAmount().toFixed(2)}}</th>
+        </tr>
+
+        <tr>
+          <th class="borderbot" style="text-align: right;"></th>
+          <th class="border" style="text-align: right;">Net Amount</th>
+          <th class="border" style="text-align: right;">{{getNetTotal()}}</th>
+        </tr>
+
+        <tr>
+          <th class="tables" style="text-align: center;font-size: 16px;" colspan="10">Amount in Words :
+            {{numberInWords.toLocaleUpperCase()}}</th>
+        </tr>
+
+        <tr>
+          <th class="tables" colspan="5" style="position: relative;">
+            <div style="top: 0;position: absolute;">Terms & Conditions</div>
+          </th>
+          <th class="tables" colspan="5">
+            <div style="text-align: right;" class="mt-2 mb-5">For {{companyDetailsList?.company_name || ''}}</div>
+            <div style="text-align: right;" class="mt-2 mb-2">Authorised Signatory</div>
+          </th>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12" style="text-align: center;margin: auto;">
+      <div style="text-align: center;">
+        <button class="btn btn-primary btn-sm m-2" printSectionId="_print_section" ngxPrint [useExistingCss]="true">
+          Print
+        </button>
+        <button (click)="closedialog()" class="btn btn-danger btn-sm m-2">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>

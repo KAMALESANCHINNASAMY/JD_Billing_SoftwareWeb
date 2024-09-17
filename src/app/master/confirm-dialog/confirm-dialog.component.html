@@ -1,0 +1,33 @@
+<div class="_header_flex" style="background-color:#00416A;padding: 15px; display: flex;">
+  <div
+    style="color: white; font-size:23px; text-align: center; width: 90%;font-family: Georgia, 'Times New Roman', Times, serif;">
+    Confirmation <span style="color: yellow;">...</span><mat-icon class="pt-1"
+      style="color: #FFD700;">report_problem</mat-icon></div>
+  <div class="pr-2" style="width: 10%;">
+    <mat-icon style="cursor: pointer; color: red;border-radius: 13px;background-color: white;font-weight: 1000;"
+      title="Click to close" (click)="closedialog()">close</mat-icon>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row" style="margin: auto;text-align: center;">
+    <b>
+      <p class="mt-4" style="text-align: center;font-size: 18px;color:#D2122E;font-family:  Georgia, serif">
+        {{data.message}}</p>
+    </b>
+  </div>
+
+  <hr>
+  <div class="row p-3" style="margin: auto;text-align: center;font-family: Georgia, 'Times New Roman', Times, serif;">
+    <div class="col-sm-6">
+      <button class="btn btn-success" [mat-dialog-close]="true" style="min-width: 100px;">
+        <b>Yes</b>
+      </button>
+    </div>
+    <div class="col-sm-6">
+      <button class="btn btn-danger" (click)="closedialog()" style="min-width: 100px;">
+        <b> No, Cancel</b>
+      </button>
+    </div>
+  </div>
+</div>

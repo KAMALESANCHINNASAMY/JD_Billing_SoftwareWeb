@@ -1,0 +1,65 @@
+<div class="container-fluid">
+  <mat-card class="matcard mt-4">
+    <mat-card-content>
+      <div class="row">
+        <div class="col-12" style="display: flex">
+          <div style="float: left; width: 300px" style="display: flex">
+            <h2 class="ml-1">Saree Wise Purchase With Out GST Report</h2>
+          </div>
+        </div>
+      </div>
+      <div class="row ml-3 mb-2">
+        <div class="col-sm-4" style="display: flex">
+          <div class="labeldiv">
+            <label class="pt-2" style="margin: auto">Si Code</label>
+          </div>
+          <div class="inputdiv">
+            <input type="text" #si_code (input)="getSalesReportbySicode(si_code.value)" class="form-control" />
+          </div>
+        </div>
+      </div>
+
+      <div class="row table-responsive pl-4">
+        <div style="text-align: right;">
+          <button class="mr-2" mat-raised-button color="accent" printSectionId="_print_section" ngxPrint
+            [useExistingCss]="true">
+            <mat-icon>print</mat-icon> Print
+          </button>
+        </div>
+        <div id="_print_section">
+          <table class="table table-bordered table-hover col-sm-12">
+            <thead>
+              <tr>
+                <th>S No</th>
+                <th>Date</th>
+                <th>Bill No</th>
+                <th>Party Name</th>
+                <th>Si code</th>
+                <th>Ref Code</th>
+                <th>Qty</th>
+                <th>Net Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of purchaseReports; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{getFormattedDate(item.purchase_date)}}</td>
+                <td>{{item.bill_no}}</td>
+                <td>{{ item.party_name }}</td>
+                <td>{{ item.si_code }}</td>
+                <td>{{ item.ref_code }}</td>
+                <td>{{ item.qty }}</td>
+                <td>{{ item.total }}</td>
+              </tr>
+              <tr>
+                <th colspan="6" style="border: none; text-align: end">Total</th>
+                <th>{{ totalQty() }}</th>
+                <th>{{ totalTotal() }}</th>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

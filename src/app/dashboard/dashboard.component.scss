@@ -1,0 +1,56 @@
+.head {
+    color: #008B8B;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.badge {
+    padding: 4px 3px;
+    background-color: rgb(235, 46, 46);
+    color: white;
+    border-radius: 25px;
+    font-family: sans-serif;
+}
+
+.name {
+    color: #006A4E;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-weight: 600;
+    font-size: 12px;
+    //text-align: center;
+}
+
+.reminderdiv {
+    //background-color: rgba(57, 83, 190, 0.1);
+    border: 2px dashed grey;
+    padding: 5px 10px;
+    border-radius: 7px;
+    font-size: 10px;
+    cursor: pointer;
+}
+
+::ng-deep {
+    .scrool::-webkit-scrollbar {
+        width: 0px;
+        cursor: pointer;
+    }
+
+    .scrool::-webkit-scrollbar-track {
+        background: rgb(163, 169, 171);
+        margin: 2px 0px 2px 0px;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .scrool::-webkit-scrollbar-thumb {
+        background: lightblue;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .scrool::-webkit-scrollbar-thumb:hover {
+        background: lightblue;
+        cursor: pointer;
+    }
+}
