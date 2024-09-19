@@ -6,6 +6,8 @@ import { HsnGroupComponent } from './hsn-group/hsn-group.component';
 import { ItemGroupComponent } from './item-group/item-group.component';
 import { BrandMasterComponent } from './brand-master/brand-master.component';
 import { ProductMasterComponent } from './product-master/product-master.component';
+import { NestedProductMasterComponent } from './nested-product-master/nested-product-master.component';
+import { LinkProductMasterComponent } from './link-product-master/link-product-master.component';
 
 export const inventoryroutes: Routes = [
   {
@@ -35,5 +37,13 @@ export const inventoryroutes: Routes = [
   {
     path: 'product-master',
     component: ProductMasterComponent
+  },
+  {
+    path: 'n-product-master',
+    component: NestedProductMasterComponent
+  },
+  {
+    path: 'link-product-master',
+    component: LinkProductMasterComponent
   }
 ];

@@ -16,6 +16,8 @@ import { BrandMasterComponent } from './brand-master/brand-master.component';
 import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ProductMasterComponent } from './product-master/product-master.component';
+import { NestedProductMasterComponent } from './nested-product-master/nested-product-master.component';
+import { LinkProductMasterComponent } from './link-product-master/link-product-master.component';
 
 @NgModule({
   declarations: [ItemMasterComponent,
@@ -24,7 +26,9 @@ import { ProductMasterComponent } from './product-master/product-master.componen
     HsnGroupComponent,
     ItemGroupComponent,
     BrandMasterComponent,
-    ProductMasterComponent
+    ProductMasterComponent,
+    NestedProductMasterComponent,
+    LinkProductMasterComponent
   ],
   imports: [
     RouterModule.forChild(inventoryroutes),

@@ -3,26 +3,26 @@
         <mat-card-content>
             <div class="row">
                 <div #tableTop class="col-12">
-                    <h2 class="ml-1 head">Sales Product Master</h2>
+                    <h2 class="ml-1 head">Purchase Product Master</h2>
                 </div>
             </div>
-            <form [formGroup]="productMasterForm" (ngSubmit)="Save()">
+            <form [formGroup]="nProductMasterForm" (ngSubmit)="Save()">
                 <div class="row ml-3">
                     <div class="col-sm-6 mt-3" style="display: flex">
-                        <div class="labeldiv">
-                            <label class="pt-2" style="margin: auto">Sales Product Name<span
+                        <div class="labeldiv" style="width: 250px;">
+                            <label class="pt-2" style="margin: auto">Purchase Product Name<span
                                     class="text-danger">*</span></label>
                         </div>
                         <div class="inputdiv">
                             <input
-                                [ngClass]="{'is-invalid':productMasterForm.controls.product_name.touched && productMasterForm.controls.product_name.errors}"
-                                class="form-control" formControlName="product_name" type="text" required />
+                                [ngClass]="{'is-invalid':nProductMasterForm.controls.n_product_name.touched && nProductMasterForm.controls.n_product_name.errors}"
+                                class="form-control" formControlName="n_product_name" type="text" required />
 
                             <span class="text-danger"
-                                *ngIf="productMasterForm.controls.product_name.touched && productMasterForm.controls.product_name.errors">
+                                *ngIf="nProductMasterForm.controls.n_product_name.touched && nProductMasterForm.controls.n_product_name.errors">
                                 <div
-                                    *ngIf="productMasterForm.controls.product_name.touched && productMasterForm.controls.product_name.errors['required']">
-                                    Sales Product Name is required
+                                    *ngIf="nProductMasterForm.controls.n_product_name.touched && nProductMasterForm.controls.n_product_name.errors['required']">
+                                    Purchase Product Name is required
                                 </div>
                             </span>
                         </div>
@@ -34,7 +34,7 @@
                         <div class="d-flex justify-content-center">
                             <div style="width: 250px; display: flex; align-items: center;">
                                 <input type="submit" style="width: 80px" class="btn btn-success mt-4 btn-sm mr-3"
-                                    value="{{ productMasterForm.value.productid ==0 ? 'Save' : 'Edit'}}" />
+                                    value="{{ nProductMasterForm.value.n_productid ==0 ? 'Save' : 'Edit'}}" />
                                 <input (click)="cancelClick()" type="button" style="width: 80px"
                                     class="btn btn-info mt-4 btn-sm mr-3" value="Clear" />
                                 <input (click)="backButton()" type="button" style="width: 80px"
@@ -54,19 +54,19 @@
                     <thead class="tableheadList">
                         <tr>
                             <th>S.No</th>
-                            <th style="text-align: left;">Sales Product Name</th>
+                            <th style="text-align: left;">Purchase Product Name</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let item of productList; let i = index">
+                        <tr *ngFor="let item of NestedProductList; let i = index">
                             <td>{{ i + 1 }}</td>
-                            <td style="text-align: left;">{{ item.product_name }}</td>
+                            <td style="text-align: left;">{{ item.n_product_name }}</td>
                             <td class="tdoption">
                                 <span class="m-2 editbutton text-success  " (click)="UpdateGetClick(item)"><b
                                         style="cursor:pointer">edit</b></span>
                                 <span>||</span>
-                                <span class="m-2  deletebutton text-danger" (click)="deleteClick(item.productid)"><b
+                                <span class="m-2  deletebutton text-danger" (click)="deleteClick(item.n_productid)"><b
                                         style="cursor:pointer">delete</b></span>
                             </td>
                         </tr>

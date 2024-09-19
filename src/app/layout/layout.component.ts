@@ -410,10 +410,22 @@ export class LayoutComponent implements OnInit {
           value: 1906
         },
         {
-          link_name: 'Product Master',
+          link_name: 'Sales Product Master',
           link: 'inventory/product-master',
           isselect: false,
           value: 1907
+        },
+        {
+          link_name: 'Purchase Product Master',
+          link: 'inventory/n-product-master',
+          isselect: false,
+          value: 1908
+        },
+        {
+          link_name: 'Link Product Master',
+          link: 'inventory/link-product-master',
+          isselect: false,
+          value: 1909
         }
       ],
     },
