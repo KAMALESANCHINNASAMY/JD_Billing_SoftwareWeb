@@ -1,9 +1,12 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NotificationsService } from 'angular2-notifications';
 import { DialogService } from 'src/app/api-service/Dialog.service';
+import { itemGroupService } from 'src/app/api-service/itemGroup.service';
 import { nestedProductMasterService } from 'src/app/api-service/nestedProductMaster.service';
+import { unitMasterService } from 'src/app/api-service/unitMaster.service';
+
 
 @Component({
   selector: 'app-nested-product-master',
@@ -14,15 +17,21 @@ export class NestedProductMasterComponent {
   userID: number = Number(localStorage.getItem('userid'));
   companyID: number = Number(localStorage.getItem('companyid'));
   NestedProductList: any[] = [];
+  unitMasterList: any[] = [];
+  itemGroupList: any[] = [];
   constructor(
     private router: Router,
     private DialogSvc: DialogService,
     private notificationSvc: NotificationsService,
-    private nPSvc: nestedProductMasterService
+    private nPSvc: nestedProductMasterService,
+    private UNITMSVC: unitMasterService,
+    private ITMGRPSVC: itemGroupService
   ) { }
 
   ngOnInit(): void {
     this.getNProductList();
+    this.getUnitMasterDetails();
+    this.getItemGrpDetails();
   }
   backButton() {
     this.router.navigateByUrl('/app/dashboard/dashboard');
@@ -33,9 +42,32 @@ export class NestedProductMasterComponent {
       this.NestedProductList = res
     })
   }
+
+  getUnitMasterDetails() {
+    this.UNITMSVC.getUnitsList(this.companyID).subscribe((res) => {
+      this.unitMasterList = res;
+    });
+  }
+  getItemGrpDetails() {
+    this.ITMGRPSVC.getItemGroupList(this.companyID).subscribe((res) => {
+      this.itemGroupList = res;
+    });
+  }
+
+  updateHsnIdGstId() {
+    const id = this.nProductMasterForm.value.item_groupid;
+    const newItem = this.itemGroupList.find((e) => { return e.item_groupid == id });
+    this.nProductMasterForm.get('gst_percentage')?.setValue(newItem.gst_percentage);
+    this.nProductMasterForm.get('hsn_number')?.setValue(newItem.hsn_number);
+  }
+
   nProductMasterForm = new FormGroup({
     n_productid: new FormControl(0),
     n_product_name: new FormControl(''),
+    unitid: new FormControl(null, [Validators.required]),
+    item_groupid: new FormControl(null, [Validators.required]),
+    gst_percentage: new FormControl(''),
+    hsn_number: new FormControl(''),
     companyid: new FormControl(this.companyID),
     cuid: new FormControl(this.userID)
   });
@@ -111,6 +143,10 @@ export class NestedProductMasterComponent {
     this.nProductMasterForm.reset();
     this.nProductMasterForm.get('n_productid')?.setValue(0);
     this.nProductMasterForm.get('n_product_name')?.setValue('');
+    this.nProductMasterForm.get('unitid')?.setValue(null);
+    this.nProductMasterForm.get('item_groupid')?.setValue(null);
+    this.nProductMasterForm.get('gst_percentage')?.setValue('');
+    this.nProductMasterForm.get('hsn_number')?.setValue('');
     this.nProductMasterForm.get('companyid')?.setValue(this.companyID);
     this.nProductMasterForm.get('cuid')?.setValue(this.userID);
 

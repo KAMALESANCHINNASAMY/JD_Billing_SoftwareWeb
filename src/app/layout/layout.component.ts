@@ -77,6 +77,12 @@ export class LayoutComponent implements OnInit {
           value: 1201
         },
         {
+          link_name: 'Raw Product Purchase',
+          link: 'accounts/raw-product',
+          isselect: false,
+          value: 1207
+        },
+        {
           link_name: 'Third-Party purchase',
           link: 'accounts/thirdparty-sareegst',
           isselect: false,
@@ -104,6 +110,12 @@ export class LayoutComponent implements OnInit {
           link: 'accounts/multiple-sales-withGST',
           isselect: false,
           value: 1206
+        },
+        {
+          link_name: 'Sale Products',
+          link: 'accounts/sale-products',
+          isselect: false,
+          value: 1208
         }
       ],
     },

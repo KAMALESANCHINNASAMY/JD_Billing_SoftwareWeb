@@ -25,6 +25,8 @@ import { DebitNoteComponent } from './debit-note/debit-note.component';
 import { ThirdPartySareesDebitNoteComponent } from './third-party-sarees-debit-note/third-party-sarees-debit-note.component';
 import { ThirdPartySareesGstDebitNoteComponent } from './third-party-sarees-gst-debit-note/third-party-sarees-gst-debit-note.component';
 import { WeaversWithGivenReceivedComponent } from './weavers-with-given-received/weavers-with-given-received.component';
+import { RawProductPurchaseComponent } from './raw-product-purchase/raw-product-purchase.component';
+import { SalesProductComponent } from './sales-product/sales-product.component';
 
 
 @NgModule({
@@ -40,7 +42,9 @@ import { WeaversWithGivenReceivedComponent } from './weavers-with-given-received
     DebitNoteComponent,
     ThirdPartySareesDebitNoteComponent,
     ThirdPartySareesGstDebitNoteComponent,
-    WeaversWithGivenReceivedComponent
+    WeaversWithGivenReceivedComponent,
+    RawProductPurchaseComponent,
+    SalesProductComponent
   ],
   imports: [
     CommonModule,

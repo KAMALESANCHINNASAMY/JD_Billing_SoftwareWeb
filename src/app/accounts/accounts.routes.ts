@@ -10,6 +10,8 @@ import { MultipleSalesBillentryComponent } from './multiple-sales-billentry/mult
 import { DebitNoteComponent } from './debit-note/debit-note.component';
 import { ThirdPartySareesDebitNoteComponent } from './third-party-sarees-debit-note/third-party-sarees-debit-note.component';
 import { WeaversWithGivenReceivedComponent } from './weavers-with-given-received/weavers-with-given-received.component';
+import { RawProductPurchaseComponent } from './raw-product-purchase/raw-product-purchase.component';
+import { SalesProductComponent } from './sales-product/sales-product.component';
 
 export const accountsRoutes: Routes = [
   {
@@ -17,8 +19,16 @@ export const accountsRoutes: Routes = [
     component: RawMaterialPurchaseComponent,
   },
   {
+    path: 'raw-product',
+    component: RawProductPurchaseComponent,
+  },
+  {
     path: 'salesbill-entry',
     component: SalesBillEntryComponent,
+  },
+  {
+    path: 'sale-products',
+    component: SalesProductComponent,
   },
   {
     path: 'thirdparty-sareegst',
