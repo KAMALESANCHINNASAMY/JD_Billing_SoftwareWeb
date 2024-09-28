@@ -116,6 +116,12 @@ export class LayoutComponent implements OnInit {
           link: 'accounts/sale-products',
           isselect: false,
           value: 1208
+        },
+        {
+          link_name: 'Expense Entry',
+          link: 'accounts/expense-entry',
+          isselect: false,
+          value: 1209
         }
       ],
     },
@@ -376,6 +382,18 @@ export class LayoutComponent implements OnInit {
           isselect: false,
           value: 1805
         },
+        {
+          link_name: 'Expense Master',
+          link: 'master/expense-master',
+          isselect: false,
+          value: 1806
+        },
+        {
+          link_name: 'Hand Cash Entry',
+          link: 'master/hand-cash',
+          isselect: false,
+          value: 1807
+        }
       ],
     },
     {

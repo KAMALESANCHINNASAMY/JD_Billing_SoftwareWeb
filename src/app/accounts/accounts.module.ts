@@ -27,6 +27,7 @@ import { ThirdPartySareesGstDebitNoteComponent } from './third-party-sarees-gst-
 import { WeaversWithGivenReceivedComponent } from './weavers-with-given-received/weavers-with-given-received.component';
 import { RawProductPurchaseComponent } from './raw-product-purchase/raw-product-purchase.component';
 import { SalesProductComponent } from './sales-product/sales-product.component';
+import { ExpenseEntryComponent } from './expense-entry/expense-entry.component';
 
 
 @NgModule({
@@ -44,7 +45,8 @@ import { SalesProductComponent } from './sales-product/sales-product.component';
     ThirdPartySareesGstDebitNoteComponent,
     WeaversWithGivenReceivedComponent,
     RawProductPurchaseComponent,
-    SalesProductComponent
+    SalesProductComponent,
+    ExpenseEntryComponent
   ],
   imports: [
     CommonModule,

@@ -15,11 +15,14 @@ import { FinancialYearComponent } from './financial-year/financial-year.componen
 import { ThirdPartyMasterComponent } from './third-party-master/third-party-master.component';
 import { LoadingspinnerComponent } from './loadingspinner/loadingspinner.component';
 import { CaptchaDialogComponent } from './captcha-dialog/captcha-dialog.component';
+import { ExpenseMasterComponent } from './expense-master/expense-master.component';
+import { HandCashEntryComponent } from './hand-cash-entry/hand-cash-entry.component';
 
 @NgModule({
   declarations: [CustomerMasterComponent,
     ConfirmDialogComponent, SupplierMasterComponent, SupplierMasterComponent, WeaverMasterComponent,
-    FinancialYearComponent, ThirdPartyMasterComponent, CaptchaDialogComponent],
+    FinancialYearComponent, ThirdPartyMasterComponent, CaptchaDialogComponent, ExpenseMasterComponent,
+    HandCashEntryComponent],
   imports: [
     RouterModule.forChild(masterRoutes),
     CommonModule,

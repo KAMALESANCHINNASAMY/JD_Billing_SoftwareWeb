@@ -12,6 +12,7 @@ import { ThirdPartySareesDebitNoteComponent } from './third-party-sarees-debit-n
 import { WeaversWithGivenReceivedComponent } from './weavers-with-given-received/weavers-with-given-received.component';
 import { RawProductPurchaseComponent } from './raw-product-purchase/raw-product-purchase.component';
 import { SalesProductComponent } from './sales-product/sales-product.component';
+import { ExpenseEntryComponent } from './expense-entry/expense-entry.component';
 
 export const accountsRoutes: Routes = [
   {
@@ -61,5 +62,9 @@ export const accountsRoutes: Routes = [
   {
     path: 'weavers_with_given_recived',
     component: WeaversWithGivenReceivedComponent
+  },
+  {
+    path: 'expense-entry',
+    component: ExpenseEntryComponent
   }
 ];
