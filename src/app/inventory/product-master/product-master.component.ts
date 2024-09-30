@@ -63,6 +63,7 @@ export class ProductMasterComponent {
   productMasterForm = new FormGroup({
     productid: new FormControl(0),
     product_name: new FormControl(''),
+    price: new FormControl('', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
     unitid: new FormControl(null, [Validators.required]),
     item_groupid: new FormControl(null, [Validators.required]),
     gst_percentage: new FormControl(''),
@@ -142,6 +143,7 @@ export class ProductMasterComponent {
     this.productMasterForm.reset();
     this.productMasterForm.get('productid')?.setValue(0);
     this.productMasterForm.get('product_name')?.setValue('');
+    this.productMasterForm.get('price')?.setValue('');
     this.productMasterForm.get('unitid')?.setValue(null);
     this.productMasterForm.get('item_groupid')?.setValue(null);
     this.productMasterForm.get('gst_percentage')?.setValue('');

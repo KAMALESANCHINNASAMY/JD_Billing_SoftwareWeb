@@ -6,6 +6,7 @@ import { FinancialYearComponent } from './financial-year/financial-year.componen
 import { ThirdPartyMasterComponent } from './third-party-master/third-party-master.component';
 import { ExpenseMasterComponent } from './expense-master/expense-master.component';
 import { HandCashEntryComponent } from './hand-cash-entry/hand-cash-entry.component';
+import { BankMasterComponent } from './bank-master/bank-master.component';
 
 
 export const masterRoutes: Routes = [
@@ -36,5 +37,9 @@ export const masterRoutes: Routes = [
   {
     path: 'hand-cash',
     component: HandCashEntryComponent
+  },
+  {
+    path: 'bank-master',
+    component: BankMasterComponent
   }
 ];

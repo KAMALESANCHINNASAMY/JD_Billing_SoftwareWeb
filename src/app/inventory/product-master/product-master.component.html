@@ -8,15 +8,17 @@
             </div>
             <form [formGroup]="productMasterForm" (ngSubmit)="Save()">
                 <div class="row ml-3">
-                    <div class="col-sm-5 mt-3" style="display: flex">
+                    <div class="col-sm-4 mt-3" style="display: flex">
                         <div class="labeldiv">
-                            <label class="pt-2" style="margin: auto">Sales Product Name<span
+                            <label style="margin: auto">Sales Product Name<span
                                     class="text-danger">*</span></label>
                         </div>
                         <div class="inputdiv">
                             <input
                                 [ngClass]="{'is-invalid':productMasterForm.controls.product_name.touched && productMasterForm.controls.product_name.errors}"
-                                class="form-control" formControlName="product_name" type="text" required />
+                                class="form-control"
+                                formControlName="product_name" type="text"
+                                required />
 
                             <span class="text-danger"
                                 *ngIf="productMasterForm.controls.product_name.touched && productMasterForm.controls.product_name.errors">
@@ -30,16 +32,32 @@
 
                     <div class="col-sm-4 mt-3" style="display: flex">
                         <div class="labeldiv">
+                            <label class="pt-2" style="margin: auto">
+                                Price <span class="text-danger">*</span>
+                            </label>
+                        </div>
+                        <div class="inputdiv" style="max-width: 250px">
+                            <input formControlName="price"
+                                [ngClass]="{'is-invalid':productMasterForm.controls.price.touched && productMasterForm.controls.price.errors}"
+                                class="form-control" required />
+                        </div>
+                    </div>
+
+                    <div class="col-sm-4 mt-3" style="display: flex">
+                        <div class="labeldiv">
                             <label class="pt-2" style="margin: auto"> Unit Code<span
                                     class="text-danger">*</span></label>
                         </div>
                         <div class="inputdiv">
-                            <select class="form-control" required formControlName="unitid" [ngClass]="{'is-invalid':productMasterForm.controls.unitid.touched && 
+                            <select class="form-control" required
+                                formControlName="unitid"
+                                [ngClass]="{'is-invalid':productMasterForm.controls.unitid.touched && 
                           productMasterForm.controls.unitid.errors}">
                                 <option [ngValue]="null" selected disabled>
                                     -- Please select --
                                 </option>
-                                <option *ngFor="let item of unitMasterList" [ngValue]="item.unitid">
+                                <option *ngFor="let item of unitMasterList"
+                                    [ngValue]="item.unitid">
                                     {{ item.unit_code }}
                                 </option>
                             </select>
@@ -50,11 +68,13 @@
                 <div class="row mt-3 ml-3">
                     <div class="col-sm-4 mt-3" style="display: flex">
                         <div class="labeldiv">
-                            <label class="pt-2" style="margin: auto"> Item Group <span
+                            <label class="pt-2" style="margin: auto"> Item Group
+                                <span
                                     class="text-danger">*</span></label>
                         </div>
                         <div class="inputdiv">
-                            <select class="form-control" required formControlName="item_groupid"
+                            <select class="form-control" required
+                                formControlName="item_groupid"
                                 (change)="updateHsnIdGstId()" [ngClass]="{
                             'is-invalid':
                             productMasterForm.controls.item_groupid.touched &&
@@ -63,7 +83,8 @@
                                 <option [ngValue]="null" selected disabled>
                                     -- Please select --
                                 </option>
-                                <option *ngFor="let item of itemGroupList" [ngValue]="item.item_groupid">
+                                <option *ngFor="let item of itemGroupList"
+                                    [ngValue]="item.item_groupid">
                                     {{ item.item_group_name }}
                                 </option>
                             </select>
@@ -76,8 +97,9 @@
                                 HSN/SAC <span class="text-danger">*</span>
                             </label>
                         </div>
-                        <div class="input-group" style="max-width: 250px">
-                            <input formControlName="hsn_number" class="form-control" readonly />
+                        <div class="inputdiv" style="max-width: 250px">
+                            <input formControlName="hsn_number"
+                                class="form-control" readonly />
                         </div>
                     </div>
 
@@ -87,10 +109,13 @@
                                 GST % <span class="text-danger">*</span>
                             </label>
                         </div>
-                        <div class="input-group" style="max-width: 250px">
-                            <input formControlName="gst_percentage" class="form-control" readonly />
+                        <div class="input-group inputdiv"
+                            style="max-width: 250px">
+                            <input formControlName="gst_percentage"
+                                class="form-control" readonly />
                             <div class="input-group-append">
-                                <span class="input-group-text" style="height: fit-content">%</span>
+                                <span class="input-group-text"
+                                    style="height: fit-content">%</span>
                             </div>
                         </div>
                     </div>
@@ -99,13 +124,19 @@
                 <div class="row justify-content-center mt-3">
                     <div class="col-sm-6">
                         <div class="d-flex justify-content-center">
-                            <div style="width: 250px; display: flex; align-items: center;">
-                                <input type="submit" style="width: 80px" class="btn btn-success mt-4 btn-sm mr-3"
+                            <div
+                                style="width: 250px; display: flex; align-items: center;">
+                                <input type="submit" style="width: 80px"
+                                    class="btn btn-success mt-4 btn-sm mr-3"
                                     value="{{ productMasterForm.value.productid ==0 ? 'Save' : 'Edit'}}" />
-                                <input (click)="cancelClick()" type="button" style="width: 80px"
-                                    class="btn btn-info mt-4 btn-sm mr-3" value="Clear" />
-                                <input (click)="backButton()" type="button" style="width: 80px"
-                                    class="btn btn-danger btn-sm mt-4" value="Close" />
+                                <input (click)="cancelClick()" type="button"
+                                    style="width: 80px"
+                                    class="btn btn-info mt-4 btn-sm mr-3"
+                                    value="Clear" />
+                                <input (click)="backButton()" type="button"
+                                    style="width: 80px"
+                                    class="btn btn-danger btn-sm mt-4"
+                                    value="Close" />
                             </div>
                         </div>
                     </div>
@@ -117,11 +148,13 @@
     <mat-card class="mt-3 matcardlist">
         <mat-card-content>
             <div class="table-responsive">
-                <table class="col-sm-12 table table-hover table-bordered table-sm">
+                <table
+                    class="col-sm-12 table table-hover table-bordered table-sm">
                     <thead class="tableheadList">
                         <tr>
                             <th>S.No</th>
                             <th style="text-align: left;">Sales Product Name</th>
+                            <th style="text-align: left;">Price</th>
                             <th style="text-align: left;">Unit Name</th>
                             <th style="text-align: left;">Hsn Number</th>
                             <th style="text-align: left;">Gst %</th>
@@ -131,15 +164,20 @@
                     <tbody>
                         <tr *ngFor="let item of productList; let i = index">
                             <td>{{ i + 1 }}</td>
-                            <td style="text-align: left;">{{ item.product_name }}</td>
+                            <td style="text-align: left;">{{ item.product_name
+                                }}</td>
+                            <td style="text-align: left;">{{ item.price }}</td>
                             <td style="text-align: left;">{{ item.unit_name }}</td>
                             <td style="text-align: left;">{{ item.hsn_number }}</td>
-                            <td style="text-align: left;">{{ item.gst_percentage }}</td>
+                            <td style="text-align: left;">{{ item.gst_percentage
+                                }}</td>
                             <td class="tdoption">
-                                <span class="m-2 editbutton text-success  " (click)="UpdateGetClick(item)"><b
+                                <span class="m-2 editbutton text-success  "
+                                    (click)="UpdateGetClick(item)"><b
                                         style="cursor:pointer">edit</b></span>
                                 <span>||</span>
-                                <span class="m-2  deletebutton text-danger" (click)="deleteClick(item.productid)"><b
+                                <span class="m-2  deletebutton text-danger"
+                                    (click)="deleteClick(item.productid)"><b
                                         style="cursor:pointer">delete</b></span>
                             </td>
                         </tr>

@@ -10,21 +10,25 @@
                 <div class="row ml-3">
                     <div class="col-sm-4" style="display: flex">
                         <div class="labeldiv">
-                            <label class="pt-2" style="margin: auto">Customer Name<span
+                            <label class="pt-2" style="margin: auto">Customer
+                                Name<span
                                     class="text-danger">*</span></label>
                         </div>
                         <div class="inputdiv">
                             <mat-form-field>
                                 <mat-label>Customer Name</mat-label>
-                                <mat-select (valueChange)="setCustomerDetails(advw.value)"
+                                <mat-select
+                                    (valueChange)="setCustomerDetails(advw.value)"
                                     [ngClass]="{'is-invalid':saleProductsForm.controls.customerid.touched && saleProductsForm.controls.customerid.errors}"
                                     formControlName="customerid" #advw required>
                                     <mat-form-field>
-                                        <input matInput type="text" #auval (input)="suggest(auval.value)"
+                                        <input matInput type="text" #auval
+                                            (input)="suggest(auval.value)"
                                             placeholder="Search...">
                                     </mat-form-field>
 
-                                    <mat-option [value]="option.customerid" *ngFor="let option of suggestions">
+                                    <mat-option [value]="option.customerid"
+                                        *ngFor="let option of suggestions">
                                         {{option.customer_name}}
                                     </mat-option>
                                 </mat-select>
@@ -34,35 +38,41 @@
 
                     <div class="col-sm-4" style="display: flex">
                         <div class="labeldiv">
-                            <label class="pt-2" style="margin: auto">Date<span class="text-danger">*</span></label>
+                            <label class="pt-2" style="margin: auto">Date<span
+                                    class="text-danger">*</span></label>
                         </div>
                         <div class="inputdiv">
                             <input
                                 [ngClass]="{'is-invalid': saleProductsForm.controls.date.touched && saleProductsForm.controls.date.errors}"
-                                class="form-control" formControlName="date" type="date" required />
+                                class="form-control" formControlName="date"
+                                type="date" required />
                         </div>
                     </div>
                 </div>
                 <div class="row ml-3 mt-3">
                     <div class="col-sm-4" style="display: flex">
                         <div class="labeldiv">
-                            <label class="pt-2" style="margin: auto">Bill No<span class="text-danger">*</span></label>
+                            <label class="pt-2" style="margin: auto">Bill No<span
+                                    class="text-danger">*</span></label>
                         </div>
                         <div class="inputdiv">
                             <input
                                 [ngClass]="{'is-invalid':saleProductsForm.controls.bill_no.touched && saleProductsForm.controls.bill_no.errors}"
-                                class="form-control" formControlName="bill_no" type="text" required readonly />
+                                class="form-control" formControlName="bill_no"
+                                type="text" required readonly />
                         </div>
                     </div>
 
                     <div class="col-sm-4" style="display: flex">
                         <div class="labeldiv">
-                            <label class="pt-2" style="margin: auto">GST IN<span class="text-danger">*</span></label>
+                            <label class="pt-2" style="margin: auto">GST IN<span
+                                    class="text-danger">*</span></label>
                         </div>
                         <div class="inputdiv">
                             <input
                                 [ngClass]="{'is-invalid':saleProductsForm.controls.gst_in.touched && saleProductsForm.controls.gst_in.errors}"
-                                formControlName="gst_in" class="form-control" type="text" readonly required />
+                                formControlName="gst_in" class="form-control"
+                                type="text" readonly required />
                         </div>
                     </div>
 
@@ -73,13 +83,15 @@
                         <div class="inputdiv">
                             <input
                                 [ngClass]="{'is-invalid':saleProductsForm.controls.credit_days.touched && saleProductsForm.controls.credit_days.errors}"
-                                formControlName="credit_days" class="form-control" type="text" required />
+                                formControlName="credit_days"
+                                class="form-control" type="text" required />
                         </div>
                     </div>
                 </div>
 
                 <div class="table-responsive mt-4">
-                    <table class="col-sm-12 table table-hover table-sm table-bordered">
+                    <table
+                        class="col-sm-12 table table-hover table-sm table-bordered">
                         <thead class="tablehead">
                             <tr>
                                 <th>#</th>
@@ -88,50 +100,78 @@
                                 <th>Discount %</th>
                                 <th>Qty</th>
                                 <th>Total</th>
+                                <th>Remaining amount</th>
                                 <th>Total GST</th>
                                 <th>Net Total</th>
                                 <th style="font-size: 11px;">Action</th>
                             </tr>
                         </thead>
                         <tbody formArrayName="sale_nested">
-                            <tr *ngFor="let chid of getCommonControls(); let i = index" formGroupName="{{i}}">
+                            <tr
+                                *ngFor="let chid of getCommonControls(); let i = index"
+                                formGroupName="{{i}}">
                                 <td>{{i+1}}</td>
-                                <td style="min-width: 150px;"><select (change)="setHsn(i)"
+                                <td style="min-width: 150px;"><select
+                                        (change)="setHsn(i)"
                                         [ngClass]="{'is-invalid': isProductControlInvalid(i)}"
-                                        formControlName="productid" class="form-control" required>
-                                        <option disabled [ngValue]="null" selected>Please select</option>
-                                        <option [ngValue]="item.productid" *ngFor="let item of productList">
+                                        formControlName="productid"
+                                        class="form-control" required>
+                                        <option disabled [ngValue]="null"
+                                            selected>Please select</option>
+                                        <option [ngValue]="item.productid"
+                                            *ngFor="let item of productList">
                                             {{item.product_name}}</option>
                                     </select>
                                 </td>
-                                <td style="min-width: 120px;"><input (input)="colculation(i)"
-                                        [ngClass]="{'is-invalid': isPriceControlInvalid(i)}" formControlName="price"
+                                <td style="min-width: 120px;"><input
+                                        (input)="colculation(i)"
+                                        [ngClass]="{'is-invalid': isPriceControlInvalid(i)}"
+                                        formControlName="price"
                                         class="form-control" required></td>
                                 <td style="min-width: 50px;">
                                     <input (input)="colculation(i)"
-                                        [ngClass]="{'is-invalid': isDiscountControlInvalid(i)}" type="text"
-                                        formControlName="discount" class="form-control" required>
+                                        [ngClass]="{'is-invalid': isDiscountControlInvalid(i)}"
+                                        type="text"
+                                        formControlName="discount"
+                                        class="form-control" required>
                                 </td>
-                                <td style="min-width: 100px;"><input (input)="colculation(i)"
-                                        [ngClass]="{'is-invalid': isQtyControlInvalid(i)}" formControlName="qty"
+                                <td style="min-width: 100px;"><input
+                                        (input)="colculation(i)"
+                                        [ngClass]="{'is-invalid': isQtyControlInvalid(i)}"
+                                        formControlName="qty"
                                         class="form-control" required></td>
-                                <td style="min-width: 140px;"><input formControlName="total" class="form-control"
+                                <td style="min-width: 140px;"><input
+                                        formControlName="total"
+                                        class="form-control"
                                         readonly></td>
-                                <td>{{+chid.get('cgst_amount')?.value + +chid.get('sgst_amount')?.value +
+                                <td style="min-width: 120px;"><input
+                                        (input)="colculation(i)"
+                                        [ngClass]="{'is-invalid': isReamControlInvalid(i)}"
+                                        formControlName="re_amount"
+                                        class="form-control" required></td>
+                                <td>{{+chid.get('cgst_amount')?.value +
+                                    +chid.get('sgst_amount')?.value +
                                     +chid.get('igst_amount')?.value}}</td>
-                                <td style="min-width: 140px;"><input formControlName="net_total" class="form-control"
+                                <td style="min-width: 140px;"><input
+                                        formControlName="net_total"
+                                        class="form-control"
                                         readonly></td>
-                                <td style="padding:0px"><mat-icon (click)="addNesForm()"
+                                <td style="padding:0px"><mat-icon
+                                        (click)="addNesForm()"
                                         style="color: green;cursor: pointer;">add_circle</mat-icon>
-                                    <mat-icon *ngIf="chid.get('entry_n_id')?.value==0" (click)="removeNesForm(i)"
+                                    <mat-icon
+                                        *ngIf="chid.get('entry_n_id')?.value==0"
+                                        (click)="removeNesForm(i)"
                                         style="color: red;cursor: pointer;">remove_circle</mat-icon>
                                 </td>
                             </tr>
                         </tbody>
                         <tbody>
                             <tr>
-                                <th style="text-align: right;font-size: 17px;" class="pr-5 head" colspan="7">Total</th>
-                                <td><input formControlName="total" class="form-control" readonly></td>
+                                <th style="text-align: right;font-size: 17px;"
+                                    class="pr-5 head" colspan="8">Total</th>
+                                <td><input formControlName="total"
+                                        class="form-control" readonly></td>
                                 <td></td>
                             </tr>
                         </tbody>
@@ -141,12 +181,17 @@
                 <div class="row">
                     <div class="col-sm-12" style="display: flex;">
                         <div style="margin: auto;">
-                            <button type="submit" style="width: 80px;" class="btn btn-success mr-3 btn-sm">
-                                <span> {{ saleProductsForm.value.entryid ==0 ? 'Save' :
+                            <button type="submit" style="width: 80px;"
+                                class="btn btn-success mr-3 btn-sm">
+                                <span> {{ saleProductsForm.value.entryid ==0 ?
+                                    'Save' :
                                     'Edit'}}</span></button>
-                            <input type="button" style="width: 80px;" (click)="cancelClick()"
-                                class="btn btn-primary mr-3 btn-sm" value="Clear" />
-                            <input type="button" style="width: 80px;" class="btn btn-danger btn-sm"
+                            <input type="button" style="width: 80px;"
+                                (click)="cancelClick()"
+                                class="btn btn-primary mr-3 btn-sm"
+                                value="Clear" />
+                            <input type="button" style="width: 80px;"
+                                class="btn btn-danger btn-sm"
                                 (click)="backButton()" value="Close" />
                         </div>
                     </div>
@@ -160,11 +205,13 @@
             <div class="row">
                 <div class="col-sm-12" style="display: flex;">
                     <div>
-                        <input #ds (change)=" getSalesProductList(ds.value)" style="max-width: 180px;" type="date"
+                        <input #ds (change)=" getSalesProductList(ds.value)"
+                            style="max-width: 180px;" type="date"
                             class="form-control" />
                     </div>
                     <div>
-                        <button class="btn btn-info ml-2" (click)="getSalesProductList('All')">GET All DATE</button>
+                        <button class="btn btn-info ml-2"
+                            (click)="getSalesProductList('All')">GET All DATE</button>
                     </div>
                 </div>
                 <div class="table-responsive mt-2">
@@ -180,7 +227,8 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let item of saleProductsList;let i=index">
+                            <tr
+                                *ngFor="let item of saleProductsList;let i=index">
                                 <td style="text-align: left;">{{item.customer_name}}</td>
                                 <td>{{item.date}}</td>
                                 <td>{{item.bill_no}}</td>
@@ -190,10 +238,14 @@
                                     <!-- <button class="btn btn-sm btn-success" (click)="getReport(item)">
                                         Preview
                                     </button> -->
-                                    <mat-icon class="mr-1" style="cursor: pointer;color: blue;" title="Click to edit"
+                                    <mat-icon class="mr-1"
+                                        style="cursor: pointer;color: blue;"
+                                        title="Click to edit"
                                         (click)="update(item)">edit</mat-icon>
 
-                                    <mat-icon class="ml-1" style="cursor: pointer;color: red;" title="Click to delete"
+                                    <mat-icon class="ml-1"
+                                        style="cursor: pointer;color: red;"
+                                        title="Click to delete"
                                         (click)="deleteFun(item.entryid)">delete</mat-icon>
                                 </td>
                             </tr>

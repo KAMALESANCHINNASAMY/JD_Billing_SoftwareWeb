@@ -11,8 +11,8 @@ export class expenseEntryService {
 
     constructor(private http: HttpClient, private ConfigService: ConfigService) { }
 
-    getList(companyid: any): Observable<any[]> {
-        return this.http.get<any[]>(this.apiUrl + 'ExpenseEntry/get_expense_entry?companyid=' + companyid);
+    getList(companyid: any, date: string): Observable<any[]> {
+        return this.http.get<any[]>(this.apiUrl + 'ExpenseEntry/get_expense_entry?companyid=' + companyid + '&date=' + date);
     }
 
     newEntry(newList: any[]): Observable<any> {

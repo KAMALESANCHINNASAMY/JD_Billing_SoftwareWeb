@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { NotificationsService } from 'angular2-notifications';
 import { expenseEntryService } from 'src/app/api-service/Accounts/expenseEntry.service';
 import { DialogService } from 'src/app/api-service/Dialog.service';
+import { bankMasterService } from 'src/app/api-service/bankMaster.service';
 import { expenseMasterService } from 'src/app/api-service/expense.service';
 
 @Component({
@@ -14,27 +15,31 @@ import { expenseMasterService } from 'src/app/api-service/expense.service';
 export class ExpenseEntryComponent {
   userID: number = Number(localStorage.getItem('userid'));
   companyID: number = Number(localStorage.getItem('companyid'));
+  today = new Date().toISOString().slice(0, 10);
   expenseEntryList: any[] = [];
   expenseMasterList: any[] = [];
+  bankList: any[] = [];
   constructor(
     private router: Router,
     private DialogSvc: DialogService,
     private notificationSvc: NotificationsService,
     private cdRef: ChangeDetectorRef,
     private cMSvc: expenseEntryService,
-    private bSvc: expenseMasterService
+    private bSvc: expenseMasterService,
+    private bankSvc: bankMasterService
   ) { }
 
   ngOnInit(): void {
-    this.getExpenseList();
+    this.getExpenseList(this.today);
     this.getExpenseMasterList();
+    this.getBankList();
   }
   backButton() {
     this.router.navigateByUrl('/app/dashboard/dashboard');
   }
 
-  getExpenseList() {
-    this.cMSvc.getList(this.companyID).subscribe((res) => {
+  getExpenseList(value: any) {
+    this.cMSvc.getList(this.companyID, value).subscribe((res) => {
       this.expenseEntryList = res;
     });
   }
@@ -42,6 +47,12 @@ export class ExpenseEntryComponent {
   getExpenseMasterList() {
     this.bSvc.getList(this.companyID).subscribe((res) => {
       this.expenseMasterList = res
+    })
+  }
+
+  getBankList() {
+    this.bankSvc.getList(this.companyID).subscribe((res) => {
+      this.bankList = res
     })
   }
 
@@ -54,6 +65,8 @@ export class ExpenseEntryComponent {
         date: new FormControl('', Validators.required),
         description: new FormControl(''),
         issale_am: new FormControl(false),
+        isbank_am: new FormControl(false),
+        bankid: new FormControl(0),
         ishand_cash_am: new FormControl(true),
         companyid: new FormControl(this.companyID),
         cuid: new FormControl(this.userID)
@@ -73,6 +86,8 @@ export class ExpenseEntryComponent {
       date: new FormControl('', Validators.required),
       description: new FormControl(''),
       issale_am: new FormControl(false),
+      isbank_am: new FormControl(false),
+      bankid: new FormControl(0),
       ishand_cash_am: new FormControl(true),
       companyid: new FormControl(this.companyID),
       cuid: new FormControl(this.userID)
@@ -120,27 +135,53 @@ export class ExpenseEntryComponent {
     return control.touched && !!control.errors;
   }
 
-  setAmountType(value: string, i: number) {
+  setAmountType(value: string, i: number, bankid: number) {
+    debugger
     const control = <FormArray>this.expenseEntryForm.controls['newList'];
     if (value == 'cash') {
-      control.at(i).get('issale_am')?.setValue(false);
       control.at(i).get('ishand_cash_am')?.setValue(true);
+      control.at(i).get('issale_am')?.setValue(false);
+      control.at(i).get('isbank_am')?.setValue(false);
+      control.at(i).get('bankid')?.setValue(bankid);
     }
     else if (value == 'sale') {
       control.at(i).get('issale_am')?.setValue(true);
       control.at(i).get('ishand_cash_am')?.setValue(false);
+      control.at(i).get('isbank_am')?.setValue(false);
+      control.at(i).get('bankid')?.setValue(bankid);
+    }
+    else if (value == 'bank') {
+      control.at(i).get('isbank_am')?.setValue(true);
+      control.at(i).get('issale_am')?.setValue(false);
+      control.at(i).get('ishand_cash_am')?.setValue(false);
+      control.at(i).get('bankid')?.setValue(bankid);
     }
     else {
       control.at(i).get('issale_am')?.setValue(true);
       control.at(i).get('ishand_cash_am')?.setValue(false);
+      control.at(i).get('isbank_am')?.setValue(false);
+      control.at(i).get('bankid')?.setValue(0);
     }
   }
 
   Save() {
+    debugger
     const control = <FormArray>this.expenseEntryForm.controls['newList'];
-    const isOk = control.value.some((e: any) => { return e.issale_am == e.ishand_cash_am });
-    if (isOk) {
-      this.notificationSvc.warn('Invalid Details!')
+
+    const isOk = control.value.every((e: any) => {
+      // Rule 1: Exactly one of issale_am, ishand_cash_am, or isbank_am must be true
+      const trueCount = [e.issale_am, e.ishand_cash_am, e.isbank_am].filter(val => val === true).length;
+
+      // Rule 2: If isbank_am is true, bankid must be greater than 0. If isbank_am is false, bankid must be 0.
+      const isBankIdValid = e.isbank_am ? e.bankid > 0 : e.bankid === 0;
+
+      // Both conditions must be true
+      return trueCount === 1 && isBankIdValid;
+    });
+
+    if (!isOk) {
+      this.notificationSvc.warn('Invalid Details!');
+      this.notificationSvc.error('Validation failed: Each entry must have exactly one true value among Sales, Hand Cash, and Bank');
       return;
     }
     if (this.expenseEntryForm.valid) {
@@ -180,6 +221,8 @@ export class ExpenseEntryComponent {
         date: new FormControl(item.date, Validators.required),
         description: new FormControl(item.description),
         issale_am: new FormControl(item.issale_am),
+        isbank_am: new FormControl(item.isbank_am),
+        bankid: new FormControl(item.bankid),
         ishand_cash_am: new FormControl(item.ishand_cash_am),
         companyid: new FormControl(this.companyID),
         cuid: new FormControl(this.userID)
@@ -215,7 +258,7 @@ export class ExpenseEntryComponent {
     }
 
     this.addNesForm();
-    this.getExpenseList();
+    this.getExpenseList(this.today);
   }
 
   @ViewChild('tableTop') tableTop!: ElementRef;

@@ -393,6 +393,12 @@ export class LayoutComponent implements OnInit {
           link: 'master/hand-cash',
           isselect: false,
           value: 1807
+        },
+        {
+          link_name: 'Bank Master',
+          link: 'master/bank-master',
+          isselect: false,
+          value: 1808
         }
       ],
     },

@@ -8,56 +8,88 @@
             </div>
             <form [formGroup]="expenseEntryForm" (ngSubmit)="Save()">
                 <div class="table-responsive mt-2">
-                    <table class="col-sm-12 table-sm table table-hover table-bordered">
+                    <table
+                        class="col-sm-12 table-sm table table-hover table-bordered">
                         <thead class="tablehead">
                             <th>#</th>
                             <th>Expense Name</th>
                             <th>Amount</th>
                             <th>Date</th>
                             <th>Description
-                                <span style="color: yellow;font-size:9px;">Maximum 250 Letter</span>
+                                <span style="color: yellow;font-size:9px;">Maximum
+                                    250 Letter</span>
                             </th>
                             <th style="text-align: left;">Where does it Deduct ?</th>
                             <th>Action</th>
                         </thead>
                         <tbody formArrayName="newList">
-                            <tr *ngFor="let chid of getCommonControls(); let i = index" formGroupName="{{ i }}">
+                            <tr
+                                *ngFor="let chid of getCommonControls(); let i = index"
+                                formGroupName="{{ i }}">
                                 <td>{{ i + 1 }}</td>
-                                <td><select [ngClass]="{ 'is-invalid': isExpenseControlInvalid(i) }"
-                                        formControlName="expenseid" class="form-control" required>
-                                        <option disabled [ngValue]="null" selected>
+                                <td><select
+                                        [ngClass]="{ 'is-invalid': isExpenseControlInvalid(i) }"
+                                        formControlName="expenseid"
+                                        class="form-control" required>
+                                        <option disabled [ngValue]="null"
+                                            selected>
                                             Please select
                                         </option>
-                                        <option [ngValue]="item.expenseid" *ngFor="let item of expenseMasterList">
+                                        <option [ngValue]="item.expenseid"
+                                            *ngFor="let item of expenseMasterList">
                                             {{ item.expense_name }}
                                         </option>
                                     </select></td>
                                 <td>
-                                    <input class="form-control" [ngClass]="{ 'is-invalid': isamountControlInvalid(i) }"
-                                        formControlName="amount" type="text" required />
+                                    <input class="form-control"
+                                        [ngClass]="{ 'is-invalid': isamountControlInvalid(i) }"
+                                        formControlName="amount" type="text"
+                                        required />
                                 </td>
                                 <td>
-                                    <input class="form-control" [ngClass]="{ 'is-invalid': isdateControlInvalid(i) }"
-                                        formControlName="date" type="date" required />
+                                    <input class="form-control"
+                                        [ngClass]="{ 'is-invalid': isdateControlInvalid(i) }"
+                                        formControlName="date" type="date"
+                                        required />
                                 </td>
                                 <td>
-                                    <input class="form-control" formControlName="description" type="text" />
+                                    <input class="form-control"
+                                        formControlName="description"
+                                        type="text" />
                                 </td>
                                 <td style="text-align: left;">
                                     <div>
-                                        <input (change)="setAmountType('cash',i)" style="width: 15px;height: 15px;"
-                                            type="checkbox" formControlName="ishand_cash_am" />From Hand Cash
+                                        <input
+                                            (change)="setAmountType('cash',i,0)"
+                                            style="width: 15px;height: 15px;"
+                                            type="checkbox"
+                                            formControlName="ishand_cash_am" />From
+                                        Hand Cash
                                     </div>
 
                                     <div>
-                                        <input (change)="setAmountType('sale',i)" style="width: 15px;height: 15px;"
-                                            type="checkbox" formControlName="issale_am" />From Sales
+                                        <input
+                                            (change)="setAmountType('sale',i,0)"
+                                            style="width: 15px;height: 15px;"
+                                            type="checkbox"
+                                            formControlName="issale_am" />From
+                                        Sales
+                                    </div>
+                                    <div *ngFor="let bank of bankList">
+                                        <input
+                                            (change)="setAmountType('bank',i,bank.bankid)"
+                                            style="width: 15px;height: 15px;"
+                                            type="checkbox"
+                                            [checked]="chid.get('bankid')?.value == bank.bankid" />From
+                                        {{bank.bank_name}}
                                     </div>
                                 </td>
                                 <td>
                                     <mat-icon (click)="addNesForm()"
                                         style="color: green; cursor: pointer">add_circle</mat-icon>
-                                    <mat-icon *ngIf="chid.get('entryid')?.value == 0" (click)="removeNesForm(i)"
+                                    <mat-icon
+                                        *ngIf="chid.get('entryid')?.value == 0"
+                                        (click)="removeNesForm(i)"
                                         style="color: red; cursor: pointer">remove_circle</mat-icon>
                                 </td>
                             </tr>
@@ -68,13 +100,19 @@
                 <div class="row justify-content-center mt-3">
                     <div class="col-sm-6">
                         <div class="d-flex justify-content-center">
-                            <div style="width: 250px; display: flex; align-items: center;">
-                                <input type="submit" style="width: 80px" class="btn btn-success mt-4 btn-sm mr-3"
+                            <div
+                                style="width: 250px; display: flex; align-items: center;">
+                                <input type="submit" style="width: 80px"
+                                    class="btn btn-success mt-4 btn-sm mr-3"
                                     value="Save" />
-                                <input (click)="cancelClick()" type="button" style="width: 80px"
-                                    class="btn btn-info mt-4 btn-sm mr-3" value="Clear" />
-                                <input (click)="backButton()" type="button" style="width: 80px"
-                                    class="btn btn-danger btn-sm mt-4" value="Close" />
+                                <input (click)="cancelClick()" type="button"
+                                    style="width: 80px"
+                                    class="btn btn-info mt-4 btn-sm mr-3"
+                                    value="Clear" />
+                                <input (click)="backButton()" type="button"
+                                    style="width: 80px"
+                                    class="btn btn-danger btn-sm mt-4"
+                                    value="Close" />
                             </div>
                         </div>
                     </div>
@@ -85,8 +123,20 @@
 
     <mat-card class="mt-3 matcardlist">
         <mat-card-content>
+            <div class="col-sm-12" style="display: flex;">
+                <div>
+                    <input #ds (change)=" getExpenseList(ds.value)"
+                        style="max-width: 180px;" type="date"
+                        class="form-control" />
+                </div>
+                <div>
+                    <button class="btn btn-info ml-2"
+                        (click)="getExpenseList('All')">GET All DATE</button>
+                </div>
+            </div>
             <div class="table-responsive">
-                <table class="col-sm-12 table table-hover table-bordered table-sm">
+                <table
+                    class="col-sm-12 table table-hover table-bordered table-sm">
                     <thead class="tableheadList">
                         <tr>
                             <th>S.No</th>
@@ -100,15 +150,18 @@
                     <tbody>
                         <tr *ngFor="let item of expenseEntryList; let i = index">
                             <td>{{ i + 1 }}</td>
-                            <td style="text-align: left;">{{ item.expense_name }}</td>
+                            <td style="text-align: left;">{{ item.expense_name
+                                }}</td>
                             <td>{{ item.amount }}</td>
                             <td>{{ item.date}}</td>
                             <td>{{ item.description}}</td>
                             <td class="tdoption">
-                                <span class="m-2 editbutton text-success  " (click)="UpdateGetClick(item)"><b
+                                <span class="m-2 editbutton text-success  "
+                                    (click)="UpdateGetClick(item)"><b
                                         style="cursor:pointer">edit</b></span>
                                 <span>||</span>
-                                <span class="m-2  deletebutton text-danger" (click)="deleteClick(item.entryid)"><b
+                                <span class="m-2  deletebutton text-danger"
+                                    (click)="deleteClick(item.entryid)"><b
                                         style="cursor:pointer">delete</b></span>
                             </td>
                         </tr>

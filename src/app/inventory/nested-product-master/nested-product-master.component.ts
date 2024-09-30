@@ -64,6 +64,7 @@ export class NestedProductMasterComponent {
   nProductMasterForm = new FormGroup({
     n_productid: new FormControl(0),
     n_product_name: new FormControl(''),
+    price: new FormControl('',[Validators.required,Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
     unitid: new FormControl(null, [Validators.required]),
     item_groupid: new FormControl(null, [Validators.required]),
     gst_percentage: new FormControl(''),
@@ -143,6 +144,7 @@ export class NestedProductMasterComponent {
     this.nProductMasterForm.reset();
     this.nProductMasterForm.get('n_productid')?.setValue(0);
     this.nProductMasterForm.get('n_product_name')?.setValue('');
+    this.nProductMasterForm.get('price')?.setValue('');
     this.nProductMasterForm.get('unitid')?.setValue(null);
     this.nProductMasterForm.get('item_groupid')?.setValue(null);
     this.nProductMasterForm.get('gst_percentage')?.setValue('');

@@ -124,6 +124,7 @@ export class SalesProductComponent {
         discount: new FormControl('', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
         qty: new FormControl('', [Validators.required, Validators.pattern(/^\d+(\.\d{1,})?$/)]),
         total: new FormControl(''),
+        re_amount: new FormControl('', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
         cgst_amount: new FormControl(''),
         sgst_amount: new FormControl(''),
         igst_amount: new FormControl(''),
@@ -190,6 +191,19 @@ export class SalesProductComponent {
     return control.touched && !!control.errors;
   }
 
+  getReamControl(index: number): FormControl {
+    const control = (
+      this.saleProductsForm.get('sale_nested') as FormArray
+    )
+      .at(index)?.get('re_amount') as FormControl;
+    return control;
+  }
+
+  isReamControlInvalid(index: number): boolean {
+    const control = this.getReamControl(index);
+    return control.touched && !!control.errors;
+  }
+
   addNesForm() {
     const newControl = new FormGroup({
       entry_n_id: new FormControl(0),
@@ -200,6 +214,7 @@ export class SalesProductComponent {
       discount: new FormControl('', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
       qty: new FormControl('', [Validators.required, Validators.pattern(/^\d+(\.\d{1,})?$/)]),
       total: new FormControl(''),
+      re_amount: new FormControl('', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
       cgst_amount: new FormControl(''),
       sgst_amount: new FormControl(''),
       igst_amount: new FormControl(''),
@@ -225,6 +240,7 @@ export class SalesProductComponent {
     const Control = this.saleProductsForm.get('sale_nested') as FormArray;
     const proID = Control.at(i).get('productid')?.value;
     const newGSTDet = this.productList.find((e) => { return e.productid == proID });
+    Control.at(i).get('price')?.setValue(newGSTDet.price);
     Control.at(i).get('hsn_number')?.setValue(newGSTDet.hsn_number);
     Control.at(i).get('gst_percentage')?.setValue(newGSTDet.gst_percentage);
 
@@ -243,17 +259,17 @@ export class SalesProductComponent {
     const qty = Number(Control.at(i).get('qty')?.value);
     Control.at(i).get('total')?.setValue(String((disAmount * qty).toFixed(2)));
 
-    const total = Number(Control.at(i).get('total')?.value);
+    const sutotal = (Number(Control.at(i).get('total')?.value)) + (Number(Control.at(i).get('re_amount')?.value));
     const gst = Number(Control.at(i).get('gst_percentage')?.value);
     debugger
     const stateCode = this.customerDetailsList.find((e) => { return e.customerid == this.saleProductsForm.value.customerid });
     if (stateCode) {
       if (stateCode.state_code == '33') {
-        Control.at(i).get('cgst_amount')?.setValue(String((((total * gst) / 100) * 0.5).toFixed(2)));
-        Control.at(i).get('sgst_amount')?.setValue(String((((total * gst) / 100) * 0.5).toFixed(2)));
+        Control.at(i).get('cgst_amount')?.setValue(String((((sutotal * gst) / 100) * 0.5).toFixed(2)));
+        Control.at(i).get('sgst_amount')?.setValue(String((((sutotal * gst) / 100) * 0.5).toFixed(2)));
         Control.at(i).get('igst_amount')?.setValue('0');
       } else {
-        Control.at(i).get('igst_amount')?.setValue(String(((total * gst) / 100).toFixed(2)));
+        Control.at(i).get('igst_amount')?.setValue(String(((sutotal * gst) / 100).toFixed(2)));
         Control.at(i).get('cgst_amount')?.setValue('0');
         Control.at(i).get('sgst_amount')?.setValue('0');
       }
@@ -263,7 +279,7 @@ export class SalesProductComponent {
     const sgst = Number(Control.at(i).get('sgst_amount')?.value);
     const igst = Number(Control.at(i).get('igst_amount')?.value);
 
-    Control.at(i).get('net_total')?.setValue(String((total + cgst + sgst + igst).toFixed(2)));
+    Control.at(i).get('net_total')?.setValue(String((sutotal + cgst + sgst + igst).toFixed(2)));
 
     this.finalCalculation();
   }
@@ -325,6 +341,7 @@ export class SalesProductComponent {
           ]),
           qty: new FormControl(e.qty, [Validators.required, Validators.pattern(/^\d+(\.\d{1,})?$/)]),
           total: new FormControl(e.total),
+          re_amount: new FormControl(e.re_amount, [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
           cgst_amount: new FormControl(e.cgst_amount),
           sgst_amount: new FormControl(e.sgst_amount),
           igst_amount: new FormControl(e.igst_amount),

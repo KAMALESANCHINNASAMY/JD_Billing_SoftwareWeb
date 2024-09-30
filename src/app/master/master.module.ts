@@ -17,12 +17,13 @@ import { LoadingspinnerComponent } from './loadingspinner/loadingspinner.compone
 import { CaptchaDialogComponent } from './captcha-dialog/captcha-dialog.component';
 import { ExpenseMasterComponent } from './expense-master/expense-master.component';
 import { HandCashEntryComponent } from './hand-cash-entry/hand-cash-entry.component';
+import { BankMasterComponent } from './bank-master/bank-master.component';
 
 @NgModule({
   declarations: [CustomerMasterComponent,
     ConfirmDialogComponent, SupplierMasterComponent, SupplierMasterComponent, WeaverMasterComponent,
     FinancialYearComponent, ThirdPartyMasterComponent, CaptchaDialogComponent, ExpenseMasterComponent,
-    HandCashEntryComponent],
+    HandCashEntryComponent,BankMasterComponent],
   imports: [
     RouterModule.forChild(masterRoutes),
     CommonModule,
