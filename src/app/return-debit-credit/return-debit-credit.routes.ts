@@ -1,13 +1,24 @@
-import { Component } from '@angular/core';
 import { Routes } from '@angular/router';
 import { SalesBillEntrygstDebitnoteComponent } from './sales-bill-entrygst-debitnote/sales-bill-entrygst-debitnote.component';
 import { SalesBillEntryDebitnoteComponent } from './sales-bill-entry-debitnote/sales-bill-entry-debitnote.component';
+import { ReturnRawProductComponent } from './return-raw-product/return-raw-product.component';
+import { ReturnSalesProductComponent } from './return-sales-product/return-sales-product.component';
 
 export const returnDebitCreditRoutes: Routes = [
   {
-path:'salesbill-debitgst',component:SalesBillEntrygstDebitnoteComponent
-},
-{
-  path:'salesbill-debitnongst',component:SalesBillEntryDebitnoteComponent
-}
+    path: 'salesbill-debitgst',
+    component: SalesBillEntrygstDebitnoteComponent
+  },
+  {
+    path: 'salesbill-debitnongst',
+    component: SalesBillEntryDebitnoteComponent
+  },
+  {
+    path: 'return-raw-prodcut',
+    component: ReturnRawProductComponent
+  },
+  {
+    path: 'return-sales-product',
+    component: ReturnSalesProductComponent
+  }
 ];

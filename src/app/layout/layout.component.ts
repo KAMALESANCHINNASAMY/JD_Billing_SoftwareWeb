@@ -60,6 +60,12 @@ export class LayoutComponent implements OnInit {
           link: 'payments/supplier-payments',
           isselect: false,
           value: 1103
+        },
+        {
+          link_name: 'Raw Product Payment',
+          link: 'payments/raw-product-payment',
+          isselect: false,
+          value: 1104
         }
       ]
     },
@@ -142,11 +148,24 @@ export class LayoutComponent implements OnInit {
         link: 'accounts/third-partygst-debit-note',
         isselect: false,
         value: 1302
-      }, {
+      },
+      {
         link_name: 'Supplier Return',
         link: 'accounts/debit-note',
         isselect: false,
         value: 1303
+      },
+      {
+        link_name: 'Raw Product Return',
+        link: 'returnCredit-Debit/return-raw-prodcut',
+        isselect: false,
+        value: 1304
+      },
+      {
+        link_name: 'Sales Product Return',
+        link: 'returnCredit-Debit/return-sales-product',
+        isselect: false,
+        value: 1305
       }
       ],
     },

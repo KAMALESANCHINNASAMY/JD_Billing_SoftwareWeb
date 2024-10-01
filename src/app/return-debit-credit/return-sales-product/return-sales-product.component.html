@@ -3,34 +3,37 @@
         <mat-card-content>
             <div class="row">
                 <div class="col-12">
-                    <h2 class="head">Raw Product Return</h2>
+                    <h2 class="head">Sales Product Return</h2>
                 </div>
             </div>
-            <form [formGroup]="SupplierDebitForm" (submit)="save()">
+            <form [formGroup]="salesDebitForm" (submit)="save()">
                 <div class="row">
                     <div class="col-sm-6" style="display: flex">
                         <div class="labeldiv">
-                            <label class="pt-2">Supplier
+                            <label class="pt-2" style="margin: auto">Customer
                                 Name<span class="text-danger">*</span></label>
                         </div>
                         <div class="inputdiv">
                             <mat-form-field>
-                                <mat-label>Supplier Name</mat-label>
+                                <mat-label>Customer Name</mat-label>
                                 <mat-select
-                                    (valueChange)="setSupplierDetails(advw.value)"
-                                    [ngClass]="{'is-invalid':SupplierDebitForm.controls.supplierid.touched &&
-                                    SupplierDebitForm.controls.supplierid.errors}"
-                                    formControlName="supplierid" #advw required>
+                                    (valueChange)="setCustomerDetails(advw.value)"
+                                    [ngClass]="{
+                                'is-invalid':
+                                  salesDebitForm.controls.customerid.touched &&
+                                  salesDebitForm.controls.customerid.errors
+                              }" formControlName="customerid" #advw required>
                                     <mat-form-field>
                                         <input matInput type="text" #auval
                                             (input)="suggest(auval.value)"
                                             placeholder="Search..." />
                                     </mat-form-field>
 
-                                    <mat-option [value]="option.supplierid"
-                                        [disabled]="SupplierDebitForm.value.returnid !=0"
+                                    <mat-option
+                                        [disabled]="salesDebitForm.value.returnid !=0"
+                                        [value]="option.customerid"
                                         *ngFor="let option of suggestions">
-                                        {{ option.supplier_name }}
+                                        {{ option.customer_name }}
                                     </mat-option>
                                 </mat-select>
                             </mat-form-field>
@@ -43,16 +46,16 @@
                         </div>
                         <div class="inputdiv">
                             <mat-form-field>
-                                <mat-label>Supplier Bill No</mat-label>
+                                <mat-label>Bill No</mat-label>
                                 <mat-select
-                                    [ngClass]="{'is-invalid': SupplierDebitForm.controls.purchaseid.touched 
-                                    &&SupplierDebitForm.controls.purchaseid.errors}"
-                                    formControlName="purchaseid" required>
+                                    [ngClass]="{'is-invalid': salesDebitForm.controls.entryid.touched 
+                                    &&salesDebitForm.controls.entryid.errors}"
+                                    formControlName="entryid" required>
                                     <mat-option
-                                        *ngFor="let option of RawProductList"
+                                        *ngFor="let option of salesProductList"
                                         (click)="onBillNoSelected(option)"
-                                        [value]="option.purchaseid">
-                                        {{ option.supplier_bill_no }}
+                                        [value]="option.entryid">
+                                        {{ option.bill_no }}
                                     </mat-option>
                                 </mat-select>
                             </mat-form-field>
@@ -66,7 +69,7 @@
                         </div>
                         <div class="inputdiv">
                             <input
-                                [ngClass]="{'is-invalid':SupplierDebitForm.controls.return_no.touched && SupplierDebitForm.controls.return_no.errors}"
+                                [ngClass]="{'is-invalid':salesDebitForm.controls.return_no.touched && salesDebitForm.controls.return_no.errors}"
                                 class="form-control" readonly
                                 formControlName="return_no" required />
                         </div>
@@ -77,7 +80,7 @@
                         </div>
                         <div class="inputdiv">
                             <input
-                                [ngClass]="{'is-invalid':SupplierDebitForm.controls.return_date.touched && SupplierDebitForm.controls.return_date.errors}"
+                                [ngClass]="{'is-invalid':salesDebitForm.controls.return_date.touched && salesDebitForm.controls.return_date.errors}"
                                 class="form-control" type="date"
                                 formControlName="return_date" required />
                         </div>
@@ -99,20 +102,20 @@
                                 <th>Net Total</th>
                             </tr>
                         </thead>
-                        <tbody formArrayName="rawProduct_nested">
+                        <tbody formArrayName="salesProduct_nested">
                             <tr
                                 *ngFor="let chid of getCommonControls(); let i = index"
                                 formGroupName="{{ i }}">
                                 <td>{{i+1}}</td>
                                 <td style="min-width: 150px;"><select
-                                        formControlName="n_productid"
+                                        formControlName="productid"
                                         class="form-control" required>
                                         <option disabled [ngValue]="null"
                                             selected>Please select</option>
                                         <option disabled
-                                            [ngValue]="item.n_productid"
-                                            *ngFor="let item of NestedProductList">
-                                            {{item.n_product_name}}</option>
+                                            [ngValue]="item.productid"
+                                            *ngFor="let item of productList">
+                                            {{item.product_name}}</option>
                                     </select>
                                 </td>
                                 <td style="min-width: 120px">
@@ -187,7 +190,7 @@
                                 </th>
                                 <td>
                                     <input formControlName="return_total"
-                                        [ngClass]="{'is-invalid':SupplierDebitForm.controls.return_total.touched && SupplierDebitForm.controls.return_total.errors}"
+                                        [ngClass]="{'is-invalid':salesDebitForm.controls.return_total.touched && salesDebitForm.controls.return_total.errors}"
                                         class="form-control" readonly />
                                 </td>
                             </tr>
@@ -199,7 +202,7 @@
                         <div style="margin: auto;">
                             <button type="submit" style="width: 80px"
                                 class="btn btn-success mr-3 btn-sm mt-2">
-                                <span>{{SupplierDebitForm.value.returnid == 0 ?
+                                <span>{{salesDebitForm.value.returnid == 0 ?
                                     "Save" : "Edit"}}</span>
                             </button>
                             <input type="button" style="width: 80px"
@@ -221,20 +224,20 @@
             <div class="row">
                 <div class="col-sm-12" style="display: flex;">
                     <div>
-                        <input #ds (change)="getSupplierDebitList(ds.value)"
+                        <input #ds (change)="getSalesDebitList(ds.value)"
                             style="max-width: 180px;" type="date"
                             class="form-control" />
                     </div>
                     <div>
                         <button class="btn btn-info ml-2"
-                            (click)="getSupplierDebitList('All')">GET All DATE</button>
+                            (click)="getSalesDebitList('All')">GET All DATE</button>
                     </div>
                 </div>
                 <div class="table-responsive mt-2">
                     <table class="table table-hover table-bordered col-sm-12">
                         <thead class="tableheadList">
                             <tr>
-                                <th style="text-align: left;">Supplier Name</th>
+                                <th style="text-align: left;">Customer Name</th>
                                 <th>Bill No</th>
                                 <th>Return No</th>
                                 <th>return Date</th>
@@ -244,8 +247,8 @@
                         </thead>
                         <tbody>
                             <tr
-                                *ngFor="let item of supplierDebitList;let i=index">
-                                <td style="text-align: left;">{{item.supplier_name}}</td>
+                                *ngFor="let item of salesDebitList;let i=index">
+                                <td style="text-align: left;">{{item.customer_name}}</td>
                                 <td>{{item.bill_no}}</td>
                                 <td>{{item.return_no}}</td>
                                 <td>{{item.return_date}}</td>

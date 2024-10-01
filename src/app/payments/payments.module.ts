@@ -11,14 +11,14 @@ import { HttpClientModule } from '@angular/common/http';
 import { ThirdPartyPaymentsComponent } from './third-party-payments/third-party-payments.component';
 import { SupplierPaymentsComponent } from './supplier-payments/supplier-payments.component';
 import { CustomerPaymentsComponent } from './customer-payments/customer-payments.component';
-
-
+import { RawProductPaymentComponent } from './raw-product-payment/raw-product-payment.component';
 
 @NgModule({
   declarations: [
     ThirdPartyPaymentsComponent,
     SupplierPaymentsComponent,
-    CustomerPaymentsComponent
+    CustomerPaymentsComponent,
+    RawProductPaymentComponent
   ],
   imports: [
     CommonModule,

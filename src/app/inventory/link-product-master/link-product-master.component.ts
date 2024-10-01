@@ -64,7 +64,7 @@ export class LinkProductMasterComponent {
       new FormGroup({
         link_n_id: new FormControl(0),
         n_productid: new FormControl(null, [Validators.required]),
-        qty: new FormControl(null, [Validators.required, Validators.pattern(/^\d+(\.\d{1,})?$/)])
+        a_qty: new FormControl(null, [Validators.required, Validators.pattern(/^\d+(\.\d{1,})?$/)])
       })
     ])
   });
@@ -77,7 +77,7 @@ export class LinkProductMasterComponent {
     const newControl = new FormGroup({
       link_n_id: new FormControl(0),
       n_productid: new FormControl(null, [Validators.required]),
-      qty: new FormControl(null, [Validators.required, Validators.pattern(/^\d+(\.\d{1,})?$/)])
+      a_qty: new FormControl(null, [Validators.required, Validators.pattern(/^\d+(\.\d{1,})?$/)])
     });
     (this.linkProductMasterForm.get('linkproduct_nested') as FormArray).push(newControl);
     //this.someMethod(); // Trigger change detection
@@ -99,7 +99,7 @@ export class LinkProductMasterComponent {
   }
 
   getQtyControl(index: number): FormControl {
-    const control = (this.linkProductMasterForm.get('linkproduct_nested') as FormArray).at(index)?.get('qty') as FormControl;
+    const control = (this.linkProductMasterForm.get('linkproduct_nested') as FormArray).at(index)?.get('a_qty') as FormControl;
     return control;
   }
 
@@ -169,7 +169,7 @@ export class LinkProductMasterComponent {
         const newControl = new FormGroup({
           link_n_id: new FormControl(e.link_n_id),
           n_productid: new FormControl(e.n_productid, [Validators.required]),
-          qty: new FormControl(e.qty, [Validators.required, Validators.pattern(/^\d+(\.\d{1,})?$/)])
+          a_qty: new FormControl(e.a_qty, [Validators.required, Validators.pattern(/^\d+(\.\d{1,})?$/)])
         });
         (this.linkProductMasterForm.get('linkproduct_nested') as FormArray).push(
           newControl

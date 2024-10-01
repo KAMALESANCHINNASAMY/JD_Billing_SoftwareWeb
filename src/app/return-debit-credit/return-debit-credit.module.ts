@@ -9,14 +9,15 @@ import { returnDebitCreditRoutes } from './return-debit-credit.routes';
 import { HttpClientModule } from '@angular/common/http';
 import { SalesBillEntrygstDebitnoteComponent } from './sales-bill-entrygst-debitnote/sales-bill-entrygst-debitnote.component';
 import { SalesBillEntryDebitnoteComponent } from './sales-bill-entry-debitnote/sales-bill-entry-debitnote.component';
-
-
-
+import { ReturnRawProductComponent } from './return-raw-product/return-raw-product.component';
+import { ReturnSalesProductComponent } from './return-sales-product/return-sales-product.component';
 
 @NgModule({
   declarations: [
     SalesBillEntrygstDebitnoteComponent,
-    SalesBillEntryDebitnoteComponent
+    SalesBillEntryDebitnoteComponent,
+    ReturnRawProductComponent,
+    ReturnSalesProductComponent
   ],
   imports: [
     CommonModule,
@@ -27,8 +28,7 @@ import { SalesBillEntryDebitnoteComponent } from './sales-bill-entry-debitnote/s
     FormsModule,
     ReactiveFormsModule,
     NgxDropzoneModule,
-    HttpClientModule,
-
+    HttpClientModule
   ]
 })
 export class ReturnDebitCreditModule { }

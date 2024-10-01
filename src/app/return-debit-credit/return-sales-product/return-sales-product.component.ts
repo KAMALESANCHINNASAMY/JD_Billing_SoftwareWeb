@@ -2,110 +2,110 @@ import { ChangeDetectorRef, Component } from '@angular/core';
 import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NotificationsService } from 'angular2-notifications';
-import { rawProductPurchaseService } from 'src/app/api-service/Accounts/rawProductPurchase.service';
-import { rawProductReturnService } from 'src/app/api-service/Credit-Debit-note/rawProductReturn.service';
+import { saleProductsService } from 'src/app/api-service/Accounts/saleProducts.service';
+import { salesProductReturnService } from 'src/app/api-service/Credit-Debit-note/salesProductReturn.service';
 import { DialogService } from 'src/app/api-service/Dialog.service';
-import { nestedProductMasterService } from 'src/app/api-service/nestedProductMaster.service';
-import { SupplierMasterService } from 'src/app/api-service/supplierMaster.service';
+import { customerMasterService } from 'src/app/api-service/customerMaster.service';
+import { productMasterService } from 'src/app/api-service/productMaster.service';
 
 @Component({
-  selector: 'app-return-raw-product',
-  templateUrl: './return-raw-product.component.html',
-  styleUrl: './return-raw-product.component.scss'
+  selector: 'app-return-sales-product',
+  templateUrl: './return-sales-product.component.html',
+  styleUrl: './return-sales-product.component.scss'
 })
-export class ReturnRawProductComponent {
+export class ReturnSalesProductComponent {
   userID: number = Number(localStorage.getItem('userid'));
   companyID: number = Number(localStorage.getItem('companyid'));
-  supplierDetailsList: any[] = [];
   suggestions: any[] = [];
   today: string = new Date().toISOString().slice(0, 10);
-  RawProductList: any[] = [];
-  supplierDebitList: any[] = [];
-  NestedProductList: any[] = [];
+  salesProductList: any[] = [];
+  customerDetailsList: any[] = [];
+  productList: any[] = [];
+  salesDebitList: any[] = [];
 
   constructor(
     private DialogSvc: DialogService,
     private notificationSvc: NotificationsService,
     private router: Router,
-    private sMSvc: SupplierMasterService,
+    private cMSvc: customerMasterService,
     private cdRef: ChangeDetectorRef,
-    private rrPSvc: rawProductReturnService,
-    private rpPSvc: rawProductPurchaseService,
-    private nPSvc: nestedProductMasterService
+    private pSvc: productMasterService,
+    private srPSvc: salesProductReturnService,
+    private rpPSvc: saleProductsService
   ) { }
   ngOnInit() {
-    this.getSupplierList();
-    this.getSupplierDebitList(this.today);
+    this.getCustomerList();
+    this.getSalesDebitList(this.today);
     this.findBillNo();
-    this.getNProductList();
+    this.getProductList();
   }
 
-  getSupplierList() {
-    this.sMSvc.getList(this.companyID).subscribe((res: any) => {
-      this.supplierDetailsList = res;
+  getCustomerList() {
+    this.cMSvc.getList(this.companyID).subscribe((res) => {
+      this.customerDetailsList = res;
       this.suggestions = res;
     });
   }
 
-  getNProductList() {
-    this.nPSvc.getList(this.companyID).subscribe((res) => {
-      this.NestedProductList = res
-    })
-  }
-
-  getSupplierDebitList(dated: any) {
-    this.rrPSvc.get(this.companyID, dated).subscribe((res: any) => {
-      this.supplierDebitList = res;
+  getSalesDebitList(dated: any) {
+    this.srPSvc.get(this.companyID, dated).subscribe((res: any) => {
+      this.salesDebitList = res;
       this.cdRef.detectChanges();
     });
   }
 
-  async setSupplierDetails(id: any) {
-    this.SupplierDebitForm.get('purchaseid')?.setValue(null);
-    this.RawProductList = []
-    this.rrPSvc.getRawProductBySupplier(this.companyID, id).subscribe((res) => {
-      this.RawProductList = res;
+  getProductList() {
+    this.pSvc.getList(this.companyID).subscribe((res) => {
+      this.productList = res
+    })
+  }
+
+  async setCustomerDetails(id: any) {
+    this.salesDebitForm.get('entryid')?.setValue(null);
+    this.salesProductList = []
+    this.srPSvc.getSalesProductByCustomer(this.companyID, id).subscribe((res) => {
+      this.salesProductList = res;
     });
     this.someMethod();
   }
 
   suggest(value: any) {
-    this.suggestions = this.supplierDetailsList.filter((item) =>
-      item.supplier_name.toLowerCase().includes(value.toLowerCase())
+    this.suggestions = this.customerDetailsList.filter((item) =>
+      item.customer_name.toLowerCase().includes(value.toLowerCase())
     );
     if (this.suggestions.length < 1)
-      this.suggestions = this.supplierDetailsList;
+      this.suggestions = this.customerDetailsList;
   }
 
   async findBillNo(): Promise<void> {
-    const data: any = await this.rrPSvc.getMaxId(this.companyID).toPromise();
+    const data: any = await this.srPSvc.getMaxId(this.companyID).toPromise();
     let maxnumber = 0;
-    if (Number(data.length) > 0 && this.SupplierDebitForm.value.returnid == 0) {
+    if (Number(data.length) > 0 && this.salesDebitForm.value.returnid == 0) {
       maxnumber = data[0].returnid + 1;
       if (maxnumber < 10) {
-        this.SupplierDebitForm.get('return_no')?.setValue('0' + String(maxnumber));
+        this.salesDebitForm.get('return_no')?.setValue('0' + String(maxnumber));
       } else {
-        this.SupplierDebitForm.get('return_no')?.setValue(String(maxnumber));
+        this.salesDebitForm.get('return_no')?.setValue(String(maxnumber));
       }
     }
   }
 
   async onBillNoSelected(value: any) {
     debugger
-    const nestedArray = await this.rpPSvc.getRawProductNestedLists(value.purchaseid).toPromise();
-    const control = <FormArray><unknown>(this.SupplierDebitForm.controls['rawProduct_nested']);
+    const nestedArray = await this.rpPSvc.getSalesNestedLists(value.entryid).toPromise();
+    const control = <FormArray><unknown>(this.salesDebitForm.controls['salesProduct_nested']);
     while (control.length !== 0) {
       control.removeAt(0);
     }
     if (control.length == 0 && nestedArray?.length != 0) {
       debugger
-      this.SupplierDebitForm.get('total')?.setValue(value.total);
-      this.SupplierDebitForm.get('bill_no')?.setValue(value.bill_no);
+      this.salesDebitForm.get('total')?.setValue(value.total);
+      this.salesDebitForm.get('bill_no')?.setValue(value.bill_no);
       nestedArray?.forEach(async (e, i) => {
         const newControl = new FormGroup({
           return_n_id: new FormControl(0),
-          purchase_n_id: new FormControl(e.purchase_n_id),
-          n_productid: new FormControl(e.n_productid),
+          entry_n_id: new FormControl(e.entry_n_id),
+          productid: new FormControl(e.productid),
           gst_percentage: new FormControl(e.gst_percentage),
           price: new FormControl(e.price),
           discount: new FormControl(e.discount),
@@ -124,7 +124,7 @@ export class ReturnRawProductComponent {
           net_total: new FormControl(e.net_total),
           ret_net_total: new FormControl('')
         });
-        (this.SupplierDebitForm.get('rawProduct_nested') as FormArray).push(
+        (this.salesDebitForm.get('salesProduct_nested') as FormArray).push(
           newControl
         );
         this.someMethod();
@@ -135,26 +135,26 @@ export class ReturnRawProductComponent {
   someMethod() {
     this.cdRef.detectChanges();
   }
-  SupplierDebitForm = new FormGroup({
+  salesDebitForm = new FormGroup({
     returnid: new FormControl(0),
-    purchaseid: new FormControl(null),
-    supplierid: new FormControl(null),
+    entryid: new FormControl(null),
+    customerid: new FormControl(null),
     bill_no: new FormControl('', [Validators.required]),
     return_no: new FormControl(''),
     return_date: new FormControl(''),
     total: new FormControl(''),
     return_total: new FormControl('', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
-    rawProduct_nested: new FormArray([]),
+    salesProduct_nested: new FormArray([]),
     cuid: new FormControl(this.userID),
     companyid: new FormControl(this.companyID),
   });
 
   getCommonControls(): AbstractControl[] {
-    return (this.SupplierDebitForm.get('rawProduct_nested') as FormArray).controls;
+    return (this.salesDebitForm.get('salesProduct_nested') as FormArray).controls;
   }
 
   getQtyControl(index: number): FormControl {
-    const control = (this.SupplierDebitForm.get('rawProduct_nested') as FormArray).at(index)?.get('ret_qty') as FormControl;
+    const control = (this.salesDebitForm.get('salesProduct_nested') as FormArray).at(index)?.get('ret_qty') as FormControl;
     return control;
   }
 
@@ -164,7 +164,7 @@ export class ReturnRawProductComponent {
   }
 
   getRemControl(index: number): FormControl {
-    const control = (this.SupplierDebitForm.get('rawProduct_nested') as FormArray).at(index)?.get('ret_re_amount') as FormControl;
+    const control = (this.salesDebitForm.get('salesProduct_nested') as FormArray).at(index)?.get('ret_re_amount') as FormControl;
     return control;
   }
 
@@ -174,7 +174,7 @@ export class ReturnRawProductComponent {
   }
 
   async save() {
-    if (this.SupplierDebitForm.valid) {
+    if (this.salesDebitForm.valid) {
       const res = await this.DialogSvc.openConfirmDialog(
         'Are you sure want to add this record ?'
       )
@@ -182,8 +182,8 @@ export class ReturnRawProductComponent {
         .toPromise();
       if (res == true) {
         await this.findBillNo();
-        var value = this.SupplierDebitForm.value;
-        this.rrPSvc.addNew(value).subscribe((res) => {
+        var value = this.salesDebitForm.value;
+        this.srPSvc.addNew(value).subscribe((res) => {
           if (res.status == 'Saved successfully') {
             this.notificationSvc.success('Saved Success');
             this.cancelClick();
@@ -197,27 +197,27 @@ export class ReturnRawProductComponent {
         });
       }
     } else {
-      this.SupplierDebitForm.markAllAsTouched();
+      this.salesDebitForm.markAllAsTouched();
     }
   }
 
   async update(item: any) {
     await this.cancelClick();
-    await this.setSupplierDetails(item.supplierid)
-    const nestedArray = await this.rrPSvc.getReturnNested(item.returnid).toPromise();
+    await this.setCustomerDetails(item.customerid)
+    const nestedArray = await this.srPSvc.getReturnNested(item.returnid).toPromise();
 
-    const control = <FormArray><unknown>(this.SupplierDebitForm.controls['rawProduct_nested']);
+    const control = <FormArray><unknown>(this.salesDebitForm.controls['salesProduct_nested']);
     while (control.length !== 0) {
       control.removeAt(0);
     }
 
     if (control.length == 0) {
-      this.SupplierDebitForm.patchValue(item);
+      this.salesDebitForm.patchValue(item);
       nestedArray?.forEach(async (e, i) => {
         const newControl = new FormGroup({
           return_n_id: new FormControl(0),
-          purchase_n_id: new FormControl(e.purchase_n_id),
-          n_productid: new FormControl(e.n_productid),
+          entry_n_id: new FormControl(e.entry_n_id),
+          productid: new FormControl(e.productid),
           gst_percentage: new FormControl(e.gst_percentage),
           price: new FormControl(e.price),
           discount: new FormControl(e.discount),
@@ -236,7 +236,7 @@ export class ReturnRawProductComponent {
           net_total: new FormControl(e.net_total),
           ret_net_total: new FormControl(e.ret_net_total)
         });
-        (this.SupplierDebitForm.get('rawProduct_nested') as FormArray).push(
+        (this.salesDebitForm.get('salesProduct_nested') as FormArray).push(
           newControl
         );
         this.someMethod();
@@ -245,7 +245,7 @@ export class ReturnRawProductComponent {
   }
 
   colculation(i: any) {
-    const Control = this.SupplierDebitForm.get('rawProduct_nested') as FormArray;
+    const Control = this.salesDebitForm.get('salesProduct_nested') as FormArray;
     const price = Number(Control.at(i).get('price')?.value);
     const discount = Number(Control.at(i).get('discount')?.value);
     if (Number(discount) > 100) {
@@ -266,8 +266,8 @@ export class ReturnRawProductComponent {
     const sutotal = (Number(Control.at(i).get('ret_total')?.value)) + (Number(Control.at(i).get('ret_re_amount')?.value));
     debugger
     const gst = Number(Control.at(i).get('gst_percentage')?.value);
-    const newArray = this.supplierDetailsList.filter((e) => {
-      return e.supplierid == this.SupplierDebitForm.value.supplierid;
+    const newArray = this.customerDetailsList.filter((e) => {
+      return e.customerid == this.salesDebitForm.value.customerid;
     });
     if (newArray.length > 0) {
       if (newArray[0].state_code == '33') {
@@ -291,34 +291,33 @@ export class ReturnRawProductComponent {
   }
 
   async finalCalculation() {
-    const Control = this.SupplierDebitForm.get('rawProduct_nested') as FormArray;
+    const Control = this.salesDebitForm.get('salesProduct_nested') as FormArray;
 
     const FormTotal = Control.value.reduce((acc: number, val: any) => (acc += Number(val.net_total)), 0);
-    this.SupplierDebitForm.get('total')?.setValue(String(FormTotal.toFixed(2)));
+    this.salesDebitForm.get('total')?.setValue(String(FormTotal.toFixed(2)));
 
     const FormReturnTotal = Control.value.reduce((acc: number, val: any) => (acc += Number(val.ret_net_total)), 0);
-    this.SupplierDebitForm.get('return_total')?.setValue(String(FormReturnTotal.toFixed(2)));
+    this.salesDebitForm.get('return_total')?.setValue(String(FormReturnTotal.toFixed(2)));
   }
 
   async cancelClick() {
-    this.SupplierDebitForm.reset();
+    this.salesDebitForm.reset();
     const control = <FormArray><unknown>(
-      this.SupplierDebitForm.controls['rawProduct_nested']
+      this.salesDebitForm.controls['salesProduct_nested']
     );
     while (control.length !== 0) {
       control.removeAt(0);
     }
 
-    this.SupplierDebitForm.get('returnid')?.setValue(0);
-    this.SupplierDebitForm.get('supplierid')?.setValue(null);
-    this.SupplierDebitForm.get('return_date')?.setValue('');
-    this.SupplierDebitForm.get('total')?.setValue('');
-    this.SupplierDebitForm.get('return_total')?.setValue('');
-    this.SupplierDebitForm.get('cuid')?.setValue(this.userID);
-    this.SupplierDebitForm.get('companyid')?.setValue(this.companyID);
+    this.salesDebitForm.get('returnid')?.setValue(0);
+    this.salesDebitForm.get('customerid')?.setValue(null);
+    this.salesDebitForm.get('return_date')?.setValue('');
+    this.salesDebitForm.get('total')?.setValue('');
+    this.salesDebitForm.get('return_total')?.setValue('');
+    this.salesDebitForm.get('cuid')?.setValue(this.userID);
+    this.salesDebitForm.get('companyid')?.setValue(this.companyID);
     this.findBillNo();
-    this.getSupplierList();
-    this.getSupplierDebitList(this.today);
+    this.getSalesDebitList(this.today);
   }
 
   backButton() {
