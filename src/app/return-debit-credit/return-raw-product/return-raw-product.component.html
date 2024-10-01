@@ -90,6 +90,7 @@
                             <tr>
                                 <th>#</th>
                                 <th>Product Name</th>
+                                <th>Actual Qty</th>
                                 <th>Price</th>
                                 <th>Discount %</th>
                                 <th>Qty</th>
@@ -114,6 +115,15 @@
                                             *ngFor="let item of NestedProductList">
                                             {{item.n_product_name}}</option>
                                     </select>
+                                </td>
+                                <td style="min-width: 70px">
+                                    <input formControlName="a_qty"
+                                        class="form-control" required readonly />
+                                    <input
+                                        [ngClass]="{ 'is-invalid': isAQtyControlInvalid(i) }"
+                                        (input)="colculation(i)"
+                                        formControlName="ret_a_qty"
+                                        class="form-control" required />
                                 </td>
                                 <td style="min-width: 120px">
                                     <input formControlName="price"
@@ -169,7 +179,7 @@
                             <tr>
                                 <th
                                     style="text-align: right;color: #005f69;font-family: Georgia, 'Times New Roman', Times, serif;"
-                                    class="pr-5 pt-3" colspan="8">
+                                    class="pr-5 pt-3" colspan="9">
                                     <b>Total</b>
                                 </th>
                                 <td>
@@ -182,7 +192,7 @@
                             <tr>
                                 <th
                                     style="text-align: right;color: #005f69;font-family: Georgia, 'Times New Roman', Times, serif;"
-                                    class="pr-5 pt-3" colspan="8">
+                                    class="pr-5 pt-3" colspan="9">
                                     <b>Return Total</b>
                                 </th>
                                 <td>

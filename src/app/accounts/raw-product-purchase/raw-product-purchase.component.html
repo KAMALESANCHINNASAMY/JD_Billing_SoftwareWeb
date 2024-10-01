@@ -111,6 +111,8 @@
                             <tr>
                                 <th>#</th>
                                 <th>Product Name</th>
+                                <th>Unit</th>
+                                <th>Actual Qty</th>
                                 <th>Price</th>
                                 <th>Discount %</th>
                                 <th>Qty</th>
@@ -138,6 +140,12 @@
                                             {{item.n_product_name}}</option>
                                     </select>
                                 </td>
+                                <td>{{chid.get('unit_name')?.value}}</td>
+                                <td style="min-width: 120px;"><input
+                                        (input)="colculation(i)"
+                                        [ngClass]="{'is-invalid': isAtytrolInvalid(i)}"
+                                        formControlName="a_qty"
+                                        class="form-control" required></td>
                                 <td style="min-width: 120px;"><input
                                         (input)="colculation(i)"
                                         [ngClass]="{'is-invalid': isPriceControlInvalid(i)}"
@@ -184,7 +192,7 @@
                         <tbody>
                             <tr>
                                 <th style="text-align: right;font-size: 17px;"
-                                    class="pr-5 head" colspan="8">Total</th>
+                                    class="pr-5 head" colspan="10">Total</th>
                                 <td><input formControlName="total"
                                         [ngClass]="{'is-invalid':rawProductPurchaseForm.controls.total.touched && rawProductPurchaseForm.controls.total.errors}"
                                         class="form-control" readonly></td>

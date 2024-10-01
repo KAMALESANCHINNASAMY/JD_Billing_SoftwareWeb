@@ -107,6 +107,8 @@ export class ReturnRawProductComponent {
           purchase_n_id: new FormControl(e.purchase_n_id),
           n_productid: new FormControl(e.n_productid),
           gst_percentage: new FormControl(e.gst_percentage),
+          a_qty: new FormControl(e.a_qty),
+          ret_a_qty: new FormControl(e.ret_a_qty),
           price: new FormControl(e.price),
           discount: new FormControl(e.discount),
           qty: new FormControl(e.qty),
@@ -160,6 +162,16 @@ export class ReturnRawProductComponent {
 
   isQtyControlInvalid(index: number): boolean {
     const control = this.getQtyControl(index);
+    return control.touched && !!control.errors;
+  }
+
+  getaQtyControl(index: number): FormControl {
+    const control = (this.SupplierDebitForm.get('rawProduct_nested') as FormArray).at(index)?.get('ret_a_qty') as FormControl;
+    return control;
+  }
+
+  isAQtyControlInvalid(index: number): boolean {
+    const control = this.getaQtyControl(index);
     return control.touched && !!control.errors;
   }
 
@@ -219,6 +231,8 @@ export class ReturnRawProductComponent {
           purchase_n_id: new FormControl(e.purchase_n_id),
           n_productid: new FormControl(e.n_productid),
           gst_percentage: new FormControl(e.gst_percentage),
+          a_qty: new FormControl(e.a_qty),
+          ret_a_qty: new FormControl(e.ret_a_qty),
           price: new FormControl(e.price),
           discount: new FormControl(e.discount),
           qty: new FormControl(e.qty),
@@ -257,6 +271,14 @@ export class ReturnRawProductComponent {
     ) {
       Control.at(i).get('ret_qty')?.setValue(Control.at(i).get('qty')?.value);
       this.notificationSvc.error('Invalid QTY!');
+    }
+
+    if (
+      Number(Control.at(i).get('ret_a_qty')?.value) >
+      Number(Control.at(i).get('a_qty')?.value)
+    ) {
+      Control.at(i).get('ret_a_qty')?.setValue(Control.at(i).get('a_qty')?.value);
+      this.notificationSvc.error('Invalid Actual QTY!');
     }
 
     const disAmount = price - (price * discount) / 100;

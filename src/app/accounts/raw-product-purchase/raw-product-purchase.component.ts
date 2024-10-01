@@ -6,6 +6,7 @@ import { rawProductPurchaseService } from 'src/app/api-service/Accounts/rawProdu
 import { DialogService } from 'src/app/api-service/Dialog.service';
 import { nestedProductMasterService } from 'src/app/api-service/nestedProductMaster.service';
 import { SupplierMasterService } from 'src/app/api-service/supplierMaster.service';
+import { unitMasterService } from 'src/app/api-service/unitMaster.service';
 
 @Component({
   selector: 'app-raw-product-purchase',
@@ -20,11 +21,13 @@ export class RawProductPurchaseComponent {
   today: string = new Date().toISOString().slice(0, 10);
   rawProductList: any[] = [];
   NestedProductList: any[] = [];
+  unitMasterList: any[] = [];
 
   async ngOnInit() {
     this.getSupplierList();
     this.getNProductList();
     this.findBillNo();
+    this.getUnitMasterDetails();
     this.getRawMAtrialList(this.today);
   }
 
@@ -35,11 +38,18 @@ export class RawProductPurchaseComponent {
     private sMSvc: SupplierMasterService,
     private cdRef: ChangeDetectorRef,
     private rpPSvc: rawProductPurchaseService,
-    private nPSvc: nestedProductMasterService
+    private nPSvc: nestedProductMasterService,
+    private UNITMSVC: unitMasterService
   ) { }
 
   backButton() {
     this.router.navigateByUrl('/app/dashboard/dashboard');
+  }
+
+  getUnitMasterDetails() {
+    this.UNITMSVC.getUnitsList(this.companyID).subscribe((res) => {
+      this.unitMasterList = res;
+    });
   }
   getNProductList() {
     this.nPSvc.getList(this.companyID).subscribe((res) => {
@@ -122,8 +132,9 @@ export class RawProductPurchaseComponent {
       new FormGroup({
         purchase_n_id: new FormControl(0),
         n_productid: new FormControl(null),
-        hsn_number: new FormControl(''),
         gst_percentage: new FormControl(''),
+        unit_name: new FormControl(''),
+        a_qty: new FormControl('', [Validators.required, Validators.pattern(/^\d+(\.\d{1,})?$/)]),
         price: new FormControl('', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
         discount: new FormControl('', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
         qty: new FormControl('', [Validators.required, Validators.pattern(/^\d+(\.\d{1,})?$/)]),
@@ -166,6 +177,19 @@ export class RawProductPurchaseComponent {
 
   isPriceControlInvalid(index: number): boolean {
     const control = this.getPriceControl(index);
+    return control.touched && !!control.errors;
+  }
+
+  getAqtyControl(index: number): FormControl {
+    const control = (
+      this.rawProductPurchaseForm.get('purchase_nested') as FormArray
+    )
+      .at(index)?.get('a_qty') as FormControl;
+    return control;
+  }
+
+  isAtytrolInvalid(index: number): boolean {
+    const control = this.getAqtyControl(index);
     return control.touched && !!control.errors;
   }
 
@@ -213,8 +237,9 @@ export class RawProductPurchaseComponent {
     const newControl = new FormGroup({
       purchase_n_id: new FormControl(0),
       n_productid: new FormControl(null),
-      hsn_number: new FormControl(''),
       gst_percentage: new FormControl(''),
+      unit_name: new FormControl(''),
+      a_qty: new FormControl('', [Validators.required, Validators.pattern(/^\d+(\.\d{1,})?$/)]),
       price: new FormControl('', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
       discount: new FormControl('', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
       qty: new FormControl('', [Validators.required, Validators.pattern(/^\d+(\.\d{1,})?$/)]),
@@ -247,7 +272,7 @@ export class RawProductPurchaseComponent {
     const proID = Control.at(i).get('n_productid')?.value;
     const newGSTDet = this.NestedProductList.find((e) => { return e.n_productid == proID });
     Control.at(i).get('price')?.setValue(newGSTDet.price);
-    Control.at(i).get('hsn_number')?.setValue(newGSTDet.hsn_number);
+    Control.at(i).get('unit_name')?.setValue(newGSTDet.unit_name);
     Control.at(i).get('gst_percentage')?.setValue(newGSTDet.gst_percentage);
 
     this.colculation(i);
@@ -335,11 +360,14 @@ export class RawProductPurchaseComponent {
       this.rawProductPurchaseForm.get('cuid')?.setValue(this.userID);
 
       nestedArray?.forEach(async (e, i) => {
+        const newGSTDet = this.NestedProductList.find((ee) => { return ee.n_productid == e.n_productid });
+        debugger
         const newControl = new FormGroup({
           purchase_n_id: new FormControl(e.purchase_n_id),
           n_productid: new FormControl(e.n_productid),
-          hsn_number: new FormControl(e.hsn_number),
           gst_percentage: new FormControl(e.gst_percentage),
+          unit_name: new FormControl(newGSTDet.unit_name),
+          a_qty: new FormControl(e.a_qty, [Validators.required, Validators.pattern(/^\d+(\.\d{1,})?$/)]),
           price: new FormControl(e.price, [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
           discount: new FormControl(e.discount, [
             Validators.required,
