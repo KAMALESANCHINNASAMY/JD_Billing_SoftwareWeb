@@ -1,0 +1,51 @@
+<div class="container-fluid">
+    <mat-card class="matcard mt-2">
+        <mat-card-content>
+            <div class="row">
+                <div class="col-sm-12">
+                    <h2 class="head">Raw Product Stock Report</h2>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-9">
+                    <button class="btn btn-info btn-sm ml-3"
+                        printSectionId="_print_section" ngxPrint
+                        [useExistingCss]="true">
+                        <mat-icon>print</mat-icon>
+                    </button>
+                </div>
+
+                <div class="table-responsive col-sm-12" id="_print_section">
+                    <table style="width: 100%;"
+                        class="table table-bordered table-hover">
+                        <thead class="tableheadList">
+                            <tr>
+                                <th>S No</th>
+                                <th>product Name</th>
+                                <th>Purchased Qty</th>
+                                <th>Return Qty</th>
+                                <th>Taken into Production</th>
+                                <th>Availabel Qty</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr
+                                *ngFor="let item of purchaseReports; let i = index">
+                                <td>{{ i + 1 }}</td>
+                                <td>{{item.n_product_name}}</td>
+                                <td>{{ item.pa_qty }}</td>
+                                <td>{{item.re_qty}}</td>
+                                <td>{{ item.total_s_qty }}</td>
+                                <td
+                                    style="font-weight: 700;color: green;font-family:sans-serif;">
+                                    {{(+item.pa_qty)-(+item.re_qty +
+                                    +item.total_s_qty)}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>

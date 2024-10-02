@@ -94,6 +94,16 @@ const routes: Routes = [
         path: 'saree-history',
         loadChildren: () =>
           import('./saree-history/saree-history.module').then((m) => (m.SareeHistoryModule))
+      },
+      {
+        path: 'sales-products-reports',
+        loadChildren: () =>
+          import('./sales-product-reports/sales-product-reports.module').then((m) => (m.SalesProductReportsModule))
+      },
+      {
+        path: 'raw-products-reports',
+        loadChildren: () =>
+          import('./raw-products-reports/raw-products-reports.module').then((m) => (m.RawProductsReportsModule))
       }
     ],
   },

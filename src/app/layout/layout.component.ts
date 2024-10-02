@@ -170,6 +170,34 @@ export class LayoutComponent implements OnInit {
       ],
     },
     {
+      link_name: 'Raw Product Reports',
+      link: null,
+      icon: 'salesreport',
+      isselect: false,
+      value: 23,
+      sub_menu: [{
+        link_name: 'Raw Product Stock Report',
+        link: 'raw-products-reports/raw-product-stock',
+        isselect: false,
+        value: 2301
+      }
+      ],
+    },
+    {
+      link_name: 'Sales Product Reports',
+      link: null,
+      icon: 'salesreport',
+      isselect: false,
+      value: 24,
+      sub_menu: [{
+        link_name: 'Sales product report',
+        link: 'sales-products-reports/sales-product-report',
+        isselect: false,
+        value: 2401
+      }
+      ],
+    },
+    {
       link_name: 'Raw Material Reports',
       link: null,
       icon: 'salesreport',
