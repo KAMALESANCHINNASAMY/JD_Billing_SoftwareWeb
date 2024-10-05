@@ -118,6 +118,18 @@ export class LayoutComponent implements OnInit {
           value: 1206
         },
         {
+          link_name: 'Supply of Material to Third Party',
+          link: 'accounts/supply-to-thirdParty',
+          isselect: false,
+          value: 1210
+        },
+        {
+          link_name: 'Purchase From ThirdParty',
+          link: 'accounts/purchase-from-thirdParty',
+          isselect: false,
+          value: 1211
+        },
+        {
           link_name: 'Sale Products',
           link: 'accounts/sale-products',
           isselect: false,
@@ -160,6 +172,18 @@ export class LayoutComponent implements OnInit {
         link: 'returnCredit-Debit/return-raw-prodcut',
         isselect: false,
         value: 1304
+      },
+      {
+        link_name: 'ThirdParty Supply Return',
+        link: 'returnCredit-Debit/thirdParty-supply-return',
+        isselect: false,
+        value: 1306
+      },
+      {
+        link_name: 'ThirdParty Purchase Return',
+        link: 'returnCredit-Debit/thirdParty-purchase-return',
+        isselect: false,
+        value: 1307
       },
       {
         link_name: 'Sales Product Return',

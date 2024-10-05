@@ -1,0 +1,208 @@
+<div class="container-fluid">
+    <mat-card class="mt-3 matcard mb-2">
+        <mat-card-content>
+            <div class="row">
+                <div class="col-12">
+                    <h2 class="head">Third Party Supply Return</h2>
+                </div>
+            </div>
+            <form [formGroup]="retSupplyForm" (submit)="save()">
+                <div class="row">
+                    <div class="col-sm-6" style="display: flex">
+                        <div class="labeldiv">
+                            <label class="pt-2" style="margin: auto">ThirdParty
+                                Name<span
+                                    class="text-danger">*</span></label>
+                        </div>
+                        <div class="inputdiv">
+                            <mat-form-field>
+                                <mat-label>Third Party Name</mat-label>
+                                <mat-select
+                                    (valueChange)="setSupplierDetails(advw.value)"
+                                    [ngClass]="{'is-invalid':retSupplyForm.controls.third_partyid.touched && retSupplyForm.controls.third_partyid.errors}"
+                                    formControlName="third_partyid" #advw
+                                    required>
+                                    <mat-form-field>
+                                        <input matInput type="text" #auval
+                                            (input)="suggest(auval.value)"
+                                            placeholder="Search...">
+                                    </mat-form-field>
+
+                                    <mat-option [value]="option.third_partyid"
+                                        [disabled]="retSupplyForm.value.returnid !=0"
+                                        *ngFor="let option of suggestions">
+                                        {{option.party_name}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6" style="display: flex">
+                        <div class="labeldiv">
+                            <label class="pt-2">
+                                Bill No</label>
+                        </div>
+                        <div class="inputdiv">
+                            <mat-form-field>
+                                <mat-label>Bill No</mat-label>
+                                <mat-select
+                                    [ngClass]="{'is-invalid': retSupplyForm.controls.supplyid.touched 
+                                    &&retSupplyForm.controls.supplyid.errors}"
+                                    formControlName="supplyid" required>
+                                    <mat-option
+                                        [disabled]="retSupplyForm.value.returnid !=0"
+                                        *ngFor="let option of supplyList"
+                                        (click)="onBillNoSelected(option)"
+                                        [value]="option.supplyid">
+                                        {{ option.bill_no }}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-sm-6" style="display: flex">
+                        <div class="labeldiv">
+                            <label class="pt-2">Return No</label>
+                        </div>
+                        <div class="inputdiv">
+                            <input
+                                [ngClass]="{'is-invalid':retSupplyForm.controls.return_no.touched && retSupplyForm.controls.return_no.errors}"
+                                class="form-control" readonly
+                                formControlName="return_no" required />
+                        </div>
+                    </div>
+                    <div class="col-sm-6" style="display: flex">
+                        <div class="labeldiv">
+                            <label class="pt-2">Return Date</label>
+                        </div>
+                        <div class="inputdiv">
+                            <input
+                                [ngClass]="{'is-invalid':retSupplyForm.controls.return_date.touched && retSupplyForm.controls.return_date.errors}"
+                                class="form-control" type="date"
+                                formControlName="return_date" required />
+                        </div>
+                    </div>
+                </div>
+                <div class="table-responsive scrollme mt-4">
+                    <table
+                        class="col-sm-12 table table-hover table-bordered table-sm">
+                        <thead class="tablehead">
+                            <tr>
+                                <th>#</th>
+                                <th>Product Name</th>
+                                <th>Actual Qty</th>
+                                <th>Qty</th>
+                            </tr>
+                        </thead>
+                        <tbody formArrayName="supply_nested">
+                            <tr
+                                *ngFor="let chid of getCommonControls(); let i = index"
+                                formGroupName="{{ i }}">
+                                <td>{{i+1}}</td>
+                                <td style="min-width: 150px;"><select
+                                        formControlName="n_productid"
+                                        class="form-control" required>
+                                        <option disabled [ngValue]="null"
+                                            selected>Please select</option>
+                                        <option disabled
+                                            [ngValue]="item.n_productid"
+                                            *ngFor="let item of NestedProductList">
+                                            {{item.n_product_name}}</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <div style="display: flex;">
+                                        <input formControlName="a_qty"
+                                            class="form-control" required
+                                            readonly />
+                                        <input (change)="checkQty(i)"
+                                            [ngClass]="{ 'is-invalid': isAQtyControlInvalid(i) }"
+                                            formControlName="ret_a_qty"
+                                            class="form-control" required />
+                                    </div>
+                                </td>
+                                <td>
+                                    <div style="display: flex;">
+                                        <input formControlName="qty"
+                                            class="form-control" required
+                                            readonly />
+                                        <input
+                                            [ngClass]="{ 'is-invalid': isQtyControlInvalid(i) }"
+                                            formControlName="ret_qty"
+                                            (change)="checkQty(i)"
+                                            class="form-control" required />
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12" style="display: flex">
+                        <div style="margin: auto;">
+                            <button type="submit" style="width: 80px"
+                                class="btn btn-success mr-3 btn-sm mt-2">
+                                <span>{{retSupplyForm.value.returnid == 0 ?
+                                    "Save" : "Edit"}}</span>
+                            </button>
+                            <input type="button" style="width: 80px"
+                                (click)="cancelClick()"
+                                class="btn btn-primary mr-3 btn-sm mt-2"
+                                value="Clear" />
+                            <input type="button" style="width: 80px"
+                                class="btn btn-danger btn-sm mt-2"
+                                (click)="backButton()"
+                                value="Close" />
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </mat-card-content>
+    </mat-card>
+    <mat-card class="mt-3 mb-2 matcardlist">
+        <mat-card-content>
+            <div class="row">
+                <div class="col-sm-12" style="display: flex;">
+                    <div>
+                        <input #ds (change)="getReturn(ds.value)"
+                            style="max-width: 180px;" type="date"
+                            class="form-control" />
+                    </div>
+                    <div>
+                        <button class="btn btn-info ml-2"
+                            (click)="getReturn('All')">GET All DATE</button>
+                    </div>
+                </div>
+                <div class="table-responsive mt-2">
+                    <table class="table table-hover table-bordered col-sm-12">
+                        <thead class="tableheadList">
+                            <tr>
+                                <th style="text-align: left;">Supplier Name</th>
+                                <th>Bill No</th>
+                                <th>Return No</th>
+                                <th>return Date</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr
+                                *ngFor="let item of supplierDebitList;let i=index">
+                                <td style="text-align: left;">{{item.party_name}}</td>
+                                <td>{{item.bill_no}}</td>
+                                <td>{{item.return_no}}</td>
+                                <td>{{item.return_date}}</td>
+                                <td style="width: 140px;">
+                                    <button class="btn btn-sm ml-1 btn-primary"
+                                        (click)="update(item)">Edit</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>

@@ -28,6 +28,8 @@ import { WeaversWithGivenReceivedComponent } from './weavers-with-given-received
 import { RawProductPurchaseComponent } from './raw-product-purchase/raw-product-purchase.component';
 import { SalesProductComponent } from './sales-product/sales-product.component';
 import { ExpenseEntryComponent } from './expense-entry/expense-entry.component';
+import { SupplyToThirdPartyComponent } from './supply-to-third-party/supply-to-third-party.component';
+import { PurchaseFromThirdPartyComponent } from './purchase-from-third-party/purchase-from-third-party.component';
 
 
 @NgModule({
@@ -46,7 +48,9 @@ import { ExpenseEntryComponent } from './expense-entry/expense-entry.component';
     WeaversWithGivenReceivedComponent,
     RawProductPurchaseComponent,
     SalesProductComponent,
-    ExpenseEntryComponent
+    ExpenseEntryComponent,
+    SupplyToThirdPartyComponent,
+    PurchaseFromThirdPartyComponent
   ],
   imports: [
     CommonModule,

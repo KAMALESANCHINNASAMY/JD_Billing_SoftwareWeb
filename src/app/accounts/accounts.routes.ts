@@ -13,6 +13,8 @@ import { WeaversWithGivenReceivedComponent } from './weavers-with-given-received
 import { RawProductPurchaseComponent } from './raw-product-purchase/raw-product-purchase.component';
 import { SalesProductComponent } from './sales-product/sales-product.component';
 import { ExpenseEntryComponent } from './expense-entry/expense-entry.component';
+import { SupplyToThirdPartyComponent } from './supply-to-third-party/supply-to-third-party.component';
+import { PurchaseFromThirdPartyComponent } from './purchase-from-third-party/purchase-from-third-party.component';
 
 export const accountsRoutes: Routes = [
   {
@@ -66,5 +68,13 @@ export const accountsRoutes: Routes = [
   {
     path: 'expense-entry',
     component: ExpenseEntryComponent
+  },
+  {
+    path: 'supply-to-thirdParty',
+    component: SupplyToThirdPartyComponent
+  },
+  {
+    path: 'purchase-from-thirdParty',
+    component: PurchaseFromThirdPartyComponent
   }
 ];

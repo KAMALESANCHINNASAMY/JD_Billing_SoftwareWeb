@@ -52,6 +52,7 @@
                                     &&salesDebitForm.controls.entryid.errors}"
                                     formControlName="entryid" required>
                                     <mat-option
+                                        [disabled]="salesDebitForm.value.returnid !=0"
                                         *ngFor="let option of salesProductList"
                                         (click)="onBillNoSelected(option)"
                                         [value]="option.entryid">

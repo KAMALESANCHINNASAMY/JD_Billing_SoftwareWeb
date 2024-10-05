@@ -3,6 +3,8 @@ import { SalesBillEntrygstDebitnoteComponent } from './sales-bill-entrygst-debit
 import { SalesBillEntryDebitnoteComponent } from './sales-bill-entry-debitnote/sales-bill-entry-debitnote.component';
 import { ReturnRawProductComponent } from './return-raw-product/return-raw-product.component';
 import { ReturnSalesProductComponent } from './return-sales-product/return-sales-product.component';
+import { ThirdPartySupplyReturnComponent } from './third-party-supply-return/third-party-supply-return.component';
+import { ThirdPartyPurchaseReturnComponent } from './third-party-purchase-return/third-party-purchase-return.component';
 
 export const returnDebitCreditRoutes: Routes = [
   {
@@ -20,5 +22,13 @@ export const returnDebitCreditRoutes: Routes = [
   {
     path: 'return-sales-product',
     component: ReturnSalesProductComponent
+  },
+  {
+    path: 'thirdParty-supply-return',
+    component: ThirdPartySupplyReturnComponent
+  },
+  {
+    path: 'thirdParty-purchase-return',
+    component: ThirdPartyPurchaseReturnComponent
   }
 ];
