@@ -98,7 +98,7 @@
                                 <th>Discount %</th>
                                 <th>Qty</th>
                                 <th>Total</th>
-                                <th>Remaining amount</th>
+                                <!-- <th>Remaining amount</th> -->
                                 <th>Total GST</th>
                                 <th>Net Total</th>
                             </tr>
@@ -143,14 +143,14 @@
                                     <input formControlName="ret_total"
                                         class="form-control" required readonly />
                                 </td>
-                                <td style="min-width: 140px">
+                                <!-- <td style="min-width: 140px">
                                     <input formControlName="re_amount"
                                         class="form-control" readonly />
                                     <input formControlName="ret_re_amount"
                                         [ngClass]="{ 'is-invalid': isRemControlInvalid(i) }"
                                         (input)="colculation(i)"
                                         class="form-control" required />
-                                </td>
+                                </td> -->
                                 <td>
                                     <div>{{+chid.get('cgst_amount')?.value +
                                         +chid.get('sgst_amount')?.value +
@@ -173,7 +173,7 @@
                             <tr>
                                 <th
                                     style="text-align: right;color: #005f69;font-family: Georgia, 'Times New Roman', Times, serif;"
-                                    class="pr-5 pt-3" colspan="8">
+                                    class="pr-5 pt-3" colspan="7">
                                     <b>Total</b>
                                 </th>
                                 <td>
@@ -186,7 +186,7 @@
                             <tr>
                                 <th
                                     style="text-align: right;color: #005f69;font-family: Georgia, 'Times New Roman', Times, serif;"
-                                    class="pr-5 pt-3" colspan="8">
+                                    class="pr-5 pt-3" colspan="7">
                                     <b>Return Total</b>
                                 </th>
                                 <td>

@@ -12,13 +12,17 @@ import { ThirdPartyPaymentsComponent } from './third-party-payments/third-party-
 import { SupplierPaymentsComponent } from './supplier-payments/supplier-payments.component';
 import { CustomerPaymentsComponent } from './customer-payments/customer-payments.component';
 import { RawProductPaymentComponent } from './raw-product-payment/raw-product-payment.component';
+import { ThirdPartyPurchasePaymentComponent } from './third-party-purchase-payment/third-party-purchase-payment.component';
+import { SaleProductsPaymentComponent } from './sale-products-payment/sale-products-payment.component';
 
 @NgModule({
   declarations: [
     ThirdPartyPaymentsComponent,
     SupplierPaymentsComponent,
     CustomerPaymentsComponent,
-    RawProductPaymentComponent
+    RawProductPaymentComponent,
+    ThirdPartyPurchasePaymentComponent,
+    SaleProductsPaymentComponent
   ],
   imports: [
     CommonModule,
@@ -29,8 +33,7 @@ import { RawProductPaymentComponent } from './raw-product-payment/raw-product-pa
     FormsModule,
     ReactiveFormsModule,
     NgxDropzoneModule,
-    HttpClientModule,
-
+    HttpClientModule
   ]
 })
 export class PaymentsModule { }

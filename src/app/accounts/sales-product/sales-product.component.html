@@ -96,11 +96,12 @@
                             <tr>
                                 <th>#</th>
                                 <th>Product Name</th>
+                                <th>Availabel Qty</th>
                                 <th>Price</th>
                                 <th>Discount %</th>
                                 <th>Qty</th>
                                 <th>Total</th>
-                                <th>Remaining amount</th>
+                                <th>GST %</th>
                                 <th>Total GST</th>
                                 <th>Net Total</th>
                                 <th style="font-size: 11px;">Action</th>
@@ -123,6 +124,7 @@
                                             {{item.product_name}}</option>
                                     </select>
                                 </td>
+                                <td>{{chid.get('av_qty')?.value}}</td>
                                 <td style="min-width: 120px;"><input
                                         (input)="colculation(i)"
                                         [ngClass]="{'is-invalid': isPriceControlInvalid(i)}"
@@ -146,8 +148,8 @@
                                         readonly></td>
                                 <td style="min-width: 120px;"><input
                                         (input)="colculation(i)"
-                                        [ngClass]="{'is-invalid': isReamControlInvalid(i)}"
-                                        formControlName="re_amount"
+                                        [ngClass]="{'is-invalid': isgstControlInvalid(i)}"
+                                        formControlName="gst_percentage"
                                         class="form-control" required></td>
                                 <td>{{+chid.get('cgst_amount')?.value +
                                     +chid.get('sgst_amount')?.value +
@@ -169,7 +171,7 @@
                         <tbody>
                             <tr>
                                 <th style="text-align: right;font-size: 17px;"
-                                    class="pr-5 head" colspan="8">Total</th>
+                                    class="pr-5 head" colspan="9">Total</th>
                                 <td><input formControlName="total"
                                         class="form-control" readonly></td>
                                 <td></td>

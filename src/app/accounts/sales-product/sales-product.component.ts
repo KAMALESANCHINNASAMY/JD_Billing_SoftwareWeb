@@ -118,17 +118,17 @@ export class SalesProductComponent {
       new FormGroup({
         entry_n_id: new FormControl(0),
         productid: new FormControl(null),
-        hsn_number: new FormControl(''),
-        gst_percentage: new FormControl(''),
+        gst_percentage: new FormControl('', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
         price: new FormControl('', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
         discount: new FormControl('', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
         qty: new FormControl('', [Validators.required, Validators.pattern(/^\d+(\.\d{1,})?$/)]),
         total: new FormControl(''),
-        re_amount: new FormControl('', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
+        re_amount: new FormControl('0.00', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
         cgst_amount: new FormControl(''),
         sgst_amount: new FormControl(''),
         igst_amount: new FormControl(''),
         net_total: new FormControl(''),
+        av_qty: new FormControl('')
       }),
     ]),
     cuid: new FormControl(this.userID),
@@ -191,16 +191,16 @@ export class SalesProductComponent {
     return control.touched && !!control.errors;
   }
 
-  getReamControl(index: number): FormControl {
+  getgstControl(index: number): FormControl {
     const control = (
       this.saleProductsForm.get('sale_nested') as FormArray
     )
-      .at(index)?.get('re_amount') as FormControl;
+      .at(index)?.get('gst_percentage') as FormControl;
     return control;
   }
 
-  isReamControlInvalid(index: number): boolean {
-    const control = this.getReamControl(index);
+  isgstControlInvalid(index: number): boolean {
+    const control = this.getgstControl(index);
     return control.touched && !!control.errors;
   }
 
@@ -208,17 +208,17 @@ export class SalesProductComponent {
     const newControl = new FormGroup({
       entry_n_id: new FormControl(0),
       productid: new FormControl(null),
-      hsn_number: new FormControl(''),
-      gst_percentage: new FormControl(''),
+      gst_percentage: new FormControl('', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
       price: new FormControl('', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
       discount: new FormControl('', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
       qty: new FormControl('', [Validators.required, Validators.pattern(/^\d+(\.\d{1,})?$/)]),
       total: new FormControl(''),
-      re_amount: new FormControl('', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
+      re_amount: new FormControl('0.00', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
       cgst_amount: new FormControl(''),
       sgst_amount: new FormControl(''),
       igst_amount: new FormControl(''),
       net_total: new FormControl(''),
+      av_qty: new FormControl('')
     });
     (this.saleProductsForm.get('sale_nested') as FormArray).push(
       newControl
@@ -241,8 +241,8 @@ export class SalesProductComponent {
     const proID = Control.at(i).get('productid')?.value;
     const newGSTDet = this.productList.find((e) => { return e.productid == proID });
     Control.at(i).get('price')?.setValue(newGSTDet.price);
-    Control.at(i).get('hsn_number')?.setValue(newGSTDet.hsn_number);
     Control.at(i).get('gst_percentage')?.setValue(newGSTDet.gst_percentage);
+    Control.at(i).get('av_qty')?.setValue(newGSTDet.av_qty);
 
     this.colculation(i);
   }
@@ -254,6 +254,10 @@ export class SalesProductComponent {
     const discount = Number(Control.at(i).get('discount')?.value);
     if (Number(discount) > 100) {
       Control.at(i).get('discount')?.setValue('');
+    }
+    if (Number(Control.at(i).get('qty')?.value) > Number(Control.at(i).get('av_qty')?.value)) {
+      Control.at(i).get('qty')?.setValue('');
+      this.notificationSvc.error('Invaild Qty')
     }
     const disAmount = price - (price * discount) / 100;
     const qty = Number(Control.at(i).get('qty')?.value);
@@ -329,11 +333,11 @@ export class SalesProductComponent {
       this.saleProductsForm.get('cuid')?.setValue(this.userID);
 
       nestedArray?.forEach(async (e, i) => {
+        const newGSTDet = this.productList.find((ee) => { return ee.productid == e.productid });
         const newControl = new FormGroup({
           entry_n_id: new FormControl(e.entry_n_id),
           productid: new FormControl(e.productid),
-          hsn_number: new FormControl(e.hsn_number),
-          gst_percentage: new FormControl(e.gst_percentage),
+          gst_percentage: new FormControl(e.gst_percentage, [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
           price: new FormControl(e.price, [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
           discount: new FormControl(e.discount, [
             Validators.required,
@@ -346,6 +350,7 @@ export class SalesProductComponent {
           sgst_amount: new FormControl(e.sgst_amount),
           igst_amount: new FormControl(e.igst_amount),
           net_total: new FormControl(e.net_total),
+          av_qty: new FormControl(newGSTDet.av_qty)
         });
         (this.saleProductsForm.get('sale_nested') as FormArray).push(newControl);
         this.someMethod();
@@ -376,6 +381,7 @@ export class SalesProductComponent {
 
     this.addNesForm();
     this.findBillNo();
+    this.getProductList();
     this.getSalesProductList(this.today);
   }
 

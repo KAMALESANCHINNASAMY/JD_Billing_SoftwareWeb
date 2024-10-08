@@ -66,6 +66,18 @@ export class LayoutComponent implements OnInit {
           link: 'payments/raw-product-payment',
           isselect: false,
           value: 1104
+        },
+        {
+          link_name: 'Purchase - ThirdParty Payment',
+          link: 'payments/third-party-purchase-payment',
+          isselect: false,
+          value: 1105
+        },
+        {
+          link_name: 'Sales Payment',
+          link: 'payments/sale-product-payment',
+          isselect: false,
+          value: 1106
         }
       ]
     },

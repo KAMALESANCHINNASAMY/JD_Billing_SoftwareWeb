@@ -114,7 +114,7 @@ export class ReturnSalesProductComponent {
           total: new FormControl(e.total),
           ret_total: new FormControl(''),
           re_amount: new FormControl(e.re_amount),
-          ret_re_amount: new FormControl('', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
+          ret_re_amount: new FormControl('0.00', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
           cgst_amount: new FormControl(e.cgst_amount),
           ret_cgst_amount: new FormControl(''),
           sgst_amount: new FormControl(e.sgst_amount),

@@ -66,13 +66,13 @@
                 <div class="row ml-3">
                     <div class="col-sm-4 mt-2" style="display: flex">
                         <div class="labeldiv">
-                            <label class="pt-2" style="margin: auto">To Which
+                            <label class="pt-2" style="margin: auto">From Which
                                 Bank</label>
                         </div>
                         <div class="inputdiv">
                             <select formControlName="bankid"
                                 class="form-control" required>
-                                <option [ngValue]=0>Not To Bank</option>
+                                <option [ngValue]=0>Not From Bank</option>
                                 <option *ngFor="let bank of bankList"
                                     [ngValue]="bank.bankid">{{bank.bank_name}}</option>
                             </select>
