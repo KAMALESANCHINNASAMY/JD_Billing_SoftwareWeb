@@ -132,14 +132,14 @@ export class RawProductPurchaseComponent {
       new FormGroup({
         purchase_n_id: new FormControl(0),
         n_productid: new FormControl(null),
-        gst_percentage: new FormControl(''),
+        gst_percentage: new FormControl('', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
         unit_name: new FormControl(''),
         a_qty: new FormControl('', [Validators.required, Validators.pattern(/^\d+(\.\d{1,})?$/)]),
         price: new FormControl('', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
         discount: new FormControl('', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
         qty: new FormControl('', [Validators.required, Validators.pattern(/^\d+(\.\d{1,})?$/)]),
         total: new FormControl(''),
-        re_amount: new FormControl('', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
+        re_amount: new FormControl('0.00', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
         cgst_amount: new FormControl(''),
         sgst_amount: new FormControl(''),
         igst_amount: new FormControl(''),
@@ -219,16 +219,16 @@ export class RawProductPurchaseComponent {
     return control.touched && !!control.errors;
   }
 
-  getReamControl(index: number): FormControl {
+  getgstControl(index: number): FormControl {
     const control = (
       this.rawProductPurchaseForm.get('purchase_nested') as FormArray
     )
-      .at(index)?.get('re_amount') as FormControl;
+      .at(index)?.get('gst_percentage') as FormControl;
     return control;
   }
 
-  isReamControlInvalid(index: number): boolean {
-    const control = this.getReamControl(index);
+  isgstControlInvalid(index: number): boolean {
+    const control = this.getgstControl(index);
     return control.touched && !!control.errors;
   }
 
@@ -237,14 +237,14 @@ export class RawProductPurchaseComponent {
     const newControl = new FormGroup({
       purchase_n_id: new FormControl(0),
       n_productid: new FormControl(null),
-      gst_percentage: new FormControl(''),
+      gst_percentage: new FormControl('', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
       unit_name: new FormControl(''),
       a_qty: new FormControl('', [Validators.required, Validators.pattern(/^\d+(\.\d{1,})?$/)]),
       price: new FormControl('', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
       discount: new FormControl('', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
       qty: new FormControl('', [Validators.required, Validators.pattern(/^\d+(\.\d{1,})?$/)]),
       total: new FormControl(''),
-      re_amount: new FormControl('', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
+      re_amount: new FormControl('0.00', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
       cgst_amount: new FormControl(''),
       sgst_amount: new FormControl(''),
       igst_amount: new FormControl(''),
@@ -365,7 +365,7 @@ export class RawProductPurchaseComponent {
         const newControl = new FormGroup({
           purchase_n_id: new FormControl(e.purchase_n_id),
           n_productid: new FormControl(e.n_productid),
-          gst_percentage: new FormControl(e.gst_percentage),
+          gst_percentage: new FormControl(e.gst_percentage, [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
           unit_name: new FormControl(newGSTDet.unit_name),
           a_qty: new FormControl(e.a_qty, [Validators.required, Validators.pattern(/^\d+(\.\d{1,})?$/)]),
           price: new FormControl(e.price, [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),

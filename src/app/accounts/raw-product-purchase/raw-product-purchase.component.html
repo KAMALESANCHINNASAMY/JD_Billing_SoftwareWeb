@@ -93,7 +93,8 @@
 
                     <div class="col-sm-4" style="display: flex">
                         <div class="labeldiv">
-                            <label class="pt-2" style="margin: auto">Credit Day's</label>
+                            <label class="pt-2" style="margin: auto">Credit Day's<span
+                                    class="text-danger">*</span></label>
                         </div>
                         <div class="inputdiv">
                             <input
@@ -117,7 +118,7 @@
                                 <th>Discount %</th>
                                 <th>Qty</th>
                                 <th>Total</th>
-                                <th>Remaining amount</th>
+                                <th>GST %</th>
                                 <th>Total GST</th>
                                 <th>Net Total</th>
                                 <th style="font-size: 11px;">Action</th>
@@ -169,8 +170,8 @@
                                         readonly></td>
                                 <td style="min-width: 120px;"><input
                                         (input)="colculation(i)"
-                                        [ngClass]="{'is-invalid': isReamControlInvalid(i)}"
-                                        formControlName="re_amount"
+                                        [ngClass]="{'is-invalid': isgstControlInvalid(i)}"
+                                        formControlName="gst_percentage"
                                         class="form-control" required></td>
                                 <td>{{+chid.get('cgst_amount')?.value +
                                     +chid.get('sgst_amount')?.value +

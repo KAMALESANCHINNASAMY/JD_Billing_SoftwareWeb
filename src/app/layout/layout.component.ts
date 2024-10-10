@@ -413,7 +413,21 @@ export class LayoutComponent implements OnInit {
       value: 17,
       sub_menu: [{
         link_name: 'Stock Details',
-        link: 'stocks/stock-management'
+        link: 'stocks/stock-management',
+        isselect: false,
+        value: 1701
+      },
+      {
+        link_name: 'Raw Product Stock Details',
+        link: 'stocks/raw-product-stock',
+        isselect: false,
+        value: 1702
+      },
+      {
+        link_name: 'Sale Product Stock Details',
+        link: 'stocks/sale-product-stock',
+        isselect: false,
+        value: 1703
       }
       ]
     },

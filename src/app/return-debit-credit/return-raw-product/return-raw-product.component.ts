@@ -116,7 +116,7 @@ export class ReturnRawProductComponent {
           total: new FormControl(e.total),
           ret_total: new FormControl(''),
           re_amount: new FormControl(e.re_amount),
-          ret_re_amount: new FormControl('', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
+          ret_re_amount: new FormControl('0.00', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
           cgst_amount: new FormControl(e.cgst_amount),
           ret_cgst_amount: new FormControl(''),
           sgst_amount: new FormControl(e.sgst_amount),
@@ -172,16 +172,6 @@ export class ReturnRawProductComponent {
 
   isAQtyControlInvalid(index: number): boolean {
     const control = this.getaQtyControl(index);
-    return control.touched && !!control.errors;
-  }
-
-  getRemControl(index: number): FormControl {
-    const control = (this.SupplierDebitForm.get('rawProduct_nested') as FormArray).at(index)?.get('ret_re_amount') as FormControl;
-    return control;
-  }
-
-  isRemControlInvalid(index: number): boolean {
-    const control = this.getRemControl(index);
     return control.touched && !!control.errors;
   }
 

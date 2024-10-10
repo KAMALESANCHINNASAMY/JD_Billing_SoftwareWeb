@@ -39,11 +39,11 @@
                     <div class="col-sm-6" style="display: flex">
                         <div class="labeldiv">
                             <label class="pt-2">
-                                Bill No</label>
+                                Bill No <span class="text-danger">*</span></label>
                         </div>
                         <div class="inputdiv">
                             <mat-form-field>
-                                <mat-label>Supplier Bill No</mat-label>
+                                <mat-label>Bill No</mat-label>
                                 <mat-select
                                     [ngClass]="{'is-invalid': SupplierDebitForm.controls.purchaseid.touched 
                                     &&SupplierDebitForm.controls.purchaseid.errors}"
@@ -63,7 +63,8 @@
                 <div class="row mt-2">
                     <div class="col-sm-6" style="display: flex">
                         <div class="labeldiv">
-                            <label class="pt-2">Return No</label>
+                            <label class="pt-2">Return No <span
+                                    class="text-danger">*</span></label>
                         </div>
                         <div class="inputdiv">
                             <input
@@ -74,7 +75,8 @@
                     </div>
                     <div class="col-sm-6" style="display: flex">
                         <div class="labeldiv">
-                            <label class="pt-2">Return Date</label>
+                            <label class="pt-2">Return Date <span
+                                    class="text-danger">*</span></label>
                         </div>
                         <div class="inputdiv">
                             <input
@@ -154,7 +156,6 @@
                                     <input formControlName="re_amount"
                                         class="form-control" readonly />
                                     <input formControlName="ret_re_amount"
-                                        [ngClass]="{ 'is-invalid': isRemControlInvalid(i) }"
                                         (input)="colculation(i)"
                                         class="form-control" required />
                                 </td>

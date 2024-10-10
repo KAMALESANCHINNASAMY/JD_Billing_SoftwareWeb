@@ -11,12 +11,16 @@ import { StockManagementComponent } from './stock-management/stock-management.co
 import { NgxPrintModule } from 'ngx-print';
 import { MatButtonModule } from '@angular/material/button';
 import { AddressPrintComponent } from './address-print/address-print.component';
+import { SaleProductStockComponent } from './sale-product-stock/sale-product-stock.component';
+import { RawProductStockComponent } from './raw-product-stock/raw-product-stock.component';
 
 
 @NgModule({
   declarations: [
     StockManagementComponent,
-    AddressPrintComponent
+    AddressPrintComponent,
+    SaleProductStockComponent,
+    RawProductStockComponent
   ],
   imports: [
     CommonModule,

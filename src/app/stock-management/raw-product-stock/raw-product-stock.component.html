@@ -1,0 +1,65 @@
+<div class="container-fluid">
+    <mat-card class="matcard">
+        <mat-card-content>
+            <div class="row">
+                <div class="col-sm-12">
+                    <h2 class="head">Raw Product Details</h2>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="table-responsive col-sm-12">
+                    <table style="width: 100%;"
+                        class="table table-bordered table-sm table-hover">
+                        <thead class="tableheadList">
+                            <tr>
+                                <th>S No</th>
+                                <th>Product Name</th>
+                                <th>Availabel Qty</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr
+                                *ngFor="let item of NestedProductList; let i = index">
+                                <td>{{ i + 1 }}</td>
+                                <td>{{item.n_product_name}}</td>
+                                <td>{{item.av_a_qty}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <hr style="border: 1px dashed grey;">
+            <div class="row">
+                <div class="table-responsive col-sm-12">
+                    <table style="width: 100%;"
+                        class="table table-bordered table-sm table-hover">
+                        <thead class="tableheadList">
+                            <tr>
+                                <th>S No</th>
+                                <th style="text-align: left;">Product Name</th>
+                                <th style="background-color: #00693E;">Purchase Qty</th>
+                                <th style="background-color: #F40009;">Return Purchase Qty</th>
+                                <th style="background-color: #00693E;">Supply Qty</th>
+                                <th style="background-color: #F40009;">Return Supply Qty</th>
+                                <th>Availabel Qty</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr
+                                *ngFor="let item of NestedProductList; let i = index">
+                                <td>{{ i + 1 }}</td>
+                                <td style="text-align: left;">{{item.n_product_name}}</td>
+                                <td>{{item.pa_qty}}</td>
+                                <td>{{item.ra_qty}}</td>
+                                <td>{{item.sa_qty}}</td>
+                                <td>{{item.sra_qty}}</td>
+                                <td>{{item.av_a_qty}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>
