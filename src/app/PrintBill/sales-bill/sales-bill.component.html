@@ -1,0 +1,140 @@
+<div id="_print_sectionsa">
+    <div class="container-fluid"
+        style="font-weight: 700;font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;">
+        <div class="row p-2"
+            style="display: flex;justify-content: space-between;">
+
+            <div>
+                <img class="img-print" src="{{ companyDetailsList?.logo }}"
+                    width="100px"
+                    height="120px" />
+            </div>
+
+            <div
+                style="text-align: center;">
+                <div class="comhead" style="font-size:25px;color: #008E97;">
+                    {{ companyDetailsList?.display_name}}
+                </div>
+                <div class="mt-1">
+                    {{companyDetailsList?.door_no}},{{companyDetailsList?.street_name}},{{companyDetailsList?.post}},</div>
+                <div>
+                    {{companyDetailsList?.taluk}},{{companyDetailsList?.district}}-{{companyDetailsList?.pincode}}.
+                </div>
+
+                <div class="mt-1" style="color: #008E97;">GSTIN :
+                    {{companyDetailsList?.gst_in || ''}}</div>
+            </div>
+
+            <div style="text-align: right;">
+                <div class="pr-3" style="color: #008E97;">TAX INVOICE</div>
+                <div class="pr-3 pt-3">
+                    Mobile : {{companyDetailsList?.mobile}}
+                </div>
+                <div class="pr-3">
+                    Office Ph :{{companyDetailsList?.office_phno}}
+                </div>
+            </div>
+        </div>
+
+        <hr style="border: 1px dashed lightgray;">
+
+        <table class="table">
+            <tbody>
+                <tr>
+                    <th class="bln" style="width: 55%;" colspan="5">
+                        <div class="mb-1">Receiver Name and Address :</div>
+                        <div style="color: #008E97;">{{customerDetailsList?.customer_name}}</div>
+                        <div>
+                            <address>{{customerDetailsList?.address}}</address>
+                        </div>
+                        <div>Mobile : {{customerDetailsList?.mobile_no}}</div>
+                        <div>GST No : {{ customerDetailsList?.gst_in }} <span
+                                class="ml-3">State Code :
+                                {{customerDetailsList?.state_code }}</span>
+                        </div>
+                    </th>
+                    <th class="brn" style="widows: 45%;" colspan="4">
+                        <div style="display: flex;" class="p-2">
+                            <div style="width:45%;text-align: left;"
+                                class="mr-3">Invoice No</div>:
+                            {{parent?.bill_no}}
+                        </div>
+                        <div class="p-2" style="display: flex;">
+                            <div style="width: 45%;text-align: left;"
+                                class="mr-3">Invoice Date</div>
+                            : {{getFormattedDate(parent?.date)}}
+                        </div>
+                        <div class="p-2" style="display: flex;">
+                            <div style="width: 45%;text-align: left;"
+                                class="mr-3">Invoice Type</div>: Credit
+                        </div>
+                    </th>
+                </tr>
+
+                <tr>
+                    <th class="bln" style="text-align: center;">S.No</th>
+                    <th>Product Name</th>
+                    <th style="text-align: center;">Price</th>
+                    <th style="text-align: center;">QTY</th>
+                    <th style="text-align: center;">Dis %</th>
+                    <th style="text-align: right;">Total</th>
+                    <th style="text-align: center;">Gst %</th>
+                    <th style="text-align: right;">Gst Amount</th>
+                    <th class="brn" style="text-align: right;">Net Total</th>
+                </tr>
+                <tr *ngFor="let item of child;let i=index;">
+                    <th class="bln btbtn" style="text-align: center;">{{i+1}}</th>
+                    <th class="btbtn">{{item.product_name}}</th>
+                    <th class="btbtn" style="text-align: center;">{{(+item.price).toFixed(2)}}</th>
+                    <th class="btbtn" style="text-align: center;">{{item.qty}}</th>
+                    <th class="btbtn" style="text-align: center;">{{item.discount}}</th>
+                    <th class="btbtn" style="text-align: right;">{{(+item.total).toFixed(2)}}</th>
+                    <th class="btbtn" style="text-align: center;">{{item.gst_percentage}}</th>
+                    <th class="btbtn" style="text-align: right;">{{(+item.cgst_amount
+                        +
+                        +item.sgst_amount +
+                        +item.igst_amount).toFixed(2)}}</th>
+                    <th class="brn btbtn" style="text-align: right;">{{(+item.net_total).toFixed(2)}}</th>
+                </tr>
+                <tr>
+                    <th class="bln" style="text-align: right;color: #008E97;"
+                        colspan="8">Net
+                        Amount</th>
+                    <th class="brn" style="text-align: right;color: #008E97;">{{getTotal()}}</th>
+                </tr>
+                <tr><th class="bln brn"
+                        style="text-align: center;color: #008E97;"
+                        colspan="9">{{numberInWords}}</th></tr>
+
+                <tr>
+                    <th class="bln" colspan="5">
+                        Receiver Signature
+                    </th>
+                    <th class="brn" colspan="4">
+                        <div style="text-align: right;" class="mt-2 mb-5">For
+                            {{companyDetailsList?.company_name || ''}}</div>
+                        <div style="text-align: right;" class="mt-2 mb-2">Authorised
+                            Signatory</div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12 p-2"
+            style="display: flex; justify-content: center;">
+            <button style="width: 80px;" class="btn btn-primary btn-sm mr-2"
+                printSectionId="_print_sectionsa" ngxPrint
+                [useExistingCss]="true">
+                Print
+            </button>
+            <button style="width: 80px;" (click)="closedialog()"
+                class="btn btn-danger btn-sm ml-2">
+                Cancel
+            </button>
+        </div>
+    </div>
+</div>

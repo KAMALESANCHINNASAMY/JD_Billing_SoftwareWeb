@@ -239,9 +239,11 @@
                                 <td>{{item.credit_days}}</td>
                                 <td>{{item.total}}</td>
                                 <td>
-                                    <!-- <button class="btn btn-sm btn-success" (click)="getReport(item)">
-                                        Preview
-                                    </button> -->
+                                    <mat-icon
+                                        style="cursor: pointer;color: green;"
+                                        title="Click to open Bill" class="mr-2"
+                                        (click)="getReport(item)">description</mat-icon>
+
                                     <mat-icon class="mr-1"
                                         style="cursor: pointer;color: blue;"
                                         title="Click to edit"

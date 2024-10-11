@@ -6,6 +6,7 @@ import { saleProductsService } from 'src/app/api-service/Accounts/saleProducts.s
 import { DialogService } from 'src/app/api-service/Dialog.service';
 import { customerMasterService } from 'src/app/api-service/customerMaster.service';
 import { productMasterService } from 'src/app/api-service/productMaster.service';
+import { salesBillPrintService } from 'src/app/api-service/reports/saleBillPrint.service';
 
 @Component({
   selector: 'app-sales-product',
@@ -35,7 +36,8 @@ export class SalesProductComponent {
     private router: Router,
     private cdRef: ChangeDetectorRef,
     private rpPSvc: saleProductsService,
-    private pSvc: productMasterService
+    private pSvc: productMasterService,
+    private sBPSvc: salesBillPrintService
   ) { }
 
   backButton() {
@@ -359,6 +361,17 @@ export class SalesProductComponent {
 
     this.scrollToTableTop();
   }
+
+  async getReport(item: any) {
+    const nested = await this.rpPSvc.getSalesNestedLists(item.entryid).toPromise();
+    this.sBPSvc.openConfirmDialog(item, nested)
+      .afterClosed()
+      .subscribe((res) => {
+        if (res == true) {
+        }
+      });
+  }
+
 
   cancelClick() {
     this.saleProductsForm.reset();
