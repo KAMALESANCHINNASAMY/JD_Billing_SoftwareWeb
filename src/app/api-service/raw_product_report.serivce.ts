@@ -11,8 +11,8 @@ export class rawProductReportService {
 
     constructor(private http: HttpClient, private ConfigService: ConfigService) { }
 
-    getRawProductStockList(companyid: any): Observable<any[]> {
-        return this.http.get<any[]>(this.apiUrl + 'RawProductReport/get_stock_by_raw_product?companyid=' + companyid);
+    getRawProductStockList(companyid: any, id: any, fromdate: any, todate: any): Observable<any[]> {
+        return this.http.get<any[]>(this.apiUrl + 'RawProductReport/get_raw_product_byid?companyid=' + companyid + '&supplierid=' + id + '&fromdate=' + fromdate + '&todate=' + todate);
     }
 
 }

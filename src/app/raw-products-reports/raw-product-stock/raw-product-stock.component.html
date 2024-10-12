@@ -1,11 +1,70 @@
-<!-- <div class="container-fluid">
+<div class="container-fluid">
     <mat-card class="matcard mt-2">
         <mat-card-content>
             <div class="row">
                 <div class="col-sm-12">
-                    <h2 class="head">Raw Product Stock Report</h2>
+                    <h2 class="head">Raw Product Purchased Report</h2>
                 </div>
             </div>
+
+            <form [formGroup]="reportForm" (ngSubmit)="getReport()">
+                <div class="row">
+                    <div class="col-sm-3">
+                        <div>
+                            <label>From Date <span
+                                    class="text-danger">*</span></label>
+                        </div>
+                        <div>
+                            <input type="date"
+                                [ngClass]="{'is-invalid':reportForm.controls.fromdate.touched && reportForm.controls.fromdate.errors}"
+                                class="form-control"
+                                formControlName="fromdate" required />
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div>
+                            <label>TO Date <span
+                                    class="text-danger">*</span></label>
+                        </div>
+                        <div>
+                            <input
+                                [ngClass]="{'is-invalid':reportForm.controls.todate.touched && reportForm.controls.todate.errors}"
+                                class="form-control" type="date"
+                                formControlName="todate" required />
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="pt-3">
+                            <mat-form-field>
+                                <mat-label>Supplier Name</mat-label>
+                                <mat-select
+                                    [ngClass]="{'is-invalid':reportForm.controls.supplierid.touched &&
+                                    reportForm.controls.supplierid.errors}"
+                                    formControlName="supplierid" #advw required>
+                                    <mat-form-field>
+                                        <input matInput type="text" #auval
+                                            (input)="suggest(auval.value)"
+                                            placeholder="Search..." />
+                                    </mat-form-field>
+                                    <mat-option [value]="0">
+                                        All
+                                    </mat-option>
+                                    <mat-option [value]="option.supplierid"
+                                        *ngFor="let option of suggestions">
+                                        {{ option.supplier_name }}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-3">
+                        <div class="pt-4 pl-4">
+                            <button type="submit" class="btn btn-info pl-4 pr-4">Search</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
 
             <div class="row">
                 <div class="col-sm-9">
@@ -18,29 +77,37 @@
 
                 <div class="table-responsive col-sm-12" id="_print_section">
                     <table style="width: 100%;"
-                        class="table table-bordered table-hover">
+                        class="table table-bordered table-hover table-sm">
                         <thead class="tableheadList">
                             <tr>
                                 <th>S No</th>
-                                <th>product Name</th>
-                                <th>Purchased Qty</th>
-                                <th>Return Qty</th>
-                                <th>Taken into Production</th>
-                                <th>Availabel Qty</th>
+                                <th>Date</th>
+                                <th>Supplier Name</th>
+                                <th>Bill No</th>
+                                <ng-container
+                                    *ngFor="let item of NestedProductList">
+                                    <th style="background-color: #c8102E;">{{item.n_product_name + ' - ' + item.unit_name}}</th>
+                                </ng-container>
                             </tr>
                         </thead>
                         <tbody>
                             <tr
                                 *ngFor="let item of purchaseReports; let i = index">
                                 <td>{{ i + 1 }}</td>
-                                <td>{{item.n_product_name}}</td>
-                                <td>{{ item.pa_qty }}</td>
-                                <td>{{item.re_qty}}</td>
-                                <td>{{ item.total_s_qty }}</td>
-                                <td
-                                    style="font-weight: 700;color: green;font-family:sans-serif;">
-                                    {{(+item.pa_qty)-(+item.re_qty +
-                                    +item.total_s_qty)}}</td>
+                                <td>{{item.date}}</td>
+                                <td>{{ item.supplier_name }}</td>
+                                <td>{{item.bill_no}}</td>
+                                <ng-container
+                                    *ngFor="let pro of NestedProductList">
+                                    <td>{{getQty(pro.n_productid,item)}}</td>
+                                </ng-container>
+                            </tr>
+                            <tr>
+                                <td colspan="4" class="head">Total</td>
+                                <ng-container
+                                    *ngFor="let pro of NestedProductList">
+                                    <td>{{getNetTot(pro.n_productid)}}</td>
+                                </ng-container>
                             </tr>
                         </tbody>
                     </table>
@@ -48,4 +115,4 @@
             </div>
         </mat-card-content>
     </mat-card>
-</div> -->
+</div>
