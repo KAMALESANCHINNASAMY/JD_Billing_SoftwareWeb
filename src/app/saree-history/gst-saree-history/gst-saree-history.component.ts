@@ -18,11 +18,10 @@ export class GstSareeHistoryComponent implements OnInit {
   totalSalesReturnQty: string;
   totalSalesReturnNettotal: string;
 
-  constructor(private SGSTH: SareeGstHistory) {}
-  ngOnInit(): void {}
+  constructor(private SGSTH: SareeGstHistory) { }
+  ngOnInit(): void { }
 
   getSareegstHistorybyref_code(ref_code: any) {
-    debugger;
     this.historyOfSaree = [];
     this.SGSTH.getGStSareeHistoryByref_code(this.companyID, ref_code).subscribe(
       (res) => {
@@ -33,7 +32,6 @@ export class GstSareeHistoryComponent implements OnInit {
   }
 
   getSareegstHistorybysi_code(si_code: any) {
-    debugger;
     this.historyOfSaree = [];
     this.SGSTH.getGStSareeHistoryBysi_code(this.companyID, si_code).subscribe(
       (res) => {

@@ -15,7 +15,6 @@ export class SareeGstHistory {
 
 
   getGStSareeHistoryByref_code(companyid: any, ref_code: any,): Observable<any[]> {
-    debugger
     const httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     };

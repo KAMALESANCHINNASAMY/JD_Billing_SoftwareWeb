@@ -12,7 +12,6 @@ export class backUpDataBaseService {
     constructor(private http: HttpClient, private ConfigService: ConfigService) { }
 
     backUp(): Observable<any> {
-        debugger
         const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }), };
         return this.http.put<any>(
             this.apiUrl + 'BackUpDataBase/backUpDataBase', httpOptions

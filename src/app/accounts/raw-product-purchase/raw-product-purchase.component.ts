@@ -106,7 +106,6 @@ export class RawProductPurchaseComponent {
   async findBillNo(): Promise<void> {
     this.rpPSvc.getMaxId(this.companyID).subscribe((data) => {
       let maxnumber = 0;
-      debugger
       if (data.length > 0) {
         maxnumber = data[0].purchaseid + 1;
         if (maxnumber < 10) {
@@ -267,7 +266,6 @@ export class RawProductPurchaseComponent {
 
 
   setHsn(i: any) {
-    debugger
     const Control = this.rawProductPurchaseForm.get('purchase_nested') as FormArray;
     const proID = Control.at(i).get('n_productid')?.value;
     const newGSTDet = this.NestedProductList.find((e) => { return e.n_productid == proID });
@@ -279,7 +277,6 @@ export class RawProductPurchaseComponent {
   }
 
   colculation(i: any) {
-    debugger
     const Control = this.rawProductPurchaseForm.get('purchase_nested') as FormArray;
     const price = Number(Control.at(i).get('price')?.value);
     const discount = Number(Control.at(i).get('discount')?.value);
@@ -292,7 +289,6 @@ export class RawProductPurchaseComponent {
 
     const sutotal = (Number(Control.at(i).get('total')?.value)) + (Number(Control.at(i).get('re_amount')?.value));
     const gst = Number(Control.at(i).get('gst_percentage')?.value);
-    debugger
     const stateCode = this.supplierDetailsList.find((e) => { return e.supplierid == this.rawProductPurchaseForm.value.supplierid });
     if (stateCode) {
       if (stateCode.state_code == '33') {
@@ -361,7 +357,6 @@ export class RawProductPurchaseComponent {
 
       nestedArray?.forEach(async (e, i) => {
         const newGSTDet = this.NestedProductList.find((ee) => { return ee.n_productid == e.n_productid });
-        debugger
         const newControl = new FormGroup({
           purchase_n_id: new FormControl(e.purchase_n_id),
           n_productid: new FormControl(e.n_productid),
@@ -416,7 +411,6 @@ export class RawProductPurchaseComponent {
   }
 
   deleteFun(id: number) {
-    debugger
     this.DialogSvc.openConfirmDialog(
       'Are you sure want to delete this record ?'
     )
@@ -424,9 +418,15 @@ export class RawProductPurchaseComponent {
       .subscribe((res) => {
         if (res == true) {
           this.rpPSvc.delete(id).subscribe((res) => {
-            if (res?.recordid) {
+            if (res?.status === 'Delete Success') {
               this.notificationSvc.error('Deleted Success');
               this.cancelClick();
+            }
+            else if (res?.status === 'Return') {
+              this.notificationSvc.warn('This record cannot be deleted ! Because You have entered a return entry for this purchase')
+            }
+            else {
+              this.notificationSvc.error('Something is wrong !')
             }
           });
         }

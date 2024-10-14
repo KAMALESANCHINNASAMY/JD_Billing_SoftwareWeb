@@ -207,7 +207,6 @@ export class LinkProductMasterComponent {
     this.linkProductMasterForm.get('companyid')?.setValue(this.companyID);
     this.linkProductMasterForm.get('cuid')?.setValue(this.userID);
     this.getLinkProductList();
-    console.log(this.linkProductMasterForm)
   }
 
   @ViewChild('tableTop') tableTop!: ElementRef;

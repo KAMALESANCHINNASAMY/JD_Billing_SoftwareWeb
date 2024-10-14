@@ -12,7 +12,6 @@ export class salesBillNongstReportService {
   constructor(private dialog: MatDialog) { }
 
   openConfirmDialog(multipleSalesNongstList: any) {
-    debugger
     return this.dialog.open(SalesBillnongstReportsComponent, {
       width: '854px',
       height: '97%',

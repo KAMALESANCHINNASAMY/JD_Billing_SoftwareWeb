@@ -144,7 +144,6 @@ export class ThirdPartyGstpurchaseReportsComponent implements OnInit {
   state_code: string = '';
   cust_ship_address: string = '';
   getReport(item: any) {
-    debugger;
     this.gst_in = item[0].gst_in;
     this.date = item[0].date;
     this.party_name = item[0].party_name;

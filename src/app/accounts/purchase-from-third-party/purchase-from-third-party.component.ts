@@ -74,7 +74,6 @@ export class PurchaseFromThirdPartyComponent {
   }
 
   setCustomerDetails(id: any) {
-    debugger
     this.purchaseThirdPartyForm.get('third_partyid')?.setValue(id);
     const Control = this.purchaseThirdPartyForm.get(
       'sale_nested'
@@ -89,7 +88,6 @@ export class PurchaseFromThirdPartyComponent {
   async findBillNo(): Promise<void> {
     this.rpPSvc.getMaxId(this.companyID).subscribe((data) => {
       let maxnumber = 0;
-      debugger
       if (data.length > 0) {
         maxnumber = data[0].purchaseid + 1;
         if (maxnumber < 10) {
@@ -226,7 +224,6 @@ export class PurchaseFromThirdPartyComponent {
   }
 
   setHsn(i: any) {
-    debugger
     const Control = this.purchaseThirdPartyForm.get('sale_nested') as FormArray;
     const proID = Control.at(i).get('productid')?.value;
     const newGSTDet = this.productList.find((e) => { return e.productid == proID });
@@ -237,7 +234,6 @@ export class PurchaseFromThirdPartyComponent {
   }
 
   colculation(i: any) {
-    debugger
     const Control = this.purchaseThirdPartyForm.get('sale_nested') as FormArray;
     const price = Number(Control.at(i).get('price')?.value);
     const discount = Number(Control.at(i).get('discount')?.value);
@@ -250,7 +246,6 @@ export class PurchaseFromThirdPartyComponent {
 
     const sutotal = Number(Control.at(i).get('total')?.value);
     const gst = Number(Control.at(i).get('gst_percentage')?.value);
-    debugger
     const stateCode = this.thirdPartyDetailsList.find((e) => { return e.third_partyid == this.purchaseThirdPartyForm.value.third_partyid });
     if (stateCode) {
       if (stateCode.state_code == '33') {
@@ -365,7 +360,6 @@ export class PurchaseFromThirdPartyComponent {
   }
 
   deleteFun(id: number) {
-    debugger
     this.DialogSvc.openConfirmDialog(
       'Are you sure want to delete this record ?'
     )
@@ -373,9 +367,15 @@ export class PurchaseFromThirdPartyComponent {
       .subscribe((res) => {
         if (res == true) {
           this.rpPSvc.delete(id).subscribe((res) => {
-            if (res?.recordid) {
+            if (res?.status === 'Delete Success') {
               this.notificationSvc.error('Deleted Success');
               this.cancelClick();
+            }
+            else if (res?.status === 'Return') {
+              this.notificationSvc.warn('This record cannot be deleted ! Because You have entered a return entry for this purchase')
+            }
+            else {
+              this.notificationSvc.error('Something is wrong !')
             }
           });
         }

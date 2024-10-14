@@ -17,7 +17,6 @@ export class thirdPartyGSTPurchaseService {
     }
 
     getThirdPartyPurchaseNestedLists(purchaseid: number): Observable<any[]> {
-        debugger
         return this.http.get<any[]>(this.apiUrl + 'ThirdPartyGstPurchase/get_third_party_gst_purchase_nested?purchaseid=' + purchaseid);
     }
 

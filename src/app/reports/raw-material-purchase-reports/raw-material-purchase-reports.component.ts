@@ -142,7 +142,6 @@ export class RawMaterialPurchaseReportsComponent implements OnInit {
   state_code: string = '';
   cust_ship_address:string ='';
   getReport(item: any) {
-    debugger;
     this.gst_in = item[0].gst_in;
     this.date = item[0].date;
     this.customer_name = item[0].customer_name;

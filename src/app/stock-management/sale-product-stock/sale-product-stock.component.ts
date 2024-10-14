@@ -18,7 +18,6 @@ export class SaleProductStockComponent {
   getProductList() {
     this.pSvc.getList(this.companyID).subscribe((res) => {
       this.productList = res;
-      console.log(res)
     })
   }
 }

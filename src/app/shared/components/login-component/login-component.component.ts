@@ -27,7 +27,6 @@ export class LoginComponent implements OnInit {
   login() {
     if (this.loginForm.valid) {
       this.logSvc.addNewCompanyDetail(this.loginForm.value).subscribe((res) => {
-        debugger;
         if (res.message == 'Login Success!' && res.token != null && res.userid > 0 && res.companyid > 0) {
           this.loginForm.reset();
           this.logSvc.stroeToken(res);

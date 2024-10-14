@@ -58,7 +58,6 @@ export class StockManagementComponent implements OnInit {
 
 
   search() {
-    debugger
     const type = this.reportForm.value.type || '';
     const weaverId = this.reportForm.value.weaverid || 0;
     const thirdpartyID = this.reportForm.value.third_partyid || 0;

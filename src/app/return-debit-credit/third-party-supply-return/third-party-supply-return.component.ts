@@ -90,14 +90,12 @@ export class ThirdPartySupplyReturnComponent {
   }
 
   async onBillNoSelected(value: any) {
-    debugger
     const nestedArray = await this.rpPSvc.getRawProductNestedLists(value.supplyid).toPromise();
     const control = <FormArray><unknown>(this.retSupplyForm.controls['supply_nested']);
     while (control.length !== 0) {
       control.removeAt(0);
     }
     if (control.length == 0 && nestedArray?.length != 0) {
-      debugger
       this.retSupplyForm.get('bill_no')?.setValue(value.bill_no);
       nestedArray?.forEach(async (e, i) => {
         const newControl = new FormGroup({
@@ -157,7 +155,6 @@ export class ThirdPartySupplyReturnComponent {
   }
 
   checkQty(i: any) {
-    debugger
     const Control = this.retSupplyForm.get('supply_nested') as FormArray;
 
     if (Number(Control.at(i).get('ret_a_qty')?.value) > Number(Control.at(i).get('a_qty')?.value)) {

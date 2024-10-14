@@ -91,14 +91,12 @@ export class ReturnRawProductComponent {
   }
 
   async onBillNoSelected(value: any) {
-    debugger
     const nestedArray = await this.rpPSvc.getRawProductNestedLists(value.purchaseid).toPromise();
     const control = <FormArray><unknown>(this.SupplierDebitForm.controls['rawProduct_nested']);
     while (control.length !== 0) {
       control.removeAt(0);
     }
     if (control.length == 0 && nestedArray?.length != 0) {
-      debugger
       this.SupplierDebitForm.get('total')?.setValue(value.total);
       this.SupplierDebitForm.get('bill_no')?.setValue(value.bill_no);
       nestedArray?.forEach(async (e, i) => {
@@ -276,7 +274,6 @@ export class ReturnRawProductComponent {
     Control.at(i).get('ret_total')?.setValue(String((disAmount * qty).toFixed(2)));
 
     const sutotal = (Number(Control.at(i).get('ret_total')?.value)) + (Number(Control.at(i).get('ret_re_amount')?.value));
-    debugger
     const gst = Number(Control.at(i).get('gst_percentage')?.value);
     const newArray = this.supplierDetailsList.filter((e) => {
       return e.supplierid == this.SupplierDebitForm.value.supplierid;

@@ -360,7 +360,6 @@ export class MultipleSalesBillentryGSTComponent {
 
   async getReport(entryid: number) {
     const multipleSalesList = await this.sBSvc.getMultipleSalesReport(entryid).toPromise();
-    debugger
     this.SBREGSTDSVC.openConfirmDialog(multipleSalesList)
       .afterClosed()
       .subscribe((res) => {

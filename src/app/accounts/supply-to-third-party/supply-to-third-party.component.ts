@@ -86,7 +86,6 @@ export class SupplyToThirdPartyComponent {
   async findBillNo(): Promise<void> {
     this.stPSvc.getMaxId(this.companyID).subscribe((data) => {
       let maxnumber = 0;
-      debugger
       if (data.length > 0) {
         maxnumber = data[0].supplyid + 1;
         if (maxnumber < 10) {
@@ -186,7 +185,6 @@ export class SupplyToThirdPartyComponent {
   }
 
   setHsn(i: any) {
-    debugger
     const Control = this.supplyForm.get('supply_nested') as FormArray;
     const proID = Control.at(i).get('n_productid')?.value;
     const newGSTDet = this.NestedProductList.find((e) => { return e.n_productid == proID });
@@ -245,7 +243,6 @@ export class SupplyToThirdPartyComponent {
 
       nestedArray?.forEach(async (e, i) => {
         const newGSTDet = this.NestedProductList.find((ee) => { return ee.n_productid == e.n_productid });
-        debugger
         const newControl = new FormGroup({
           supply_n_id: new FormControl(e.supply_n_id),
           n_productid: new FormControl(e.n_productid),
@@ -287,7 +284,6 @@ export class SupplyToThirdPartyComponent {
   }
 
   deleteFun(id: number) {
-    debugger
     this.DialogSvc.openConfirmDialog(
       'Are you sure want to delete this record ?'
     )
@@ -295,9 +291,15 @@ export class SupplyToThirdPartyComponent {
       .subscribe((res) => {
         if (res == true) {
           this.stPSvc.delete(id).subscribe((res) => {
-            if (res?.recordid) {
+            if (res?.status === 'Delete Success') {
               this.notificationSvc.error('Deleted Success');
               this.cancelClick();
+            }
+            else if (res?.status === 'Return') {
+              this.notificationSvc.warn('This record cannot be deleted ! Because You have entered a return entry for this purchase')
+            }
+            else {
+              this.notificationSvc.error('Something is wrong !')
             }
           });
         }

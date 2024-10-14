@@ -20,7 +20,6 @@ export class linkProductMasterService {
     }
 
     newLinkProduct(unitInsert: any): Observable<any> {
-        console.log(unitInsert)
         const httpOptions = { headers: new HttpHeaders({ 'Content-type': 'application/json' }) };
         return this.http.post<any>(this.apiUrl + 'LinkProduct/Insert_link_product', unitInsert, httpOptions);
     }

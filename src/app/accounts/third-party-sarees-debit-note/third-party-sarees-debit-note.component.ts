@@ -185,7 +185,6 @@ export class ThirdPartySareesDebitNoteComponent implements OnInit {
   async findBillNo(): Promise<void> {
     const data: any =await this.TPNGSTDSVC.getMaxId(this.companyID).toPromise();
     let maxnumber = 0;
-    debugger
     if (Number(data.length) > 0 && this.thirdPartyNonGstDebitForm.value.thirdPartyDebitid == 0) {
       maxnumber = data[0].entryid + 1;
       if (maxnumber < 10) {

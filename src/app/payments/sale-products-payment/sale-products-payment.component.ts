@@ -195,10 +195,8 @@ export class SaleProductsPaymentComponent {
   }
 
   async deductionAdvanceAmount(naadv: any) {
-    debugger
     const getAdvan = Number(this.advanceArrayList.find((e) => { return e.advanceid == this.paymentsForm.value.advanceid })?.aval_addvance || 0);
     await this.setTwoDigitBalance();
-    debugger
     if (Number(naadv) > Number(this.paymentsForm.value.n_total_amount) || Number(naadv) > getAdvan) {
       this.paymentsForm.get('adnp_amount')?.setValue('0.00');
       this.notificationSvc.error('Amount is invalid');

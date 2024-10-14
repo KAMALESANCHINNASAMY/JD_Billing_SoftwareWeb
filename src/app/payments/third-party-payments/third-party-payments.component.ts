@@ -128,10 +128,8 @@ export class ThirdPartyPaymentsComponent implements OnInit {
   }
 
   async deductionAdvanceAmount(naadv: any) {
-    debugger
     const getAdvan = Number(this.advanceArrayList.find((e) => { return e.advanceid == this.thirdPartyPaymentsForm.value.advanceid })?.aval_addvance || 0);
     await this.setTwoDigitBalance();
-    debugger
     if (Number(naadv) > Number(this.thirdPartyPaymentsForm.value.n_total_amount) || Number(naadv) > getAdvan) {
       this.thirdPartyPaymentsForm.get('adnp_amount')?.setValue('0.00');
       this.notificationSvc.error('Amount is invalid');
@@ -181,7 +179,6 @@ export class ThirdPartyPaymentsComponent implements OnInit {
 
   async getPaymentForThirdParty(id: number): Promise<void> {
     const newPaymentList = await this.TPPSVC.getThirdPartyPaymentLists(id).toPromise();
-    debugger
     const control = <FormArray><unknown>(
       this.thirdPartyPaymentsForm.controls['thirdPartyPayment_nested']
     );

@@ -12,7 +12,6 @@ export class salesBillPrintService {
     constructor(private dialog: MatDialog) { }
 
     openConfirmDialog(parent: any, child: any) {
-        debugger
         return this.dialog.open(SalesBillComponent, {
             width: '854px',
             height: '97vh',

@@ -361,7 +361,6 @@ export class WeaversSareesComponent implements OnInit {
   }
 
   deleteFun(id: number) {
-    debugger
     this.DialogSvc.openConfirmDialog(
       'Are you sure want to delete this record ?'
     )

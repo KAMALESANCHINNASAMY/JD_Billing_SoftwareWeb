@@ -12,7 +12,6 @@ export class salesBillNongstReturnReportService {
 
 
   openConfirmDialog(parent: any, childarray: any) {
-    debugger
     return this.dialog.open(SalesBillnongstReturnReportsComponent, {
       width: '1024px',
       height: '700px',

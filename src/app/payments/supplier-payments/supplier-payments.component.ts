@@ -193,10 +193,8 @@ export class SupplierPaymentsComponent implements OnInit {
   }
 
   async deductionAdvanceAmount(naadv: any) {
-    debugger
     const getAdvan = Number(this.advanceArrayList.find((e) => { return e.advanceid == this.supplierPaymentsForm.value.advanceid })?.aval_addvance || 0);
     await this.setTwoDigitBalance();
-    debugger
     if (Number(naadv) > Number(this.supplierPaymentsForm.value.n_total_amount) || Number(naadv) > getAdvan) {
       this.supplierPaymentsForm.get('adnp_amount')?.setValue('0.00');
       this.notificationSvc.error('Amount is invalid');

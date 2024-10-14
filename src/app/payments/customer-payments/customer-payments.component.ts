@@ -128,7 +128,6 @@ export class CustomerPaymentsComponent implements OnInit {
     amount = Number(this.customerPaymentForm.value.n_amount);
     let bal = 0;
     control.value.forEach((e: any, i: number) => {
-      debugger;
       control.at(i).get('isselect')?.setValue(false);
       const totalAmount = Number(e.total_amount);
       if (amount < totalAmount) {
@@ -216,10 +215,8 @@ export class CustomerPaymentsComponent implements OnInit {
   }
 
   async deductionAdvanceAmount(naadv: any) {
-    debugger
     const getAdvan = Number(this.advanceArrayList.find((e) => { return e.advanceid == this.customerPaymentForm.value.advanceid })?.aval_addvance || 0);
     await this.setTwoDigitBalance();
-    debugger
     if (Number(naadv) > Number(this.customerPaymentForm.value.n_total_amount) || Number(naadv) > getAdvan) {
       this.customerPaymentForm.get('adnp_amount')?.setValue('0.00');
       this.notificationSvc.error('Amount is invalid');

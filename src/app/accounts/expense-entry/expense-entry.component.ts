@@ -136,7 +136,6 @@ export class ExpenseEntryComponent {
   }
 
   setAmountType(value: string, i: number, bankid: number) {
-    debugger
     const control = <FormArray>this.expenseEntryForm.controls['newList'];
     if (value == 'cash') {
       control.at(i).get('ishand_cash_am')?.setValue(true);
@@ -165,7 +164,6 @@ export class ExpenseEntryComponent {
   }
 
   Save() {
-    debugger
     const control = <FormArray>this.expenseEntryForm.controls['newList'];
 
     const isOk = control.value.every((e: any) => {

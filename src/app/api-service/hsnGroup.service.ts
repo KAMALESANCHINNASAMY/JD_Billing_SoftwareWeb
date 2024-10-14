@@ -9,7 +9,7 @@ import { ConfigService } from './configuration.service';
 export class hsnMasterService {
   readonly apiUrl = this.ConfigService.BSfwUrl;
 
-  constructor(private http: HttpClient, private ConfigService: ConfigService) {}
+  constructor(private http: HttpClient, private ConfigService: ConfigService) { }
 
   getHSNGroup(companyid: any): Observable<any[]> {
     const httpOptions = {
@@ -22,7 +22,6 @@ export class hsnMasterService {
   }
 
   newHSNGroup(hsnInsert: any): Observable<any> {
-    debugger
     const httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
     };

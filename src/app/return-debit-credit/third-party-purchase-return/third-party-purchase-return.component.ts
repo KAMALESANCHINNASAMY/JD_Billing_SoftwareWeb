@@ -91,14 +91,12 @@ export class ThirdPartyPurchaseReturnComponent {
   }
 
   async onBillNoSelected(value: any) {
-    debugger
     const nestedArray = await this.rpPSvc.getSalesNestedLists(value.purchaseid).toPromise();
     const control = <FormArray><unknown>(this.salesDebitForm.controls['salesProduct_nested']);
     while (control.length !== 0) {
       control.removeAt(0);
     }
     if (control.length == 0 && nestedArray?.length != 0) {
-      debugger
       this.salesDebitForm.get('total')?.setValue(value.total);
       this.salesDebitForm.get('bill_no')?.setValue(value.bill_no);
       nestedArray?.forEach(async (e, i) => {
@@ -250,7 +248,6 @@ export class ThirdPartyPurchaseReturnComponent {
     Control.at(i).get('ret_total')?.setValue(String((disAmount * qty).toFixed(2)));
 
     const sutotal = Number(Control.at(i).get('ret_total')?.value);
-    debugger
     const gst = Number(Control.at(i).get('gst_percentage')?.value);
     const newArray = this.thirdPartyDetailsList.filter((e) => {
       return e.third_partyid == this.salesDebitForm.value.third_partyid;

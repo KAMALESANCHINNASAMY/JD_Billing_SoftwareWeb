@@ -87,7 +87,6 @@ export class WeaversWithGivenReceivedComponent {
     });
   }
   async changeMode() {
-    debugger
     const control = <FormArray>this.weaverSareesForm.controls['giventoweavers'];
     while (control.length !== 0) {
       control.removeAt(0);
@@ -577,7 +576,6 @@ export class WeaversWithGivenReceivedComponent {
   }
 
   deleteFun(item: any) {
-    debugger
     this.DialogSvc.openConfirmDialog(
       'Are you sure want to delete this record ?'
     )

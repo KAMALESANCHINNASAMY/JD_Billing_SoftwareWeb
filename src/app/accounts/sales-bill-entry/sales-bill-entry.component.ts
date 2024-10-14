@@ -100,7 +100,6 @@ export class SalesBillEntryComponent implements OnInit {
     }
   }
   async getStockBySiCode(code: string, i: number) {
-    debugger
     const Control = this.salesBillEntryForm.get('sales_bill_nested') as FormArray;
     const alredyExArray = Control.value.filter((e: any, ii: number) => { return e.si_code === code && ii !== i });
     if (alredyExArray.length > 0) {
