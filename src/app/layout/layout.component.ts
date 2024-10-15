@@ -95,7 +95,7 @@ export class LayoutComponent implements OnInit {
           value: 1201
         },
         {
-          link_name: 'Raw Product Purchase',
+          link_name: 'Purchase',
           link: 'accounts/raw-product',
           isselect: false,
           value: 1207
@@ -130,25 +130,25 @@ export class LayoutComponent implements OnInit {
           value: 1206
         },
         {
-          link_name: 'Supply of Material to Third Party',
+          link_name: 'Job Work Outward',
           link: 'accounts/supply-to-thirdParty',
           isselect: false,
           value: 1210
         },
         {
-          link_name: 'Purchase From ThirdParty',
+          link_name: 'Job Work Inward',
           link: 'accounts/purchase-from-thirdParty',
           isselect: false,
           value: 1211
         },
         {
-          link_name: 'Sale Products',
+          link_name: 'Sales',
           link: 'accounts/sale-products',
           isselect: false,
           value: 1208
         },
         {
-          link_name: 'Expense Entry',
+          link_name: 'Expense',
           link: 'accounts/expense-entry',
           isselect: false,
           value: 1209

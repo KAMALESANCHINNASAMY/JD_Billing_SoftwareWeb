@@ -103,9 +103,9 @@ export class ThirdPartySupplyReturnComponent {
           supply_n_id: new FormControl(e.supply_n_id),
           n_productid: new FormControl(e.n_productid),
           a_qty: new FormControl(e.a_qty),
-          ret_a_qty: new FormControl(e.ret_a_qty),
+          ret_a_qty: new FormControl('', [Validators.required, Validators.pattern(/^\d+(\.\d{1,})?$/)]),
           qty: new FormControl(e.qty),
-          ret_qty: new FormControl('', [Validators.required, Validators.pattern(/^\d+(\.\d{1,})?$/)])
+          ret_qty: new FormControl('0.00', [Validators.required, Validators.pattern(/^\d+(\.\d{1,})?$/)])
         });
         (this.retSupplyForm.get('supply_nested') as FormArray).push(
           newControl
@@ -214,7 +214,7 @@ export class ThirdPartySupplyReturnComponent {
           supply_n_id: new FormControl(e.supply_n_id),
           n_productid: new FormControl(e.n_productid),
           a_qty: new FormControl(e.a_qty),
-          ret_a_qty: new FormControl(e.ret_a_qty),
+          ret_a_qty: new FormControl(e.ret_a_qty, [Validators.required, Validators.pattern(/^\d+(\.\d{1,})?$/)]),
           qty: new FormControl(e.qty),
           ret_qty: new FormControl(e.ret_qty, [Validators.required, Validators.pattern(/^\d+(\.\d{1,})?$/)])
         });

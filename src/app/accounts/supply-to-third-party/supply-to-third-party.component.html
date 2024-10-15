@@ -3,7 +3,7 @@
         <mat-card-content>
             <div class="row">
                 <div class="col-sm-12">
-                    <h2 class="head">Supply of Raw Marerial to Third Party</h2>
+                    <h2 class="head">Job Work Outward</h2>
                 </div>
             </div>
             <form #tableTop [formGroup]="supplyForm"
@@ -64,6 +64,42 @@
                     </div>
                 </div>
 
+                <div class="row ml-3">
+                    <div class="col-sm-4" style="display: flex">
+                        <div class="labeldiv">
+                            <label class="pt-2" style="margin: auto">
+                                Product Name<span
+                                    class="text-danger">*</span></label>
+                        </div>
+                        <div class="inputdiv">
+                            <select class="form-control"
+                                (change)="getNested()"
+                                [ngClass]="{'is-invalid': supplyForm.controls.productid.touched && supplyForm.controls.productid.errors}"
+                                formControlName="productid" required>
+                                <option selected disabled value="null">Please
+                                    Select</option>
+                                <option
+                                    *ngFor="let option of linkProductList"
+                                    [ngValue]="option.productid">
+                                    {{option.product_name}}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-4" style="display: flex">
+                        <div class="labeldiv">
+                            <label class="pt-2" style="margin: auto">Qty<span
+                                    class="text-danger">*</span></label>
+                        </div>
+                        <div class="inputdiv">
+                            <input (input)="getNested()"
+                                [ngClass]="{'is-invalid': supplyForm.controls.qty.touched && supplyForm.controls.qty.errors}"
+                                class="form-control" formControlName="qty"
+                                type="text" required />
+                        </div>
+                    </div>
+                </div>
+
                 <div class="table-responsive mt-4">
                     <table
                         class="col-sm-12 table table-hover table-sm table-bordered">
@@ -72,11 +108,8 @@
                                 <th>#</th>
                                 <th>Product Name</th>
                                 <th>Unit</th>
-                                <th>Availabel Actual Qty</th>
-                                <th>Availabel Qty</th>
                                 <th>Actual Qty</th>
-                                <th>Qty</th>
-                                <th style="font-size: 11px;">Action</th>
+                                <!-- <th>Qty</th> -->
                             </tr>
                         </thead>
                         <tbody formArrayName="supply_nested">
@@ -85,39 +118,27 @@
                                 formGroupName="{{i}}">
                                 <td>{{i+1}}</td>
                                 <td style="min-width: 150px;"><select
-                                        (change)="setHsn(i)"
                                         [ngClass]="{'is-invalid': isProductControlInvalid(i)}"
                                         formControlName="n_productid"
                                         class="form-control" required>
                                         <option disabled [ngValue]="null"
                                             selected>Please select</option>
-                                        <option [ngValue]="item.n_productid"
+                                        <option disabled
+                                            [ngValue]="item.n_productid"
                                             *ngFor="let item of NestedProductList">
                                             {{item.n_product_name}}</option>
                                     </select>
                                 </td>
                                 <td>{{chid.get('unit_name')?.value}}</td>
-                                <td>{{chid.get('av_a_qty')?.value}}</td>
-                                <td>{{chid.get('av_qty')?.value}}</td>
                                 <td style="min-width: 120px;"><input
                                         [ngClass]="{'is-invalid': isAtytrolInvalid(i)}"
-                                        formControlName="a_qty"
-                                        (change)="setHsn(i)"
+                                        formControlName="a_qty" readonly
                                         class="form-control" required></td>
 
-                                <td style="min-width: 100px;"><input
+                                <!-- <td style="min-width: 100px;"><input
                                         [ngClass]="{'is-invalid': isQtyControlInvalid(i)}"
-                                        formControlName="qty"
-                                        (change)="setHsn(i)"
-                                        class="form-control" required></td>
-                                <td style="padding:0px"><mat-icon
-                                        (click)="addNesForm()"
-                                        style="color: green;cursor: pointer;">add_circle</mat-icon>
-                                    <mat-icon
-                                        *ngIf="chid.get('supply_n_id')?.value==0"
-                                        (click)="removeNesForm(i)"
-                                        style="color: red;cursor: pointer;">remove_circle</mat-icon>
-                                </td>
+                                        formControlName="qty" readonly
+                                        class="form-control" required></td> -->
                             </tr>
                         </tbody>
                     </table>
@@ -175,9 +196,6 @@
                                 <td>{{item.date}}</td>
                                 <td>{{item.bill_no}}</td>
                                 <td>
-                                    <!-- <button class="btn btn-sm btn-success" (click)="getReport(item)">
-                                        Preview
-                                    </button> -->
                                     <mat-icon class="mr-1"
                                         style="cursor: pointer;color: blue;"
                                         title="Click to edit"

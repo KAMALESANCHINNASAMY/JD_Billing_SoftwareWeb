@@ -24,7 +24,7 @@
 
 th,
 td {
-    border: 1px solid #008E97 !important;
+    border: 2px solid grey !important;
     padding-top: 3px;
     padding-bottom: 3px;
 }
@@ -42,6 +42,16 @@ td {
     border-bottom: 0px !important;
 }
 
+th,
+td {
+    padding-left: 4px !important;
+    padding-right: 4px !important;
+}
+
+.emptyarray {
+    display: none;
+}
+
 @media print {
     @page {
         margin: 18px 20px !important;
@@ -50,8 +60,25 @@ td {
     .comhead {
         font-size: 48px !important;
     }
-    .img-print{
+
+    .img-print {
         width: 162px !important;
-        height: 181px !important;
+        height: 171px !important;
+    }
+
+    .emptyarray {
+        /* Show during print */
+        display: table-row;
+    }
+
+    th,
+    td {
+        font-size: 19px !important;
+        padding-left: 4px !important;
+        padding-right: 4px !important;
+    }
+
+    .container-fluid {
+        font-size: 21px !important;
     }
 }

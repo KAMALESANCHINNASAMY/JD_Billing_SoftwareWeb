@@ -1,19 +1,20 @@
 <div id="_print_sectionsa">
     <div class="container-fluid"
-        style="font-weight: 700;font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;">
+        style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;">
         <div class="row p-2"
             style="display: flex;justify-content: space-between;">
 
             <div>
                 <img class="img-print" src="{{ companyDetailsList?.logo }}"
                     width="100px"
-                    height="120px" />
+                    height="110px" />
             </div>
 
             <div
                 style="text-align: center;">
-                <div class="comhead" style="font-size:25px;color: #008E97;">
-                    {{ companyDetailsList?.display_name}}
+                <div class="comhead"
+                    style="font-size:25px;font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;">
+                    <b> {{ companyDetailsList?.display_name}}</b>
                 </div>
                 <div class="mt-1">
                     {{companyDetailsList?.door_no}},{{companyDetailsList?.street_name}},{{companyDetailsList?.post}},</div>
@@ -21,100 +22,206 @@
                     {{companyDetailsList?.taluk}},{{companyDetailsList?.district}}-{{companyDetailsList?.pincode}}.
                 </div>
 
-                <div class="mt-1" style="color: #008E97;">GSTIN :
+                <div class="mt-1">GSTIN :
                     {{companyDetailsList?.gst_in || ''}}</div>
             </div>
 
             <div style="text-align: right;">
-                <div class="pr-3" style="color: #008E97;">TAX INVOICE</div>
-                <div class="pr-3 pt-3">
+                <div class="pr-3"><b>TAX INVOICE</b></div>
+                <div class="pr-3 pt-2">
                     Mobile : {{companyDetailsList?.mobile}}
                 </div>
                 <div class="pr-3">
-                    Office Ph :{{companyDetailsList?.office_phno}}
+                    Office Ph : {{companyDetailsList?.office_phno}}
+                </div>
+                <div class="pr-3">
+                    Email :{{companyDetailsList?.email}}
                 </div>
             </div>
         </div>
-
-        <hr style="border: 1px dashed lightgray;">
-
+        <div style="text-align: right;">
+            ORIGINAL FOR RECIPIENT
+        </div>
         <table class="table">
             <tbody>
                 <tr>
-                    <th class="bln" style="width: 55%;" colspan="5">
-                        <div class="mb-1">Receiver Name and Address :</div>
-                        <div style="color: #008E97;">{{customerDetailsList?.customer_name}}</div>
+                    <td class="bln" colspan="5">
+                        <div>Bill To :</div>
+                        <div class="mb-1 mt-1" style="font-size:x-large;"><b>{{customerDetailsList?.customer_name}}</b></div>
                         <div>
                             <address>{{customerDetailsList?.address}}</address>
                         </div>
                         <div>Mobile : {{customerDetailsList?.mobile_no}}</div>
                         <div>GST No : {{ customerDetailsList?.gst_in }} <span
-                                class="ml-3">State Code :
-                                {{customerDetailsList?.state_code }}</span>
+                                class="ml-3">State :
+                                {{customerDetailsList?.state_code + ' - ' +
+                                customerDetailsList?.state}}</span>
                         </div>
-                    </th>
-                    <th class="brn" style="widows: 45%;" colspan="4">
-                        <div style="display: flex;" class="p-2">
-                            <div style="width:45%;text-align: left;"
+                    </td>
+                    <td class="brn" colspan="5">
+                        <div style="display: flex;" class="p-1">
+                            <div style="width:40%;text-align: left;"
                                 class="mr-3">Invoice No</div>:
-                            {{parent?.bill_no}}
+                            <b>{{parent?.bill_no}}</b>
                         </div>
-                        <div class="p-2" style="display: flex;">
-                            <div style="width: 45%;text-align: left;"
-                                class="mr-3">Invoice Date</div>
-                            : {{getFormattedDate(parent?.date)}}
+                        <div class="p-1" style="display: flex;">
+                            <div style="width: 40%;text-align: left;"
+                                class="mr-3">Date</div>
+                            :<b> {{getFormattedDate(parent?.date)}}</b>
                         </div>
-                        <div class="p-2" style="display: flex;">
-                            <div style="width: 45%;text-align: left;"
-                                class="mr-3">Invoice Type</div>: Credit
+                        <div class="p-1" style="display: flex;">
+                            <div style="width: 40%;text-align: left;"
+                                class="mr-3">Place of supply</div>:
+                            <b> {{customerDetailsList?.state_code + ' - ' +
+                                customerDetailsList?.state}}</b>
                         </div>
-                    </th>
+                    </td>
                 </tr>
 
                 <tr>
-                    <th class="bln" style="text-align: center;">S.No</th>
-                    <th>Product Name</th>
+                    <th class="bln" style="text-align: center;">#</th>
+                    <th>Item Name</th>
+                    <th style="text-align: center;">HSN/SAC</th>
                     <th style="text-align: center;">Price</th>
                     <th style="text-align: center;">QTY</th>
                     <th style="text-align: center;">Dis %</th>
-                    <th style="text-align: right;">Total</th>
+                    <th style="text-align: right;">Taxable
+                        amount</th>
                     <th style="text-align: center;">Gst %</th>
-                    <th style="text-align: right;">Gst Amount</th>
-                    <th class="brn" style="text-align: right;">Net Total</th>
+                    <th style="text-align: right;">Tax Amount</th>
+                    <th class="brn" style="text-align: right;">Net Amount</th>
                 </tr>
                 <tr *ngFor="let item of child;let i=index;">
-                    <th class="bln btbtn" style="text-align: center;">{{i+1}}</th>
+                    <td class="bln btbtn" style="text-align: center;">{{i+1}}</td>
                     <th class="btbtn">{{item.product_name}}</th>
-                    <th class="btbtn" style="text-align: center;">{{(+item.price).toFixed(2)}}</th>
-                    <th class="btbtn" style="text-align: center;">{{item.qty}}</th>
-                    <th class="btbtn" style="text-align: center;">{{item.discount}}</th>
-                    <th class="btbtn" style="text-align: right;">{{(+item.total).toFixed(2)}}</th>
-                    <th class="btbtn" style="text-align: center;">{{item.gst_percentage}}</th>
-                    <th class="btbtn" style="text-align: right;">{{(+item.cgst_amount
-                        +
+                    <td class="btbtn" style="text-align: center;">{{item.hsn_number}}</td>
+                    <td class="btbtn" style="text-align: center;">{{(+item.price).toFixed(2)}}</td>
+                    <td class="btbtn" style="text-align: center;">{{item.qty}}</td>
+                    <td class="btbtn" style="text-align: center;">{{item.discount}}</td>
+                    <td class="btbtn" style="text-align: right;">{{(+item.total).toFixed(2)}}</td>
+                    <td class="btbtn" style="text-align: center;">{{item.gst_percentage}}</td>
+                    <td class="btbtn" style="text-align: right;">
+                        {{(+item.cgst_amount +
                         +item.sgst_amount +
-                        +item.igst_amount).toFixed(2)}}</th>
+                        +item.igst_amount).toFixed(2)}}</td>
                     <th class="brn btbtn" style="text-align: right;">{{(+item.net_total).toFixed(2)}}</th>
                 </tr>
-                <tr>
-                    <th class="bln" style="text-align: right;color: #008E97;"
-                        colspan="8">Net
-                        Amount</th>
-                    <th class="brn" style="text-align: right;color: #008E97;">{{getTotal()}}</th>
+                <tr class="emptyarray" *ngFor="let empty of emptyArray;">
+                    <td style="color: rgb(189, 195, 193,0.0);" class="bln btbtn">*</td>
+                    <th class="btbtn"></th>
+                    <td class="btbtn"></td>
+                    <td class="btbtn"></td>
+                    <th class="btbtn"></th>
+                    <th class="btbtn"></th>
+                    <th class="btbtn"></th>
+                    <th class="btbtn"></th>
+                    <th class="btbtn"></th>
+                    <th class="brn btbtn"></th>
                 </tr>
-                <tr><th class="bln brn"
-                        style="text-align: center;color: #008E97;"
-                        colspan="9">{{numberInWords}}</th></tr>
+                <tr>
+                    <th></th>
+                    <th class="bln" style="text-align: left;">Total</th>
+                    <th></th>
+                    <th></th>
+                    <th class="brn" style="text-align: center;">{{getTotalQty()}}</th>
+                    <th></th>
+                    <th class="brn" style="text-align: right;">{{gettxableAmount()}}</th>
+                    <th></th>
+                    <th class="brn" style="text-align: right;">{{getTotalGSTAmount()}}</th>
+                    <th class="brn" style="text-align: right;">{{getTotal()}}</th>
+                </tr>
+                <tr><td class="bln brn"
+                        style="text-align: center;"
+                        colspan="10">Invoice Amount in Words : <b>{{numberInWords}}
+                            only</b>
+                    </td>
+                </tr>
+                <tr>
+                    <th style="text-align: center;" rowspan="2" colspan="2">HSN/
+                        SAC </th>
+                    <th style="text-align: center;" rowspan="2">Taxable Amount</th>
+                    <th style="text-align: center;" colspan="2">CGST</th>
+                    <th style="text-align: center;" colspan="2">SGST</th>
+                    <th style="text-align: center;" colspan="2">IGST</th>
+                    <th style="text-align: center;" rowspan="2">Total Tax Amount</th>
+                </tr>
+                <tr>
+                    <th>GST %</th>
+                    <th style="text-align: center;">Amount</th>
+                    <th>GST %</th>
+                    <th style="text-align: center;">Amount</th>
+                    <th>GST %</th>
+                    <th style="text-align: center;">Amount</th>
+                </tr>
+                <tr>
+                    <th style="text-align: center;" colspan="2">{{child[0]?.hsn_number}}</th>
+                    <th style="text-align: center;">{{gettxableAmount()}}</th>
+                    <th style="text-align: center;">{{+child[0]?.gst_percentage
+                        / 2}}%</th>
+                    <th style="text-align: center;">{{getcgstAmount()}}</th>
+                    <th style="text-align: center;">{{+child[0]?.gst_percentage
+                        / 2}}%</th>
+                    <th style="text-align: center;">{{getsgstAmount()}}</th>
+                    <th style="text-align: center;">{{child[0]?.gst_percentage}}%</th>
+                    <th style="text-align: center;">{{getigstAmount()}}</th>
+                    <th style="text-align: center;">{{getTotalGSTAmount()}}</th>
+                </tr>
+                <tr>
+                    <th style="text-align: center;" colspan="2">Total</th>
+                    <th style="text-align: center;">{{gettxableAmount()}}</th>
+                    <th style="text-align: center;"></th>
+                    <th style="text-align: center;">{{getcgstAmount()}}</th>
+                    <th style="text-align: center;"></th>
+                    <th style="text-align: center;">{{getsgstAmount()}}</th>
+                    <th style="text-align: center;"></th>
+                    <th style="text-align: center;">{{getigstAmount()}}</th>
+                    <th style="text-align: center;">{{getTotalGSTAmount()}}</th>
+                </tr>
 
                 <tr>
-                    <th class="bln" colspan="5">
-                        Receiver Signature
-                    </th>
-                    <th class="brn" colspan="4">
-                        <div style="text-align: right;" class="mt-2 mb-5">For
-                            {{companyDetailsList?.company_name || ''}}</div>
-                        <div style="text-align: right;" class="mt-2 mb-2">Authorised
-                            Signatory</div>
+                    <td class="tables boderleft" colspan="4">
+                        <div class="pt-1" style="display: flex;">
+                            <div style="width: 35%;"><b>BANK NAME</b></div>:
+                            {{companyDetailsList?.bank_name}}
+                        </div>
+
+                        <div class="pt-2" style="display: flex;">
+                            <div style="width: 35%;"><b>A/C NAME</b></div>:
+                            {{companyDetailsList?.ac_holder_name}}
+                        </div>
+                        <div class="pt-2" style="display: flex;">
+                            <div style="width: 35%;"><b>A/C NO </b></div>:
+                            {{companyDetailsList?.ac_no}}
+                        </div>
+                        <div class="pt-2" style="display: flex;">
+                            <div style="width: 35%;"><b>IFSC Code </b></div>:
+                            {{companyDetailsList?.ifsc_code}}
+                        </div>
+                    </td>
+                    <td class="bln" colspan="3">
+                        <b> Terms and conditions :</b>
+
+                        <div class="p-1">
+                            We are not responsible for any loss or
+                            damag in transit.
+                        </div>
+                        <div class="p-1">
+                            Goods once sold will not be taken back.
+                        </div>
+                        <div class="p-1">
+                            Thanks for doing business with us!
+                        </div>
+                    </td>
+                    <th class="brn" colspan="3">
+                        <div style="display: flex;
+                        flex-direction: column;
+                        justify-content: space-between;
+                        height: 135px;">
+                            <div style="text-align: center;">For
+                                {{companyDetailsList?.company_name || ''}}</div>
+                            <div style="text-align: center;">Authorised
+                                Signatory</div>
+                        </div>
                     </th>
                 </tr>
             </tbody>

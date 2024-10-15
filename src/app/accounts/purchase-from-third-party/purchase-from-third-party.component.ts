@@ -110,7 +110,7 @@ export class PurchaseFromThirdPartyComponent {
       new FormGroup({
         purchase_n_id: new FormControl(0),
         productid: new FormControl(null),
-        gst_percentage: new FormControl('', [Validators.required, Validators.pattern(/^\d+(\.\d{1,})?$/)]),
+        gst_percentage: new FormControl('0', [Validators.required, Validators.pattern(/^\d+(\.\d{1,})?$/)]),
         price: new FormControl('', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
         discount: new FormControl('', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
         qty: new FormControl('', [Validators.required, Validators.pattern(/^\d+(\.\d{1,})?$/)]),
@@ -198,7 +198,7 @@ export class PurchaseFromThirdPartyComponent {
     const newControl = new FormGroup({
       purchase_n_id: new FormControl(0),
       productid: new FormControl(null),
-      gst_percentage: new FormControl('', [Validators.required, Validators.pattern(/^\d+(\.\d{1,})?$/)]),
+      gst_percentage: new FormControl('0', [Validators.required, Validators.pattern(/^\d+(\.\d{1,})?$/)]),
       price: new FormControl('', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
       discount: new FormControl('', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
       qty: new FormControl('', [Validators.required, Validators.pattern(/^\d+(\.\d{1,})?$/)]),
@@ -228,7 +228,6 @@ export class PurchaseFromThirdPartyComponent {
     const proID = Control.at(i).get('productid')?.value;
     const newGSTDet = this.productList.find((e) => { return e.productid == proID });
     Control.at(i).get('price')?.setValue(newGSTDet.price);
-    Control.at(i).get('gst_percentage')?.setValue(newGSTDet.gst_percentage);
 
     this.colculation(i);
   }
