@@ -10,10 +10,12 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
 import { HttpClientModule } from '@angular/common/http';
 import { NgxPrintModule } from 'ngx-print';
 import { MatDialogModule } from '@angular/material/dialog';
+import { PaymentReportComponent } from './payment-report/payment-report.component';
+import { SupplierLedgerComponent } from './supplier-ledger/supplier-ledger.component';
 
 
 @NgModule({
-  declarations: [RawProductStockComponent],
+  declarations: [RawProductStockComponent, PaymentReportComponent,SupplierLedgerComponent],
   imports: [
     CommonModule, RouterModule.forChild(rawproductreportRoutes),
     MaterialModule,

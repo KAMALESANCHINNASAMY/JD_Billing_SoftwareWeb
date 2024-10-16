@@ -216,6 +216,18 @@ export class LayoutComponent implements OnInit {
         link: 'raw-products-reports/raw-product-stock',
         isselect: false,
         value: 2301
+      },
+      {
+        link_name: 'Raw Product Payment Report',
+        link: 'raw-products-reports/raw-product-payment-report',
+        isselect: false,
+        value: 2302
+      },
+      {
+        link_name: 'Purchase Ledger',
+        link: 'raw-products-reports/supplier-ledger',
+        isselect: false,
+        value: 2303
       }
       ],
     },
@@ -230,6 +242,18 @@ export class LayoutComponent implements OnInit {
         link: 'sales-products-reports/sales-product-report',
         isselect: false,
         value: 2401
+      },
+      {
+        link_name: 'Sales Payment report',
+        link: 'sales-products-reports/sales-payment-report',
+        isselect: false,
+        value: 2402
+      },
+      {
+        link_name: 'Sales Ledger',
+        link: 'sales-products-reports/sales-ledger',
+        isselect: false,
+        value: 2403
       }
       ],
     },

@@ -272,6 +272,7 @@ export class SaleProductsPaymentComponent {
     this.paymentsForm.get('n_total_amount')?.setValue('0.00');
     this.paymentsForm.get('cuid')?.setValue(this.userID);
     this.paymentsForm.get('companyid')?.setValue(this.companyID);
+    this.advanceArrayList = [];
     this.getCustomerList();
   }
 

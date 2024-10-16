@@ -273,6 +273,7 @@ export class RawProductPaymentComponent {
     this.supplierPaymentsForm.get('n_total_amount')?.setValue('0.00');
     this.supplierPaymentsForm.get('cuid')?.setValue(this.userID);
     this.supplierPaymentsForm.get('companyid')?.setValue(this.companyID);
+    this.advanceArrayList = [];
     this.getSupplierList();
   }
 
