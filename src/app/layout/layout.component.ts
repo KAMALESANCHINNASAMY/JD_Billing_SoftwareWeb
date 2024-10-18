@@ -62,19 +62,19 @@ export class LayoutComponent implements OnInit {
           value: 1103
         },
         {
-          link_name: 'Raw Product Payment',
+          link_name: 'Purchase Payment',
           link: 'payments/raw-product-payment',
           isselect: false,
           value: 1104
         },
         {
-          link_name: 'Purchase - ThirdParty Payment',
+          link_name: 'Job Work Payment',
           link: 'payments/third-party-purchase-payment',
           isselect: false,
           value: 1105
         },
         {
-          link_name: 'Sales Payment',
+          link_name: 'Receipt',
           link: 'payments/sale-product-payment',
           isselect: false,
           value: 1106
@@ -156,7 +156,7 @@ export class LayoutComponent implements OnInit {
       ],
     },
     {
-      link_name: 'Return Credit/Debit-note',
+      link_name: 'Return Purchase & Sales',
       link: null,
       icon: 'return',
       isselect: false,
@@ -180,25 +180,25 @@ export class LayoutComponent implements OnInit {
         value: 1303
       },
       {
-        link_name: 'Raw Product Return',
+        link_name: 'Purchase Return',
         link: 'returnCredit-Debit/return-raw-prodcut',
         isselect: false,
         value: 1304
       },
       {
-        link_name: 'ThirdParty Supply Return',
+        link_name: 'Job Work Outward Return',
         link: 'returnCredit-Debit/thirdParty-supply-return',
         isselect: false,
         value: 1306
       },
       {
-        link_name: 'ThirdParty Purchase Return',
+        link_name: 'Job Work Inward Return',
         link: 'returnCredit-Debit/thirdParty-purchase-return',
         isselect: false,
         value: 1307
       },
       {
-        link_name: 'Sales Product Return',
+        link_name: 'Sales Return',
         link: 'returnCredit-Debit/return-sales-product',
         isselect: false,
         value: 1305
@@ -254,6 +254,20 @@ export class LayoutComponent implements OnInit {
         link: 'sales-products-reports/sales-ledger',
         isselect: false,
         value: 2403
+      }
+      ],
+    },
+    {
+      link_name: 'Day Book',
+      link: null,
+      icon: 'salesreport',
+      isselect: false,
+      value: 25,
+      sub_menu: [{
+        link_name: 'Day Book report',
+        link: 'day-book/day-book-report',
+        isselect: false,
+        value: 2501
       }
       ],
     },

@@ -104,6 +104,11 @@ const routes: Routes = [
         path: 'raw-products-reports',
         loadChildren: () =>
           import('./raw-products-reports/raw-products-reports.module').then((m) => (m.RawProductsReportsModule))
+      },
+      {
+        path: 'day-book',
+        loadChildren: () =>
+          import('./day-book/day-book.module').then((m) => (m.DayBookModule))
       }
     ],
   },

@@ -1,0 +1,97 @@
+<div class="container-fluid">
+    <mat-card class="matcard mt-2">
+        <mat-card-content>
+            <div class="row">
+                <div class="col-sm-12">
+                    <h2 class="head">Day Book</h2>
+                </div>
+            </div>
+
+            <form [formGroup]="reportForm" (ngSubmit)="getReport()">
+                <div class="row">
+                    <div class="col-sm-3">
+                        <div>
+                            <label>From Date <span
+                                    class="text-danger">*</span></label>
+                        </div>
+                        <div>
+                            <input type="date"
+                                [ngClass]="{'is-invalid':reportForm.controls.fromdate.touched && reportForm.controls.fromdate.errors}"
+                                class="form-control"
+                                formControlName="fromdate" required />
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div>
+                            <label>TO Date <span
+                                    class="text-danger">*</span></label>
+                        </div>
+                        <div>
+                            <input
+                                [ngClass]="{'is-invalid':reportForm.controls.todate.touched && reportForm.controls.todate.errors}"
+                                class="form-control" type="date"
+                                formControlName="todate" required />
+                        </div>
+                    </div>
+
+                    <div class="col-sm-3">
+                        <div class="pt-4 pl-4">
+                            <button type="submit" class="btn btn-info pl-4 pr-4">Search</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <div class="row">
+                <div class="col-sm-9">
+                    <button class="btn btn-info btn-sm ml-3"
+                        printSectionId="_print_section" ngxPrint
+                        [useExistingCss]="true">
+                        <mat-icon>print</mat-icon>
+                    </button>
+                </div>
+
+                <div class="table-responsive col-sm-12" id="_print_section">
+                    <table style="width: 100%;"
+                        class="table table-bordered table-hover table-sm">
+                        <thead class="tableheadList">
+                            <tr>
+                                <th>S No</th>
+                                <th>Date</th>
+                                <th style="text-align: left;">Description</th>
+                                <th style="text-align: left;">Ref & Bank</th>
+                                <th style="text-align: right;">Income</th>
+                                <th style="text-align: right;">Expense</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr
+                                *ngFor="let item of purchaseReports; let i = index">
+                                <td>{{ i + 1 }}</td>
+                                <td>{{item.date}}</td>
+                                <td style="text-align: left;">{{
+                                    item.description }}</td>
+                                <td style="text-align: left;">{{item.payment_type
+                                    + ' - ' +
+                                    item.bank_name}}</td>
+                                <td style="text-align: right;">{{item.income}}</td>
+                                <td style="text-align: right;">{{item.expense}}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="4" class="head">Total</td>
+                                <th style="text-align: right;">{{getTotIncome()}}</th>
+                                <th style="text-align: right;">{{getTotExpense()}}</th>
+                            </tr>
+
+                            <tr>
+                                <td colspan="4" class="head">Balance</td>
+                                <th colspan="2">{{(+getTotIncome() -
+                                    +getTotExpense()).toFixed(2)}}</th>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>
