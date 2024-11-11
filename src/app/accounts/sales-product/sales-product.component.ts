@@ -115,25 +115,26 @@ export class SalesProductComponent {
     gst_in: new FormControl(''),
     credit_days: new FormControl('', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
     total: new FormControl(''),
+    roundof: new FormControl('',[Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
+    net_amount: new FormControl('', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
+    action: new FormControl(''),
     sale_nested: new FormArray([
       new FormGroup({
         entry_n_id: new FormControl(0),
         productid: new FormControl(null),
         gst_percentage: new FormControl('', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
         price: new FormControl('', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
-        discount: new FormControl('', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
+        discount: new FormControl('0', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
         qty: new FormControl('', [Validators.required, Validators.pattern(/^\d+(\.\d{1,})?$/)]),
         total: new FormControl(''),
-        re_amount: new FormControl('0.00', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
         cgst_amount: new FormControl(''),
         sgst_amount: new FormControl(''),
         igst_amount: new FormControl(''),
-        net_total: new FormControl(''),
-        av_qty: new FormControl('')
+        net_total: new FormControl('')
       }),
     ]),
     cuid: new FormControl(this.userID),
-    companyid: new FormControl(this.companyID),
+    companyid: new FormControl(this.companyID)
   });
 
   getCommonControls(): AbstractControl[] {
@@ -163,19 +164,6 @@ export class SalesProductComponent {
 
   isPriceControlInvalid(index: number): boolean {
     const control = this.getPriceControl(index);
-    return control.touched && !!control.errors;
-  }
-
-  getDiscountControl(index: number): FormControl {
-    const control = (
-      this.saleProductsForm.get('sale_nested') as FormArray
-    )
-      .at(index)?.get('discount') as FormControl;
-    return control;
-  }
-
-  isDiscountControlInvalid(index: number): boolean {
-    const control = this.getDiscountControl(index);
     return control.touched && !!control.errors;
   }
 
@@ -211,15 +199,13 @@ export class SalesProductComponent {
       productid: new FormControl(null),
       gst_percentage: new FormControl('', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
       price: new FormControl('', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
-      discount: new FormControl('', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
+      discount: new FormControl('0', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
       qty: new FormControl('', [Validators.required, Validators.pattern(/^\d+(\.\d{1,})?$/)]),
       total: new FormControl(''),
-      re_amount: new FormControl('0.00', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
       cgst_amount: new FormControl(''),
       sgst_amount: new FormControl(''),
       igst_amount: new FormControl(''),
-      net_total: new FormControl(''),
-      av_qty: new FormControl('')
+      net_total: new FormControl('')
     });
     (this.saleProductsForm.get('sale_nested') as FormArray).push(
       newControl
@@ -242,7 +228,6 @@ export class SalesProductComponent {
     const newGSTDet = this.productList.find((e) => { return e.productid == proID });
     Control.at(i).get('price')?.setValue(newGSTDet.price);
     Control.at(i).get('gst_percentage')?.setValue(newGSTDet.gst_percentage);
-    Control.at(i).get('av_qty')?.setValue(newGSTDet.av_qty);
 
     this.colculation(i);
   }
@@ -254,15 +239,12 @@ export class SalesProductComponent {
     if (Number(discount) > 100) {
       Control.at(i).get('discount')?.setValue('');
     }
-    if (Number(Control.at(i).get('qty')?.value) > Number(Control.at(i).get('av_qty')?.value)) {
-      Control.at(i).get('qty')?.setValue('');
-      this.notificationSvc.error('Invaild Qty')
-    }
+
     const disAmount = price - (price * discount) / 100;
     const qty = Number(Control.at(i).get('qty')?.value);
     Control.at(i).get('total')?.setValue(String((disAmount * qty).toFixed(2)));
 
-    const sutotal = (Number(Control.at(i).get('total')?.value)) + (Number(Control.at(i).get('re_amount')?.value));
+    const sutotal = Number(Control.at(i).get('total')?.value);
     const gst = Number(Control.at(i).get('gst_percentage')?.value);
     const stateCode = this.customerDetailsList.find((e) => { return e.customerid == this.saleProductsForm.value.customerid });
     if (stateCode) {
@@ -287,10 +269,19 @@ export class SalesProductComponent {
   }
 
   finalCalculation() {
+    debugger
     const Control = this.saleProductsForm.get('sale_nested') as FormArray;
     const FormTotal = Control.value.reduce((acc: any, val: any) => (acc += Number(val.net_total)), 0);
     this.saleProductsForm.get('total')?.setValue(String(FormTotal.toFixed(2)));
+
+    if (this.saleProductsForm.value.action === '+') {
+      this.saleProductsForm.get('net_amount')?.setValue((FormTotal + Number(this.saleProductsForm.value.roundof)).toFixed(2));
+    } else if (this.saleProductsForm.value.action === '-') {
+      this.saleProductsForm.get('net_amount')?.setValue((FormTotal - Number(this.saleProductsForm.value.roundof)).toFixed(2));
+    }
   }
+
+
 
   async save() {
     if (this.saleProductsForm.valid) {
@@ -343,12 +334,10 @@ export class SalesProductComponent {
           ]),
           qty: new FormControl(e.qty, [Validators.required, Validators.pattern(/^\d+(\.\d{1,})?$/)]),
           total: new FormControl(e.total),
-          re_amount: new FormControl(e.re_amount, [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
           cgst_amount: new FormControl(e.cgst_amount),
           sgst_amount: new FormControl(e.sgst_amount),
           igst_amount: new FormControl(e.igst_amount),
-          net_total: new FormControl(e.net_total),
-          av_qty: new FormControl(newGSTDet.av_qty)
+          net_total: new FormControl(e.net_total)
         });
         (this.saleProductsForm.get('sale_nested') as FormArray).push(newControl);
         this.someMethod();
@@ -385,6 +374,9 @@ export class SalesProductComponent {
     this.saleProductsForm.get('gst_in')?.setValue('');
     this.saleProductsForm.get('credit_days')?.setValue('');
     this.saleProductsForm.get('total')?.setValue('');
+    this.saleProductsForm.get('roundof')?.setValue('');
+    this.saleProductsForm.get('net_amount')?.setValue('');
+    this.saleProductsForm.get('action')?.setValue('');
     this.saleProductsForm.get('cuid')?.setValue(this.userID);
     this.saleProductsForm.get('companyid')?.setValue(this.companyID);
 

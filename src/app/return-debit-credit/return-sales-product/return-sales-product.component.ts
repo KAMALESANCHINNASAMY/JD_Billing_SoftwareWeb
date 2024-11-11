@@ -111,8 +111,6 @@ export class ReturnSalesProductComponent {
           ret_qty: new FormControl('', [Validators.required, Validators.pattern(/^\d+(\.\d{1,})?$/)]),
           total: new FormControl(e.total),
           ret_total: new FormControl(''),
-          re_amount: new FormControl(e.re_amount),
-          ret_re_amount: new FormControl('0.00', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
           cgst_amount: new FormControl(e.cgst_amount),
           ret_cgst_amount: new FormControl(''),
           sgst_amount: new FormControl(e.sgst_amount),
@@ -142,9 +140,12 @@ export class ReturnSalesProductComponent {
     return_date: new FormControl(''),
     total: new FormControl(''),
     return_total: new FormControl('', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
+    return_roundof: new FormControl('', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
+    return_net_amount: new FormControl('', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
+    return_action: new FormControl(''),
     salesProduct_nested: new FormArray([]),
     cuid: new FormControl(this.userID),
-    companyid: new FormControl(this.companyID),
+    companyid: new FormControl(this.companyID)
   });
 
   getCommonControls(): AbstractControl[] {
@@ -158,16 +159,6 @@ export class ReturnSalesProductComponent {
 
   isQtyControlInvalid(index: number): boolean {
     const control = this.getQtyControl(index);
-    return control.touched && !!control.errors;
-  }
-
-  getRemControl(index: number): FormControl {
-    const control = (this.salesDebitForm.get('salesProduct_nested') as FormArray).at(index)?.get('ret_re_amount') as FormControl;
-    return control;
-  }
-
-  isRemControlInvalid(index: number): boolean {
-    const control = this.getRemControl(index);
     return control.touched && !!control.errors;
   }
 
@@ -223,8 +214,6 @@ export class ReturnSalesProductComponent {
           ret_qty: new FormControl(e.ret_qty, [Validators.required, Validators.pattern(/^\d+(\.\d{1,})?$/)]),
           total: new FormControl(e.total),
           ret_total: new FormControl(e.ret_total),
-          re_amount: new FormControl(e.re_amount),
-          ret_re_amount: new FormControl(e.ret_re_amount, [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
           cgst_amount: new FormControl(e.cgst_amount),
           ret_cgst_amount: new FormControl(e.ret_cgst_amount),
           sgst_amount: new FormControl(e.sgst_amount),
@@ -261,7 +250,7 @@ export class ReturnSalesProductComponent {
     const qty = Number(Control.at(i).get('ret_qty')?.value);
     Control.at(i).get('ret_total')?.setValue(String((disAmount * qty).toFixed(2)));
 
-    const sutotal = (Number(Control.at(i).get('ret_total')?.value)) + (Number(Control.at(i).get('ret_re_amount')?.value));
+    const sutotal = (Number(Control.at(i).get('ret_total')?.value));
     const gst = Number(Control.at(i).get('gst_percentage')?.value);
     const newArray = this.customerDetailsList.filter((e) => {
       return e.customerid == this.salesDebitForm.value.customerid;
@@ -295,6 +284,12 @@ export class ReturnSalesProductComponent {
 
     const FormReturnTotal = Control.value.reduce((acc: number, val: any) => (acc += Number(val.ret_net_total)), 0);
     this.salesDebitForm.get('return_total')?.setValue(String(FormReturnTotal.toFixed(2)));
+
+    if (this.salesDebitForm.value.return_action === '+') {
+      this.salesDebitForm.get('return_net_amount')?.setValue((FormReturnTotal + Number(this.salesDebitForm.value.return_roundof)).toFixed(2));
+    } else if (this.salesDebitForm.value.return_action === '-') {
+      this.salesDebitForm.get('return_net_amount')?.setValue((FormReturnTotal - Number(this.salesDebitForm.value.return_roundof)).toFixed(2));
+    }
   }
 
   async cancelClick() {
@@ -311,6 +306,9 @@ export class ReturnSalesProductComponent {
     this.salesDebitForm.get('return_date')?.setValue('');
     this.salesDebitForm.get('total')?.setValue('');
     this.salesDebitForm.get('return_total')?.setValue('');
+    this.salesDebitForm.get('return_net_amount')?.setValue('');
+    this.salesDebitForm.get('return_roundof')?.setValue('');
+    this.salesDebitForm.get('return_action')?.setValue('');
     this.salesDebitForm.get('cuid')?.setValue(this.userID);
     this.salesDebitForm.get('companyid')?.setValue(this.companyID);
     this.findBillNo();

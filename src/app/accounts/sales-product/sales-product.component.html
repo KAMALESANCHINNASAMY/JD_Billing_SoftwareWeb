@@ -98,7 +98,6 @@
                             <tr>
                                 <th>#</th>
                                 <th>Product Name</th>
-                                <th>Availabel Qty</th>
                                 <th>Price</th>
                                 <th>Discount %</th>
                                 <th>Qty</th>
@@ -126,7 +125,6 @@
                                             {{item.product_name}}</option>
                                     </select>
                                 </td>
-                                <td>{{chid.get('av_qty')?.value}}</td>
                                 <td style="min-width: 120px;"><input
                                         (input)="colculation(i)"
                                         [ngClass]="{'is-invalid': isPriceControlInvalid(i)}"
@@ -134,7 +132,6 @@
                                         class="form-control" required></td>
                                 <td style="min-width: 50px;">
                                     <input (input)="colculation(i)"
-                                        [ngClass]="{'is-invalid': isDiscountControlInvalid(i)}"
                                         type="text"
                                         formControlName="discount"
                                         class="form-control" required>
@@ -173,9 +170,48 @@
                         <tbody>
                             <tr>
                                 <th style="text-align: right;font-size: 17px;"
-                                    class="pr-5 head" colspan="9">Total</th>
+                                    class="pr-5 head" colspan="8">Total</th>
                                 <td><input formControlName="total"
                                         class="form-control" readonly></td>
+                                <td></td>
+                            </tr>
+
+                            <tr>
+                                <th style="text-align: right;font-size: 17px;"
+                                    class="pr-5 head" colspan="8">Round off</th>
+                                <td><input
+                                        [ngClass]="{'is-invalid':saleProductsForm.controls.roundof.touched && saleProductsForm.controls.roundof.errors}"
+                                        (input)="finalCalculation()"
+                                        formControlName="roundof"
+                                        class="form-control"></td>
+                                <td>
+                                    <label>
+                                        <input
+                                            type="radio"
+                                            formControlName="action"
+                                            value="+"
+                                            (change)="finalCalculation()" />
+                                        Add (+)
+                                    </label>
+
+                                    <label>
+                                        <input
+                                            type="radio"
+                                            formControlName="action"
+                                            value="-"
+                                            (change)="finalCalculation()" />
+                                        Subtract (-)
+                                    </label>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th style="text-align: right;font-size: 17px;"
+                                    class="pr-5 head" colspan="8">Net Amount</th>
+                                <td><input
+                                        [ngClass]="{'is-invalid':saleProductsForm.controls.net_amount.touched && saleProductsForm.controls.net_amount.errors}"
+                                        formControlName="net_amount"
+                                        class="form-control" readonly required></td>
                                 <td></td>
                             </tr>
                         </tbody>
@@ -225,8 +261,9 @@
                                 <th style="text-align: left;">Customer Name</th>
                                 <th>Date</th>
                                 <th>Bill No</th>
-                                <th>Credit Day's</th>
-                                <th>Total Amount</th>
+                                <th>Item Name</th>
+                                <th>Qty</th>
+                                <th>Net Amount</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -236,8 +273,9 @@
                                 <td style="text-align: left;">{{item.customer_name}}</td>
                                 <td>{{item.date}}</td>
                                 <td>{{item.bill_no}}</td>
-                                <td>{{item.credit_days}}</td>
-                                <td>{{item.total}}</td>
+                                <td>{{item.product_name}}</td>
+                                <td>{{item.qtys}}</td>
+                                <td>{{item.net_amount}}</td>
                                 <td>
                                     <mat-icon
                                         style="cursor: pointer;color: green;"

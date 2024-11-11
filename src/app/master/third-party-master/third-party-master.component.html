@@ -10,14 +10,16 @@
         <div class="row ml-3">
           <div class="col-sm-6 mt-3" style="display: flex">
             <div class="labeldiv">
-              <label class="pt-2" style="margin: auto">Name<span class="text-danger">*</span></label>
+              <label class="pt-2" style="margin: auto">Name<span
+                  class="text-danger">*</span></label>
             </div>
             <div class="inputdiv">
               <input [ngClass]="{
                   'is-invalid':
                     thirdPartyForm.controls.party_name.touched &&
                     thirdPartyForm.controls.party_name.errors
-                }" class="form-control" formControlName="party_name" type="text" required />
+                }" class="form-control" formControlName="party_name" type="text"
+                required />
 
               <span class="text-danger" *ngIf="
                   thirdPartyForm.controls.party_name.touched &&
@@ -37,7 +39,8 @@
               <label class="pt-2" style="margin: auto">Mobile No</label>
             </div>
             <div class="inputdiv">
-              <input class="form-control" (keypress)="numberOnly($event)" (paste)="preventPasteNumber($event)"
+              <input class="form-control" (keypress)="numberOnly($event)"
+                (paste)="preventPasteNumber($event)"
                 formControlName="mobile" type="text" />
             </div>
           </div>
@@ -45,14 +48,16 @@
         <div class="row ml-3">
           <div class="col-sm-6 mt-3" style="display: flex">
             <div class="labeldiv">
-              <label class="pt-2" style="margin: auto">Short Code<span class="text-danger">*</span></label>
+              <label class="pt-2" style="margin: auto">Short Code<span
+                  class="text-danger">*</span></label>
             </div>
             <div class="inputdiv">
               <input [ngClass]="{
                   'is-invalid':
                     thirdPartyForm.controls.short_code.touched &&
                     thirdPartyForm.controls.short_code.errors
-                }" class="form-control" formControlName="short_code" type="text" required />
+                }" class="form-control" formControlName="short_code" type="text"
+                required />
 
               <span class="text-danger" *ngIf="
                   thirdPartyForm.controls.short_code.touched &&
@@ -69,14 +74,16 @@
           </div>
           <div class="col-sm-6 mt-3" style="display: flex">
             <div class="labeldiv">
-              <label class="pt-2" style="margin: auto">GST IN<span class="text-danger">*</span></label>
+              <label class="pt-2" style="margin: auto">GST IN<span
+                  class="text-danger">*</span></label>
             </div>
             <div class="inputdiv">
               <input [ngClass]="{
                   'is-invalid':
                     thirdPartyForm.controls.gst_in.touched &&
                     thirdPartyForm.controls.gst_in.errors
-                }" class="form-control" formControlName="gst_in" type="text" required />
+                }" class="form-control" formControlName="gst_in" type="text"
+                required />
 
               <span class="text-danger" *ngIf="
                   thirdPartyForm.controls.gst_in.touched &&
@@ -95,16 +102,20 @@
         <div class="row ml-3">
           <div class="col-sm-6 mt-3" style="display: flex">
             <div class="labeldiv">
-              <label class="pt-2" style="margin: auto">State<span class="text-danger">*</span></label>
+              <label class="pt-2" style="margin: auto">State<span
+                  class="text-danger">*</span></label>
             </div>
             <div class="inputdiv">
-              <input (keypress)="stringOnly($event)" (paste)="preventPasteString($event)"
+              <input (keypress)="stringOnly($event)"
+                (paste)="preventPasteString($event)"
                 [ngClass]="{'is-invalid':thirdPartyForm.controls.state.touched && thirdPartyForm.controls.state.errors}"
-                formControlName="state" class="form-control" type="text" required />
+                formControlName="state" class="form-control" type="text"
+                required />
 
               <span class="text-danger"
                 *ngIf="thirdPartyForm.controls.state.touched && thirdPartyForm.controls.state.errors">
-                <div *ngIf="thirdPartyForm.controls.state.touched && thirdPartyForm.controls.state.errors['required']">
+                <div
+                  *ngIf="thirdPartyForm.controls.state.touched && thirdPartyForm.controls.state.errors['required']">
                   State is required
                 </div>
               </span>
@@ -112,12 +123,14 @@
           </div>
           <div class="col-sm-6 mt-3" style="display: flex">
             <div class="labeldiv">
-              <label class="pt-2" style="margin: auto">State Code<span class="text-danger">*</span></label>
+              <label class="pt-2" style="margin: auto">State Code<span
+                  class="text-danger">*</span></label>
             </div>
             <div class="inputdiv">
               <input
                 [ngClass]="{'is-invalid':thirdPartyForm.controls.state_code.touched && thirdPartyForm.controls.state_code.errors}"
-                formControlName="state_code" class="form-control" type="text" required (keypress)="numberOnly($event)"
+                formControlName="state_code" class="form-control" type="text"
+                required (keypress)="numberOnly($event)"
                 (paste)="preventPasteNumber($event)" />
 
               <span class="text-danger"
@@ -133,13 +146,16 @@
         <div class="row ml-3">
           <div class="col-sm-6 mt-3" style="display: flex">
             <div class="labeldiv">
-              <label class="pt-2" style="margin: auto;color: red;"><b>Opening Balance</b><span
+              <label class="pt-2" style="margin: auto;color: red;"><b>Opening
+                  Balance</b><span
                   class="text-danger">*</span></label>
             </div>
             <div class="inputdiv">
               <input (blur)="setTwoDigitBalance()"
+                [readOnly]="thirdPartyForm.value.third_partyid !==0"
                 [ngClass]="{'is-invalid':thirdPartyForm.controls.balance.touched && thirdPartyForm.controls.balance.errors}"
-                formControlName="balance" class="form-control" type="text" required />
+                formControlName="balance" class="form-control" type="text"
+                required />
               <span class="text-danger"
                 *ngIf="thirdPartyForm.controls.balance.touched && thirdPartyForm.controls.balance.errors">
                 <div
@@ -151,7 +167,8 @@
           </div>
           <div class="col-sm-6 mt-3" style="display: flex">
             <div class="labeldiv">
-              <label class="pt-2" style="margin: auto">Address<span class="text-danger">*</span></label>
+              <label class="pt-2" style="margin: auto">Address<span
+                  class="text-danger">*</span></label>
             </div>
             <div class="inputdiv">
               <textarea
@@ -178,19 +195,24 @@
           </div>
 
           <div class="mt-2" style="display: flex;min-width: 80%;"
-            *ngFor="let chid of getCommonControls(); let i = index" formGroupName="{{ i }}">
+            *ngFor="let chid of getCommonControls(); let i = index"
+            formGroupName="{{ i }}">
             <div style="display: flex;">
               <label class="pt-2 pl-4 pr-1">Date :</label>
-              <input [ngClass]="{ 'is-invalid': isDateControlInvalid(i) }" formControlName="date" class="form-control"
+              <input [ngClass]="{ 'is-invalid': isDateControlInvalid(i) }"
+                formControlName="date" class="form-control"
                 style="width: 150px;" type="date">
             </div>
 
             <div style="display: flex;">
               <label class="pt-2 pl-4 pr-1">Amount :</label>
               <div>
-                <input (blur)="setTwoDigitAdvance(i)" [ngClass]="{ 'is-invalid': isAmountControlInvalid(i) }"
-                  formControlName="advance_amount" class="form-control" style="width: 180px;" type="text">
-                <label *ngIf="chid.get('advanceid')?.value != 0" class="text-danger pl-1">USED:{{
+                <input (blur)="setTwoDigitAdvance(i)"
+                  [ngClass]="{ 'is-invalid': isAmountControlInvalid(i) }"
+                  formControlName="advance_amount" class="form-control"
+                  style="width: 180px;" type="text">
+                <label *ngIf="chid.get('advanceid')?.value != 0"
+                  class="text-danger pl-1">USED:{{
                   +chid.get('oadvance_amount')?.value -
                   +chid.get('aval_addvance')?.value}}
                   , BAL:{{chid.get('aval_addvance')?.value}}</label>
@@ -199,17 +221,21 @@
 
             <div style="display: flex;">
               <label class="pt-2 pl-4 pr-1">Description :</label>
-              <input [ngClass]="{ 'is-invalid': isDescriptionControlInvalid(i) }" formControlName="description"
+              <input
+                [ngClass]="{ 'is-invalid': isDescriptionControlInvalid(i) }"
+                formControlName="description"
                 class="form-control" style="width: 250px;" type="text">
             </div>
 
             <div class="pt-2">
-              <mat-icon *ngIf="chid.get('advanceid')?.value == 0" (click)="removeNesForm(i)"
+              <mat-icon *ngIf="chid.get('advanceid')?.value == 0"
+                (click)="removeNesForm(i)"
                 style="color: red; cursor: pointer">remove_circle</mat-icon>
             </div>
           </div>
           <div style="width: 10%;" class="mt-2 pt-2">
-            <mat-icon (click)="addNesForm()" style="color: green; cursor: pointer">add_circle</mat-icon>
+            <mat-icon (click)="addNesForm()"
+              style="color: green; cursor: pointer">add_circle</mat-icon>
           </div>
         </div>
 
@@ -217,12 +243,15 @@
           <div class="col-sm-6">
             <div class="d-flex justify-content-center">
               <div style="width: 250px; display: flex; align-items: center">
-                <input type="submit" style="width: 80px" class="btn btn-success mt-4 btn-sm mr-3" value="{{
+                <input type="submit" style="width: 80px"
+                  class="btn btn-success mt-4 btn-sm mr-3" value="{{
                     thirdPartyForm.value.third_partyid == 0 ? 'Save' : 'Edit'
                   }}" />
-                <input (click)="cancelClick()" type="button" style="width: 80px" class="btn btn-info mt-4 btn-sm mr-3"
+                <input (click)="cancelClick()" type="button" style="width: 80px"
+                  class="btn btn-info mt-4 btn-sm mr-3"
                   value="Clear" />
-                <input (click)="backButton()" type="button" style="width: 80px" class="btn btn-danger btn-sm mt-4"
+                <input (click)="backButton()" type="button" style="width: 80px"
+                  class="btn btn-danger btn-sm mt-4"
                   value="Close" />
               </div>
             </div>
@@ -260,10 +289,12 @@
               <td>{{ item.gst_in }}</td>
               <td style="text-align: right;">{{ item.balance }}</td>
               <td class="tdoption">
-                <span class="m-2 editbutton text-success" (click)="UpdateGetClick(item)"><b
+                <span class="m-2 editbutton text-success"
+                  (click)="UpdateGetClick(item)"><b
                     style="cursor: pointer">edit</b></span>
                 <span>||</span>
-                <span class="m-2 deletebutton text-danger" (click)="deleteClick(item.third_partyid)"><b
+                <span class="m-2 deletebutton text-danger"
+                  (click)="deleteClick(item.third_partyid)"><b
                     style="cursor: pointer">delete</b></span>
               </td>
             </tr>

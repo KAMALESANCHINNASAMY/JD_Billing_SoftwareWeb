@@ -10,12 +10,14 @@
         <div class="row m-3">
           <div class="col-sm-6" style="display: flex">
             <div class="labeldiv">
-              <label class="pt-2" style="margin: auto">Supplier Name<span class="text-danger">*</span></label>
+              <label class="pt-2" style="margin: auto">Supplier Name<span
+                  class="text-danger">*</span></label>
             </div>
             <div class="inputdiv">
               <input
                 [ngClass]="{'is-invalid':supplierForm.controls.supplier_name.touched && supplierForm.controls.supplier_name.errors}"
-                formControlName="supplier_name" class="form-control" type="text" required />
+                formControlName="supplier_name" class="form-control" type="text"
+                required />
 
               <span class="text-danger"
                 *ngIf="supplierForm.controls.supplier_name.touched && supplierForm.controls.supplier_name.errors">
@@ -31,7 +33,8 @@
               <label class="pt-2" style="margin: auto">Mobile No</label>
             </div>
             <div class="inputdiv">
-              <input formControlName="mobile_no" class="form-control" type="text" (paste)="preventPasteNumber($event)"
+              <input formControlName="mobile_no" class="form-control"
+                type="text" (paste)="preventPasteNumber($event)"
                 (keypress)="numberOnly($event)" />
             </div>
           </div>
@@ -39,16 +42,20 @@
         <div class="row m-3">
           <div class="col-sm-6" style="display: flex">
             <div class="labeldiv">
-              <label class="pt-2" style="margin: auto">State<span class="text-danger">*</span></label>
+              <label class="pt-2" style="margin: auto">State<span
+                  class="text-danger">*</span></label>
             </div>
             <div class="inputdiv">
-              <input (keypress)="stringOnly($event)" (paste)="preventPasteString($event)"
+              <input (keypress)="stringOnly($event)"
+                (paste)="preventPasteString($event)"
                 [ngClass]="{'is-invalid':supplierForm.controls.state.touched && supplierForm.controls.state.errors}"
-                formControlName="state" class="form-control" type="text" required />
+                formControlName="state" class="form-control" type="text"
+                required />
 
               <span class="text-danger"
                 *ngIf="supplierForm.controls.state.touched && supplierForm.controls.state.errors">
-                <div *ngIf="supplierForm.controls.state.touched && supplierForm.controls.state.errors['required']">
+                <div
+                  *ngIf="supplierForm.controls.state.touched && supplierForm.controls.state.errors['required']">
                   State is required
                 </div>
               </span>
@@ -56,13 +63,16 @@
           </div>
           <div class="col-sm-6" style="display: flex">
             <div class="labeldiv">
-              <label class="pt-2" style="margin: auto">State Code<span class="text-danger">*</span></label>
+              <label class="pt-2" style="margin: auto">State Code<span
+                  class="text-danger">*</span></label>
             </div>
             <div class="inputdiv">
               <input
                 [ngClass]="{'is-invalid':supplierForm.controls.state_code.touched && supplierForm.controls.state_code.errors}"
-                formControlName="state_code" class="form-control" type="text" required
-                (keypress)="numberOnlyStateCode($event)" (paste)="preventPasteNumber($event)" />
+                formControlName="state_code" class="form-control" type="text"
+                required
+                (keypress)="numberOnlyStateCode($event)"
+                (paste)="preventPasteNumber($event)" />
 
               <span class="text-danger"
                 *ngIf="supplierForm.controls.state_code.touched && supplierForm.controls.state_code.errors">
@@ -77,16 +87,19 @@
         <div class="row m-3">
           <div class="col-sm-6" style="display: flex">
             <div class="labeldiv">
-              <label class="pt-2" style="margin: auto">GST IN<span class="text-danger">*</span></label>
+              <label class="pt-2" style="margin: auto">GST IN<span
+                  class="text-danger">*</span></label>
             </div>
             <div class="inputdiv">
               <input
                 [ngClass]="{'is-invalid':supplierForm.controls.gst_in.touched && supplierForm.controls.gst_in.errors}"
-                formControlName="gst_in" class="form-control" type="text" required />
+                formControlName="gst_in" class="form-control" type="text"
+                required />
 
               <span class="text-danger"
                 *ngIf="supplierForm.controls.gst_in.touched && supplierForm.controls.gst_in.errors">
-                <div *ngIf="supplierForm.controls.gst_in.touched && supplierForm.controls.gst_in.errors['required']">
+                <div
+                  *ngIf="supplierForm.controls.gst_in.touched && supplierForm.controls.gst_in.errors['required']">
                   GST IN is required
                 </div>
               </span>
@@ -95,16 +108,20 @@
 
           <div class="col-sm-6" style="display: flex">
             <div class="labeldiv">
-              <label class="pt-2" style="margin: auto;color: red;"><b>Opening Balance</b><span
+              <label class="pt-2" style="margin: auto;color: red;"><b>Opening
+                  Balance</b><span
                   class="text-danger">*</span></label>
             </div>
             <div class="inputdiv">
               <input (blur)="setTwoDigitBalance()"
+                [readOnly]="supplierForm.value.supplierid !==0"
                 [ngClass]="{'is-invalid':supplierForm.controls.balance.touched && supplierForm.controls.balance.errors}"
-                formControlName="balance" class="form-control" type="text" required />
+                formControlName="balance" class="form-control" type="text"
+                required />
               <span class="text-danger"
                 *ngIf="supplierForm.controls.balance.touched && supplierForm.controls.balance.errors">
-                <div *ngIf="supplierForm.controls.balance.touched && supplierForm.controls.balance.errors['required']">
+                <div
+                  *ngIf="supplierForm.controls.balance.touched && supplierForm.controls.balance.errors['required']">
                   Opening Balance is required
                 </div>
               </span>
@@ -115,7 +132,8 @@
         <div class="row m-3">
           <div class="col-sm-6" style="display: flex">
             <div class="labeldiv">
-              <label class="pt-4" style="margin: auto">Address<span class="text-danger">*</span></label>
+              <label class="pt-4" style="margin: auto">Address<span
+                  class="text-danger">*</span></label>
             </div>
             <div class="inputdiv">
               <textarea
@@ -124,7 +142,8 @@
 
               <span class="text-danger"
                 *ngIf="supplierForm.controls.address.touched && supplierForm.controls.address.errors">
-                <div *ngIf="supplierForm.controls.address.touched && supplierForm.controls.address.errors['required']">
+                <div
+                  *ngIf="supplierForm.controls.address.touched && supplierForm.controls.address.errors['required']">
                   Address is required
                 </div>
               </span>
@@ -135,7 +154,8 @@
               <label class="pt-4" style="margin: auto">Shipping Address</label>
             </div>
             <div class="inputdiv">
-              <textarea formControlName="shipping_address" class="form-control" rows="4" type="text"></textarea>
+              <textarea formControlName="shipping_address" class="form-control"
+                rows="4" type="text"></textarea>
             </div>
           </div>
         </div>
@@ -148,19 +168,24 @@
           </div>
 
           <div class="mt-2" style="display: flex;min-width: 80%;"
-            *ngFor="let chid of getCommonControls(); let i = index" formGroupName="{{ i }}">
+            *ngFor="let chid of getCommonControls(); let i = index"
+            formGroupName="{{ i }}">
             <div style="display: flex;">
               <label class="pt-2 pl-4 pr-1">Date :</label>
-              <input [ngClass]="{ 'is-invalid': isDateControlInvalid(i) }" formControlName="date" class="form-control"
+              <input [ngClass]="{ 'is-invalid': isDateControlInvalid(i) }"
+                formControlName="date" class="form-control"
                 style="width: 150px;" type="date">
             </div>
 
             <div style="display: flex;">
               <label class="pt-2 pl-4 pr-1">Amount :</label>
               <div>
-                <input (blur)="setTwoDigitAdvance(i)" [ngClass]="{ 'is-invalid': isAmountControlInvalid(i) }"
-                  formControlName="advance_amount" class="form-control" style="width: 180px;" type="text">
-                <label *ngIf="chid.get('advanceid')?.value != 0" class="text-danger pl-1">USED:{{
+                <input (blur)="setTwoDigitAdvance(i)"
+                  [ngClass]="{ 'is-invalid': isAmountControlInvalid(i) }"
+                  formControlName="advance_amount" class="form-control"
+                  style="width: 180px;" type="text">
+                <label *ngIf="chid.get('advanceid')?.value != 0"
+                  class="text-danger pl-1">USED:{{
                   +chid.get('oadvance_amount')?.value -
                   +chid.get('aval_addvance')?.value}}
                   , BAL:{{chid.get('aval_addvance')?.value}}</label>
@@ -169,28 +194,35 @@
 
             <div style="display: flex;">
               <label class="pt-2 pl-4 pr-1">Description :</label>
-              <input [ngClass]="{ 'is-invalid': isDescriptionControlInvalid(i) }" formControlName="description"
+              <input
+                [ngClass]="{ 'is-invalid': isDescriptionControlInvalid(i) }"
+                formControlName="description"
                 class="form-control" style="width: 250px;" type="text">
             </div>
 
             <div class="pt-2">
-              <mat-icon *ngIf="chid.get('advanceid')?.value == 0" (click)="removeNesForm(i)"
+              <mat-icon *ngIf="chid.get('advanceid')?.value == 0"
+                (click)="removeNesForm(i)"
                 style="color: red; cursor: pointer">remove_circle</mat-icon>
             </div>
           </div>
           <div style="width: 10%;" class="mt-2 pt-2">
-            <mat-icon (click)="addNesForm()" style="color: green; cursor: pointer">add_circle</mat-icon>
+            <mat-icon (click)="addNesForm()"
+              style="color: green; cursor: pointer">add_circle</mat-icon>
           </div>
         </div>
         <div class="row justify-content-center mt-3">
           <div class="col-sm-6">
             <div class="d-flex justify-content-center">
               <div style="width: 250px; display: flex; align-items: center;">
-                <input type="submit" style="width: 80px" class="btn btn-success mt-4 btn-sm mr-3"
+                <input type="submit" style="width: 80px"
+                  class="btn btn-success mt-4 btn-sm mr-3"
                   value="{{ supplierForm.value.supplierid ==0 ? 'Save' : 'Edit'}}" />
-                <input (click)="cancelClick()" type="button" style="width: 80px" class="btn btn-info mt-4 btn-sm mr-3"
+                <input (click)="cancelClick()" type="button" style="width: 80px"
+                  class="btn btn-info mt-4 btn-sm mr-3"
                   value="Clear" />
-                <input (click)="backButton()" type="button" style="width: 80px" class="btn btn-danger btn-sm mt-4"
+                <input (click)="backButton()" type="button" style="width: 80px"
+                  class="btn btn-danger btn-sm mt-4"
                   value="Close" />
               </div>
             </div>
@@ -222,10 +254,12 @@
               <td>{{ item.gst_in}}</td>
               <td style="text-align: right;">{{ item.balance }}</td>
               <td class="tdoption">
-                <span class="m-2 editbutton text-success" (click)="UpdateGetClick(item)"><b
+                <span class="m-2 editbutton text-success"
+                  (click)="UpdateGetClick(item)"><b
                     style="cursor:pointer">edit</b></span>
                 <span>||</span>
-                <span class="m-2  deletebutton text-danger" (click)="deleteClick(item.supplierid)"><b
+                <span class="m-2  deletebutton text-danger"
+                  (click)="deleteClick(item.supplierid)"><b
                     style="cursor:pointer">delete</b></span>
               </td>
             </tr>

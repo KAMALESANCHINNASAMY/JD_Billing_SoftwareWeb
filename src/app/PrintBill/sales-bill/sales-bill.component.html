@@ -6,8 +6,7 @@
 
             <div>
                 <img class="img-print" src="{{ companyDetailsList?.logo }}"
-                    width="100px"
-                    height="110px" />
+                    width="100px" />
             </div>
 
             <div
@@ -130,10 +129,37 @@
                     <th class="brn" style="text-align: right;">{{getTotalGSTAmount()}}</th>
                     <th class="brn" style="text-align: right;">{{getTotal()}}</th>
                 </tr>
-                <tr><td class="bln brn"
-                        style="text-align: center;"
-                        colspan="10">Invoice Amount in Words : <b>{{numberInWords}}
-                            only</b>
+                <tr>
+                    <td colspan="5">
+                        <div>Invoice Amount in Words :</div>
+                        <div><b>{{numberInWords}} only</b></div>
+                    </td>
+                    <td colspan="5">
+                        <div><b>Amounts</b></div>
+
+                        <div
+                            style="display: flex;justify-content: space-between;">
+                            <div>Sub Total</div>
+                            <div>{{getTotal()}}</div>
+                        </div>
+
+                        <div
+                            style="display: flex;justify-content: space-between;">
+                            <div>Round Off</div>
+                            <div>{{parent?.action}} {{parent?.roundof}}</div>
+                        </div>
+
+                        <div
+                            style="display: flex;justify-content: space-between;">
+                            <div><b>Total</b></div>
+                            <div>{{parent?.net_amount}}</div>
+                        </div>
+
+                        <div
+                            style="display: flex;justify-content: space-between;">
+                            <div>Balance</div>
+                            <div>{{parent?.net_amount}}</div>
+                        </div>
                     </td>
                 </tr>
                 <tr>

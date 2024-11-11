@@ -97,12 +97,11 @@
                                 <th>#</th>
                                 <th>Product Name</th>
                                 <th>Price</th>
-                                <th>Discount %</th>
                                 <th>Qty</th>
                                 <th>Total</th>
-                                <!-- <th>Remaining amount</th> -->
                                 <th>Total GST</th>
                                 <th>Net Total</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody formArrayName="salesProduct_nested">
@@ -125,11 +124,7 @@
                                     <input formControlName="price"
                                         class="form-control" required readonly />
                                 </td>
-                                <td style="min-width: 50px">
-                                    <input type="text"
-                                        formControlName="discount"
-                                        class="form-control" required readonly />
-                                </td>
+
                                 <td style="min-width: 70px">
                                     <input formControlName="qty"
                                         class="form-control" required readonly />
@@ -145,14 +140,6 @@
                                     <input formControlName="ret_total"
                                         class="form-control" required readonly />
                                 </td>
-                                <!-- <td style="min-width: 140px">
-                                    <input formControlName="re_amount"
-                                        class="form-control" readonly />
-                                    <input formControlName="ret_re_amount"
-                                        [ngClass]="{ 'is-invalid': isRemControlInvalid(i) }"
-                                        (input)="colculation(i)"
-                                        class="form-control" required />
-                                </td> -->
                                 <td>
                                     <div>{{+chid.get('cgst_amount')?.value +
                                         +chid.get('sgst_amount')?.value +
@@ -175,20 +162,20 @@
                             <tr>
                                 <th
                                     style="text-align: right;color: #005f69;font-family: Georgia, 'Times New Roman', Times, serif;"
-                                    class="pr-5 pt-3" colspan="7">
+                                    class="pr-5 pt-3" colspan="6">
                                     <b>Total</b>
                                 </th>
                                 <td>
                                     <input formControlName="total"
                                         class="form-control" readonly />
                                 </td>
+                                <td></td>
                             </tr>
-                        </tbody>
-                        <tbody>
+
                             <tr>
                                 <th
                                     style="text-align: right;color: #005f69;font-family: Georgia, 'Times New Roman', Times, serif;"
-                                    class="pr-5 pt-3" colspan="7">
+                                    class="pr-5 pt-3" colspan="6">
                                     <b>Return Total</b>
                                 </th>
                                 <td>
@@ -196,6 +183,63 @@
                                         [ngClass]="{'is-invalid':salesDebitForm.controls.return_total.touched && salesDebitForm.controls.return_total.errors}"
                                         class="form-control" readonly />
                                 </td>
+                                <td></td>
+                            </tr>
+
+                            <tr>
+                                <th
+                                    style="text-align: right;color: #005f69;font-family: Georgia, 'Times New Roman', Times, serif;"
+                                    class="pr-5 pt-3" colspan="6">
+                                    <b>Return Round Off</b>
+                                </th>
+                                <td>
+                                    <input
+                                        [ngClass]="{'is-invalid':salesDebitForm.controls.return_roundof.touched && salesDebitForm.controls.return_roundof.errors}"
+                                        formControlName="return_roundof"
+                                        (input)="finalCalculation()"
+                                        class="form-control" />
+                                </td>
+
+                                <td>
+                                    <div
+                                        style="display: flex;justify-content: start;">
+                                        <label>
+                                            <input
+                                                type="radio"
+                                                formControlName="return_action"
+                                                value="+"
+                                                (change)="finalCalculation()" />
+                                            Add (+)
+                                        </label>
+                                    </div>
+
+                                    <div
+                                        style="display: flex;justify-content: start;">
+                                        <label>
+                                            <input
+                                                type="radio"
+                                                formControlName="return_action"
+                                                value="-"
+                                                (change)="finalCalculation()" />
+                                            Subtract (-)
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th
+                                    style="text-align: right;color: #005f69;font-family: Georgia, 'Times New Roman', Times, serif;"
+                                    class="pr-5 pt-3" colspan="6">
+                                    <b>Return Net Amount</b>
+                                </th>
+                                <td>
+                                    <input
+                                        [ngClass]="{'is-invalid':salesDebitForm.controls.return_net_amount.touched && salesDebitForm.controls.return_net_amount.errors}"
+                                        formControlName="return_net_amount"
+                                        class="form-control" readonly />
+                                </td>
+                                <td></td>
                             </tr>
                         </tbody>
                     </table>
@@ -244,7 +288,7 @@
                                 <th>Bill No</th>
                                 <th>Return No</th>
                                 <th>return Date</th>
-                                <th>Return Amount</th>
+                                <th>Return Net Amount</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -255,7 +299,7 @@
                                 <td>{{item.bill_no}}</td>
                                 <td>{{item.return_no}}</td>
                                 <td>{{item.return_date}}</td>
-                                <td>{{item.return_total}}</td>
+                                <td>{{item.return_net_amount}}</td>
                                 <td style="width: 140px;">
                                     <button class="btn btn-sm ml-1 btn-primary"
                                         (click)="update(item)">Edit</button>

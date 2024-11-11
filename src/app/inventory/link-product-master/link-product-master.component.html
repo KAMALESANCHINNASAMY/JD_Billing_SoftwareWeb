@@ -43,7 +43,7 @@
                                 <th>#</th>
                                 <th>Purchase Product Name</th>
                                 <th>Qty - kg/gram</th>
-                                <th *ngIf="linkProductMasterForm.value.linkid ==0">Action</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody formArrayName="linkproduct_nested">
@@ -60,7 +60,7 @@
                                             selected>
                                             Please select
                                         </option>
-                                        <option [disabled]="linkProductMasterForm.value.linkid != 0" [ngValue]="item.n_productid"
+                                        <option [ngValue]="item.n_productid"
                                             *ngFor="let item of NestedProductList">
                                             {{ item.n_product_name }}
                                         </option>
@@ -68,12 +68,12 @@
                                 </td>
 
                                 <td>
-                                    <input [readOnly]="linkProductMasterForm.value.linkid != 0"
+                                    <input
                                         [ngClass]="{ 'is-invalid': isqtyInvalid(i) }"
                                         class="form-control"
                                         formControlName="a_qty" />
                                 </td>
-                                <td *ngIf="linkProductMasterForm.value.linkid ==0">
+                                <td>
                                     <mat-icon (click)="addNesForm()"
                                         style="color: green; cursor: pointer">add_circle</mat-icon>
                                     <mat-icon (click)="removeNesForm(i)"

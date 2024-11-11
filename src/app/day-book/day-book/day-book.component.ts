@@ -29,8 +29,6 @@ export class DayBookComponent {
     if (this.reportForm.valid) {
       const res = await this.rpSvc.saleList(this.companyID, fromdate, todate).toPromise();
       this.purchaseReports = res || [];
-
-      console.log(res)
     }
     else {
       this.reportForm.markAllAsTouched();

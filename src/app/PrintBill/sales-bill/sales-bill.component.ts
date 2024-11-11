@@ -28,6 +28,7 @@ export class SalesBillComponent {
     this.child = this.data.child;
     await this.ensureLength15(this.child.length);
     this.getCustomerList();
+    this.numberInWords = numberToWordsWithDecimal(Number(this.parent.net_amount));
   }
 
   constructor(
@@ -51,8 +52,8 @@ export class SalesBillComponent {
 
   async ensureLength15(lenth: number): Promise<void> {
     this.emptyArray = [];
-    if (lenth < 11) {
-      for (let i = lenth; i < 11; i++) {
+    if (lenth < 10) {
+      for (let i = lenth; i < 10; i++) {
         this.emptyArray.push([]);
       }
     }
@@ -61,51 +62,45 @@ export class SalesBillComponent {
   getCustomerList() {
     this.cMSvc.getList(this.companyID).subscribe((res) => {
       this.customerDetailsList = res.find((e) => { return e.customerid == this.parent.customerid });
+      debugger
     });
   }
 
   getTotal() {
     let amount = 0;
     amount = this.child.reduce((acc, val) => (acc += Number(val.net_total)), 0);
-    this.numberInWords = numberToWordsWithDecimal(Number(amount));
     return amount.toFixed(2);
   }
 
   getTotalQty() {
     let amount = 0;
     amount = this.child.reduce((acc, val) => (acc += Number(val.qty)), 0);
-    this.numberInWords = numberToWordsWithDecimal(Number(amount));
     return amount;
   }
   gettxableAmount() {
     let amount = 0;
     amount = this.child.reduce((acc, val) => (acc += Number(val.total)), 0);
-    this.numberInWords = numberToWordsWithDecimal(Number(amount));
     return amount.toFixed(2);
   }
   getcgstAmount() {
     let amount = 0;
     amount = this.child.reduce((acc, val) => (acc += Number(val.cgst_amount)), 0);
-    this.numberInWords = numberToWordsWithDecimal(Number(amount));
     return amount.toFixed(2);
   }
   getsgstAmount() {
     let amount = 0;
     amount = this.child.reduce((acc, val) => (acc += Number(val.sgst_amount)), 0);
-    this.numberInWords = numberToWordsWithDecimal(Number(amount));
     return amount.toFixed(2);
   }
   getigstAmount() {
     let amount = 0;
     amount = this.child.reduce((acc, val) => (acc += Number(val.igst_amount)), 0);
-    this.numberInWords = numberToWordsWithDecimal(Number(amount));
     return amount.toFixed(2);
   }
 
   getTotalGSTAmount() {
     let amount = 0;
     amount = this.child.reduce((acc, val) => (acc += (Number(val.cgst_amount) + Number(val.sgst_amount) + Number(val.igst_amount))), 0);
-    this.numberInWords = numberToWordsWithDecimal(Number(amount));
     return amount.toFixed(2);
   }
 
