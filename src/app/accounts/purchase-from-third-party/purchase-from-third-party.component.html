@@ -199,6 +199,8 @@
                                 <th style="text-align: left;">Third Party Name</th>
                                 <th>Date</th>
                                 <th>Bill No</th>
+                                <th>Item Name</th>
+                                <th>Qty</th>
                                 <th>Total Amount</th>
                                 <th>Action</th>
                             </tr>
@@ -209,6 +211,8 @@
                                 <td style="text-align: left;">{{item.party_name}}</td>
                                 <td>{{item.date}}</td>
                                 <td>{{item.bill_no}}</td>
+                                <td>{{item.product_name}}</td>
+                                <td>{{item.qtys}}</td>
                                 <td>{{item.total}}</td>
                                 <td>
                                     <!-- <button class="btn btn-sm btn-success" (click)="getReport(item)">
