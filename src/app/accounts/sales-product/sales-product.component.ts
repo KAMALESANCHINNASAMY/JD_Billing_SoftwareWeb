@@ -114,8 +114,9 @@ export class SalesProductComponent {
     bill_no: new FormControl(''),
     gst_in: new FormControl(''),
     credit_days: new FormControl('', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
+    narration: new FormControl(''),
     total: new FormControl(''),
-    roundof: new FormControl('',[Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
+    roundof: new FormControl('', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
     net_amount: new FormControl('', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
     action: new FormControl(''),
     sale_nested: new FormArray([
@@ -373,6 +374,7 @@ export class SalesProductComponent {
     this.saleProductsForm.get('bill_no')?.setValue('');
     this.saleProductsForm.get('gst_in')?.setValue('');
     this.saleProductsForm.get('credit_days')?.setValue('');
+    this.saleProductsForm.get('narration')?.setValue('');
     this.saleProductsForm.get('total')?.setValue('');
     this.saleProductsForm.get('roundof')?.setValue('');
     this.saleProductsForm.get('net_amount')?.setValue('');

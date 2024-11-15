@@ -140,7 +140,24 @@
 
                 <hr>
 
-                <div class="row ml-3 mt-3">
+                <div style="display: flex;justify-content: end;">
+                    <div>
+                        <button type="submit" style="width: 80px"
+                            class="btn btn-success mr-3 btn-sm mt-2">
+                            Save
+                        </button>
+                        <input type="button" style="width: 80px"
+                            (click)="cancelClick()"
+                            class="btn btn-primary mr-3 btn-sm mt-2"
+                            value="Clear" />
+                        <input type="button" style="width: 80px"
+                            class="btn btn-danger btn-sm mt-2"
+                            (click)="backButton()"
+                            value="Close" />
+                    </div>
+                </div>
+
+                <div class="row ml-3">
                     <div style="display: flex">
                         <div class="form-check">
                             <input class="form-check-input"
@@ -252,25 +269,6 @@
                             </tr>
                         </tbody>
                     </table>
-                </div>
-
-                <div class="row">
-                    <div class="col-sm-12" style="display: flex">
-                        <div style="margin: auto">
-                            <button type="submit" style="width: 80px"
-                                class="btn btn-success mr-3 btn-sm mt-2">
-                                Save
-                            </button>
-                            <input type="button" style="width: 80px"
-                                (click)="cancelClick()"
-                                class="btn btn-primary mr-3 btn-sm mt-2"
-                                value="Clear" />
-                            <input type="button" style="width: 80px"
-                                class="btn btn-danger btn-sm mt-2"
-                                (click)="backButton()"
-                                value="Close" />
-                        </div>
-                    </div>
                 </div>
             </form>
         </mat-card-content>

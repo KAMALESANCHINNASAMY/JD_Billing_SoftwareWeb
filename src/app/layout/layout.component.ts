@@ -37,7 +37,7 @@ export class LayoutComponent implements OnInit {
       sub_menu: [],
     },
     {
-      link_name: 'Payments',
+      link_name: 'Payments & Receipts',
       link: 'payments',
       icon: 'rupee',
       isselect: false,
@@ -156,7 +156,7 @@ export class LayoutComponent implements OnInit {
       ],
     },
     {
-      link_name: 'Return Purchase & Sales',
+      link_name: 'Returns',
       link: null,
       icon: 'return',
       isselect: false,
@@ -206,25 +206,25 @@ export class LayoutComponent implements OnInit {
       ],
     },
     {
-      link_name: 'Raw Product Reports',
+      link_name: 'Product Reports',
       link: null,
       icon: 'salesreport',
       isselect: false,
       value: 23,
       sub_menu: [{
-        link_name: 'Raw Product Stock Report',
+        link_name: 'Stock Report',
         link: 'raw-products-reports/raw-product-stock',
         isselect: false,
         value: 2301
       },
       {
-        link_name: 'Raw Product Payment Report',
+        link_name: 'Payment Report',
         link: 'raw-products-reports/raw-product-payment-report',
         isselect: false,
         value: 2302
       },
       {
-        link_name: 'Purchase Ledger',
+        link_name: 'Supplier Ledger',
         link: 'raw-products-reports/supplier-ledger',
         isselect: false,
         value: 2303
@@ -238,19 +238,19 @@ export class LayoutComponent implements OnInit {
       isselect: false,
       value: 24,
       sub_menu: [{
-        link_name: 'Sales product report',
+        link_name: 'Sales report',
         link: 'sales-products-reports/sales-product-report',
         isselect: false,
         value: 2401
       },
       {
-        link_name: 'Sales Payment report',
+        link_name: 'Customer wise sales receipts',
         link: 'sales-products-reports/sales-payment-report',
         isselect: false,
         value: 2402
       },
       {
-        link_name: 'Sales Ledger',
+        link_name: 'Sales out standing',
         link: 'sales-products-reports/sales-ledger',
         isselect: false,
         value: 2403

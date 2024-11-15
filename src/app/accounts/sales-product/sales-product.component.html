@@ -48,8 +48,7 @@
                                 type="date" required />
                         </div>
                     </div>
-                </div>
-                <div class="row ml-3 mt-3">
+
                     <div class="col-sm-4" style="display: flex">
                         <div class="labeldiv">
                             <label class="pt-2" style="margin: auto">Bill No<span
@@ -62,6 +61,8 @@
                                 type="text" required readonly />
                         </div>
                     </div>
+                </div>
+                <div class="row ml-3 mt-3">
 
                     <div class="col-sm-4" style="display: flex">
                         <div class="labeldiv">
@@ -87,6 +88,16 @@
                                 [ngClass]="{'is-invalid':saleProductsForm.controls.credit_days.touched && saleProductsForm.controls.credit_days.errors}"
                                 formControlName="credit_days"
                                 class="form-control" type="text" required />
+                        </div>
+                    </div>
+
+                    <div class="col-sm-4" style="display: flex">
+                        <div class="labeldiv">
+                            <label class="pt-2">Narration</label>
+                        </div>
+                        <div class="inputdiv">
+                            <input formControlName="narration"
+                                class="form-control" type="text" />
                         </div>
                     </div>
                 </div>
@@ -259,6 +270,7 @@
                         <thead class="tableheadList">
                             <tr>
                                 <th style="text-align: left;">Customer Name</th>
+                                <th style="text-align: left;">Narration</th>
                                 <th>Date</th>
                                 <th>Bill No</th>
                                 <th>Item Name</th>
@@ -271,6 +283,7 @@
                             <tr
                                 *ngFor="let item of saleProductsList;let i=index">
                                 <td style="text-align: left;">{{item.customer_name}}</td>
+                                <td style="text-align: left;">{{item.narration}}</td>
                                 <td>{{item.date}}</td>
                                 <td>{{item.bill_no}}</td>
                                 <td>{{item.product_name}}</td>
