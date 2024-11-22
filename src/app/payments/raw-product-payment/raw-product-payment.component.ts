@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -5,12 +6,14 @@ import { NotificationsService } from 'angular2-notifications';
 import { DialogService } from 'src/app/api-service/Dialog.service';
 import { bankMasterService } from 'src/app/api-service/bankMaster.service';
 import { rawProductPaymentService } from 'src/app/api-service/payment/rawProductPayment.service';
+import { rawProductReportService } from 'src/app/api-service/raw_product_report.serivce';
 import { SupplierMasterService } from 'src/app/api-service/supplierMaster.service';
 
 @Component({
   selector: 'app-raw-product-payment',
   templateUrl: './raw-product-payment.component.html',
-  styleUrl: './raw-product-payment.component.scss'
+  styleUrl: './raw-product-payment.component.scss',
+  providers: [DatePipe]
 })
 export class RawProductPaymentComponent {
   userID: number = Number(localStorage.getItem('userid'));
@@ -19,6 +22,8 @@ export class RawProductPaymentComponent {
   suggestions: any[] = [];
   advanceArrayList: any[] = [];
   bankList: any[] = [];
+  supplierPayment: any[] = [];
+  today = new Date().toISOString().slice(0, 10)
 
   constructor(
     private DialogSvc: DialogService,
@@ -27,12 +32,15 @@ export class RawProductPaymentComponent {
     private sMSvc: SupplierMasterService,
     private cdRef: ChangeDetectorRef,
     private sMPSvc: rawProductPaymentService,
+    private RMPRSVC: rawProductReportService,
+    private datePipe: DatePipe,
     private bSvc: bankMasterService
   ) { }
 
   async ngOnInit() {
     this.getSupplierList();
     this.getBankList();
+    this.getReport(this.today);
   }
 
   getBankList() {
@@ -280,4 +288,20 @@ export class RawProductPaymentComponent {
   backButton() {
     this.router.navigateByUrl('/app/dashboard/dashboard');
   }
+
+
+  async getReport(date: string) {
+    let res = await this.RMPRSVC.getPayment(date, date, 0, this.companyID).toPromise();
+    this.supplierPayment = res || [];
+  }
+
+  getFormattedDate(dateString: string): string | null {
+    if (dateString) {
+      const date = new Date(dateString);
+      return this.datePipe.transform(date, 'dd-MM-yyyy');
+    } else {
+      return '';
+    }
+  }
+
 }

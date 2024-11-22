@@ -11,8 +11,8 @@ export class dayBookReportService {
 
     constructor(private http: HttpClient, private ConfigService: ConfigService) { }
 
-    saleList(companyid: any, fromdate: any, todate: any): Observable<any[]> {
-        return this.http.get<any[]>(this.apiUrl + 'DayBook/get_daybook_bydate?companyid=' + companyid + '&fromdate=' + fromdate + '&todate=' + todate);
+    saleList(companyid: any, fromdate: any, todate: any, bankid: number): Observable<any[]> {
+        return this.http.get<any[]>(this.apiUrl + 'DayBook/get_daybook_bydate?companyid=' + companyid + '&fromdate=' + fromdate + '&todate=' + todate + '&bankid='+bankid);
     }
 
 }

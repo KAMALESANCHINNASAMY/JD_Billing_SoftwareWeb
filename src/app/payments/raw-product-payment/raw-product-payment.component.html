@@ -3,7 +3,7 @@
         <mat-card-content>
             <div class="row">
                 <div class="col-12">
-                    <h2 class="ml-1 head">Raw Product Purchase Payment</h2>
+                    <h2 class="ml-1 head">Purchase Payment</h2>
                 </div>
             </div>
             <form [formGroup]="supplierPaymentsForm" (submit)="save()">
@@ -271,6 +271,53 @@
                     </table>
                 </div>
             </form>
+        </mat-card-content>
+    </mat-card>
+
+    <mat-card class="matcard mt-4">
+        <mat-card-content>
+            <div class="row">
+                <div class="table-responsive col-sm-12">
+
+                    <div>
+                        <input #dayVal (change)="getReport(dayVal.value)"
+                            type="date" style="width: 200px;"
+                            class="form-control m-2" />
+                    </div>
+
+                    <table style="width: 100%;"
+                        class="table table-bordered table-hover">
+                        <thead class="tableheadList">
+                            <tr>
+                                <th>S No</th>
+                                <th>Payment Date</th>
+                                <th>Supplier Name</th>
+                                <th>Amount Mode</th>
+                                <th>Payment Type</th>
+                                <th>Cheque No</th>
+                                <th style="text-align: right;">Paid Amount</th>
+                                <!-- <th>Action</th> -->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr
+                                *ngFor="let item of supplierPayment; let i = index">
+                                <td>{{ i + 1 }}</td>
+                                <td>{{getFormattedDate(item.date)}}</td>
+                                <td>{{ item.supplier_name }}</td>
+                                <td>{{item.amount_mode | uppercase}}</td>
+
+                                <td>{{item.payment_type}}</td>
+                                <td>{{item.cheque_no}}</td>
+                                <td style="text-align: right;">{{item.deduction_amount}}</td>
+                                <!-- <td class="disnon"><button
+                                            class="btn btn-sm btn-danger"
+                                            (click)="deleteClick(item.paymentid)">Remove</button></td> -->
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </mat-card-content>
     </mat-card>
 </div>

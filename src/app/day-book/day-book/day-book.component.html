@@ -35,6 +35,22 @@
                     </div>
 
                     <div class="col-sm-3">
+                        <div>
+                            <label>Bank <span class="text-danger">*</span></label>
+                        </div>
+                        <div>
+                            <select
+                                [ngClass]="{'is-invalid':reportForm.controls.bankid.touched && reportForm.controls.bankid.errors}"
+                                formControlName="bankid"
+                                class="form-control" required>
+                                <option [ngValue]=0>All</option>
+                                <option *ngFor="let bank of bankList"
+                                    [ngValue]="bank.bankid">{{bank.bank_name}}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-2">
                         <div class="pt-4 pl-4">
                             <button type="submit" class="btn btn-info pl-4 pr-4">Search</button>
                         </div>
@@ -42,7 +58,7 @@
                 </div>
             </form>
 
-            <div class="row">
+            <div class="row mt-2">
                 <div class="col-sm-9">
                     <button class="btn btn-info btn-sm ml-3"
                         printSectionId="_print_section" ngxPrint

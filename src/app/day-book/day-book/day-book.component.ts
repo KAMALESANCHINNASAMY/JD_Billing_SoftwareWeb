@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { bankMasterService } from 'src/app/api-service/bankMaster.service';
 import { dayBookReportService } from 'src/app/api-service/dayBook.service';
 
 @Component({
@@ -9,25 +10,36 @@ import { dayBookReportService } from 'src/app/api-service/dayBook.service';
 })
 export class DayBookComponent {
   purchaseReports: any[] = [];
+  bankList: any[] = [];
   companyID: number = Number(localStorage.getItem('companyid'));
 
-  constructor(private rpSvc: dayBookReportService
+  constructor(private rpSvc: dayBookReportService,
+    private bSvc: bankMasterService
   ) { }
 
   ngOnInit() {
+    this.getBankList();
+  }
 
+  getBankList() {
+    this.bSvc.getList(this.companyID).subscribe((res) => {
+      this.bankList = res
+    })
   }
 
   reportForm = new FormGroup({
     fromdate: new FormControl(''),
-    todate: new FormControl('')
+    todate: new FormControl(''),
+    bankid: new FormControl(0)
   })
 
   async getReport() {
     const fromdate = this.reportForm.value.fromdate;
     const todate = this.reportForm.value.todate;
+    const bankID = this.reportForm.value.bankid;
+    debugger
     if (this.reportForm.valid) {
-      const res = await this.rpSvc.saleList(this.companyID, fromdate, todate).toPromise();
+      const res = await this.rpSvc.saleList(this.companyID, fromdate, todate, Number(bankID)).toPromise();
       this.purchaseReports = res || [];
     }
     else {
