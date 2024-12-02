@@ -199,7 +199,47 @@
                                         class="form-control" readonly></td>
                                 <td></td>
                             </tr>
+
+                            <tr>
+                                <th style="text-align: right;font-size: 17px;"
+                                    class="pr-5 head" colspan="10">Round off</th>
+                                <td><input
+                                        [ngClass]="{'is-invalid':rawProductPurchaseForm.controls.roundof.touched && rawProductPurchaseForm.controls.roundof.errors}"
+                                        (input)="finalCalculation()"
+                                        formControlName="roundof"
+                                        class="form-control"></td>
+                                <td>
+                                    <label>
+                                        <input
+                                            type="radio"
+                                            formControlName="action"
+                                            value="+"
+                                            (change)="finalCalculation()" />
+                                        Add (+)
+                                    </label>
+
+                                    <label>
+                                        <input
+                                            type="radio"
+                                            formControlName="action"
+                                            value="-"
+                                            (change)="finalCalculation()" />
+                                        Subtract (-)
+                                    </label>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th style="text-align: right;font-size: 17px;"
+                                    class="pr-5 head" colspan="10">Net Amount</th>
+                                <td><input
+                                        [ngClass]="{'is-invalid':rawProductPurchaseForm.controls.net_amount.touched && rawProductPurchaseForm.controls.net_amount.errors}"
+                                        formControlName="net_amount"
+                                        class="form-control" readonly required></td>
+                                <td></td>
+                            </tr>
                         </tbody>
+
                     </table>
                 </div>
 
@@ -249,7 +289,7 @@
                                 <th>Supplier Bill No</th>
                                 <th>Bill No</th>
                                 <th>Credit Day's</th>
-                                <th>Total Amount</th>
+                                <th>Net Amount</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -260,7 +300,7 @@
                                 <td>{{item.supplier_bill_no}}</td>
                                 <td>{{item.bill_no}}</td>
                                 <td>{{item.credit_days}}</td>
-                                <td>{{item.total}}</td>
+                                <td>{{item.net_amount}}</td>
                                 <td>
                                     <!-- <button class="btn btn-sm btn-success" (click)="getReport(item)">
                                         Preview

@@ -100,6 +100,7 @@
                                 <th>Total</th>
                                 <th>Total GST</th>
                                 <th>Net Total</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody formArrayName="rawProduct_nested">
@@ -180,9 +181,9 @@
                                     <input formControlName="total"
                                         class="form-control" readonly />
                                 </td>
+                                <td></td>
                             </tr>
-                        </tbody>
-                        <tbody>
+
                             <tr>
                                 <th
                                     style="text-align: right;color: #005f69;font-family: Georgia, 'Times New Roman', Times, serif;"
@@ -194,6 +195,63 @@
                                         [ngClass]="{'is-invalid':SupplierDebitForm.controls.return_total.touched && SupplierDebitForm.controls.return_total.errors}"
                                         class="form-control" readonly />
                                 </td>
+                                <td></td>
+                            </tr>
+
+                            <tr>
+                                <th
+                                    style="text-align: right;color: #005f69;font-family: Georgia, 'Times New Roman', Times, serif;"
+                                    class="pr-5 pt-3" colspan="8">
+                                    <b>Return Round Off</b>
+                                </th>
+                                <td>
+                                    <input
+                                        [ngClass]="{'is-invalid':SupplierDebitForm.controls.return_roundof.touched && SupplierDebitForm.controls.return_roundof.errors}"
+                                        formControlName="return_roundof"
+                                        (input)="finalCalculation()"
+                                        class="form-control" />
+                                </td>
+
+                                <td>
+                                    <div
+                                        style="display: flex;justify-content: start;">
+                                        <label>
+                                            <input
+                                                type="radio"
+                                                formControlName="return_action"
+                                                value="+"
+                                                (change)="finalCalculation()" />
+                                            Add (+)
+                                        </label>
+                                    </div>
+
+                                    <div
+                                        style="display: flex;justify-content: start;">
+                                        <label>
+                                            <input
+                                                type="radio"
+                                                formControlName="return_action"
+                                                value="-"
+                                                (change)="finalCalculation()" />
+                                            Subtract (-)
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th
+                                    style="text-align: right;color: #005f69;font-family: Georgia, 'Times New Roman', Times, serif;"
+                                    class="pr-5 pt-3" colspan="8">
+                                    <b>Return Net Amount</b>
+                                </th>
+                                <td>
+                                    <input
+                                        [ngClass]="{'is-invalid':SupplierDebitForm.controls.return_net_amount.touched && SupplierDebitForm.controls.return_net_amount.errors}"
+                                        formControlName="return_net_amount"
+                                        class="form-control" readonly />
+                                </td>
+                                <td></td>
                             </tr>
                         </tbody>
                     </table>
@@ -242,7 +300,7 @@
                                 <th>Bill No</th>
                                 <th>Return No</th>
                                 <th>return Date</th>
-                                <th>Return Amount</th>
+                                <th>Return Net Amount</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -253,7 +311,7 @@
                                 <td>{{item.bill_no}}</td>
                                 <td>{{item.return_no}}</td>
                                 <td>{{item.return_date}}</td>
-                                <td>{{item.return_total}}</td>
+                                <td>{{item.return_net_amount}}</td>
                                 <td style="width: 140px;">
                                     <button class="btn btn-sm ml-1 btn-primary"
                                         (click)="update(item)">Edit</button>

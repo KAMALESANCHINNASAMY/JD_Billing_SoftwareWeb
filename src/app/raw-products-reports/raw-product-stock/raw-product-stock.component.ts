@@ -65,17 +65,52 @@ export class RawProductStockComponent {
     }
   }
 
-  getQty(n_productid: number, value: any) {
+  // getQty(n_productid: number, value: any) {
+  //   let reval: number = 0;
+  //   let productids: any[] = value.n_productids.split(',').map((id: string) => Number(id));
+  //   let qtys: any[] = value.qtys.split(',');
+  //   let index = productids.indexOf(n_productid);
+  //   if (index !== -1 && productids.length === qtys.length) {
+  //     reval = Number(qtys[index] || 0);
+  //   }
+
+  //   return Number(reval);
+  // }
+
+  getQty(id: number, value: any) {
     let reval: number = 0;
     let productids: any[] = value.n_productids.split(',').map((id: string) => Number(id));
     let qtys: any[] = value.qtys.split(',');
-    let index = productids.indexOf(n_productid);
+    debugger
+    let index = productids.indexOf(id);
+    let indexes = productids
+      .map((value, index) => value === id ? index : -1)
+      .filter(index => index !== -1);
     if (index !== -1 && productids.length === qtys.length) {
-      reval = Number(qtys[index] || 0);
+      //reval = Number(qtys[index] || 0);
+
+      reval = indexes.reduce((total, index) => total + parseInt(qtys[index] || '0', 10), 0);
     }
 
     return Number(reval);
   }
+
+  // getNetTot(id: number) {
+  //   let reval: number = 0;
+  //   this.purchaseReports.forEach((value) => {
+  //     let newval = 0;
+  //     let productids: any[] = value.n_productids.split(',').map((id: string) => Number(id));
+  //     let qtys: any[] = value.qtys.split(',');
+  //     let index = productids.indexOf(id);
+  //     if (index !== -1 && productids.length === qtys.length) {
+  //       newval = Number(qtys[index] || 0);
+  //     }
+  //     reval = reval + newval;
+  //   });
+
+  //   return Number(reval);
+  // }
+
 
   getNetTot(id: number) {
     let reval: number = 0;
@@ -84,8 +119,11 @@ export class RawProductStockComponent {
       let productids: any[] = value.n_productids.split(',').map((id: string) => Number(id));
       let qtys: any[] = value.qtys.split(',');
       let index = productids.indexOf(id);
+      let indexes = productids
+        .map((value, index) => value === id ? index : -1)
+        .filter(index => index !== -1);
       if (index !== -1 && productids.length === qtys.length) {
-        newval = Number(qtys[index] || 0);
+        newval = indexes.reduce((total, index) => total + parseInt(qtys[index] || '0', 10), 0);
       }
       reval = reval + newval;
     });

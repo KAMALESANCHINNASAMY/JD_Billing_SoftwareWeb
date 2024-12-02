@@ -19,6 +19,7 @@ export class ExpenseEntryComponent {
   expenseEntryList: any[] = [];
   expenseMasterList: any[] = [];
   bankList: any[] = [];
+  suggestions: any[] = [];
   constructor(
     private router: Router,
     private DialogSvc: DialogService,
@@ -44,11 +45,23 @@ export class ExpenseEntryComponent {
     });
   }
 
+
+
   getExpenseMasterList() {
     this.bSvc.getList(this.companyID).subscribe((res) => {
-      this.expenseMasterList = res
+      this.expenseMasterList = res;
+      this.suggestions = res;
     })
   }
+
+  suggest(value: any) {
+    this.suggestions = this.expenseMasterList.filter((item) =>
+      item.expense_name.toLowerCase().includes(value.toLowerCase())
+    );
+    if (this.suggestions.length < 1)
+      this.suggestions = this.expenseMasterList;
+  }
+
 
   getBankList() {
     this.bankSvc.getList(this.companyID).subscribe((res) => {

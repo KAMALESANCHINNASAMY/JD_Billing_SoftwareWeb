@@ -127,6 +127,9 @@ export class RawProductPurchaseComponent {
     gst_in: new FormControl(''),
     credit_days: new FormControl('', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
     total: new FormControl('', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
+    roundof: new FormControl('', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
+    net_amount: new FormControl('', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
+    action: new FormControl(''),
     purchase_nested: new FormArray([
       new FormGroup({
         purchase_n_id: new FormControl(0),
@@ -138,7 +141,6 @@ export class RawProductPurchaseComponent {
         discount: new FormControl('', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
         qty: new FormControl('', [Validators.required, Validators.pattern(/^\d+(\.\d{1,})?$/)]),
         total: new FormControl(''),
-        re_amount: new FormControl('0.00', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
         cgst_amount: new FormControl(''),
         sgst_amount: new FormControl(''),
         igst_amount: new FormControl(''),
@@ -243,7 +245,6 @@ export class RawProductPurchaseComponent {
       discount: new FormControl('', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
       qty: new FormControl('', [Validators.required, Validators.pattern(/^\d+(\.\d{1,})?$/)]),
       total: new FormControl(''),
-      re_amount: new FormControl('0.00', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
       cgst_amount: new FormControl(''),
       sgst_amount: new FormControl(''),
       igst_amount: new FormControl(''),
@@ -287,7 +288,7 @@ export class RawProductPurchaseComponent {
     const qty = Number(Control.at(i).get('qty')?.value);
     Control.at(i).get('total')?.setValue(String((disAmount * qty).toFixed(2)));
 
-    const sutotal = (Number(Control.at(i).get('total')?.value)) + (Number(Control.at(i).get('re_amount')?.value));
+    const sutotal = (Number(Control.at(i).get('total')?.value));
     const gst = Number(Control.at(i).get('gst_percentage')?.value);
     const stateCode = this.supplierDetailsList.find((e) => { return e.supplierid == this.rawProductPurchaseForm.value.supplierid });
     if (stateCode) {
@@ -315,6 +316,12 @@ export class RawProductPurchaseComponent {
     const Control = this.rawProductPurchaseForm.get('purchase_nested') as FormArray;
     const FormTotal = Control.value.reduce((acc: any, val: any) => (acc += Number(val.net_total)), 0);
     this.rawProductPurchaseForm.get('total')?.setValue(String(FormTotal.toFixed(2)));
+
+    if (this.rawProductPurchaseForm.value.action === '+') {
+      this.rawProductPurchaseForm.get('net_amount')?.setValue((FormTotal + Number(this.rawProductPurchaseForm.value.roundof)).toFixed(2));
+    } else if (this.rawProductPurchaseForm.value.action === '-') {
+      this.rawProductPurchaseForm.get('net_amount')?.setValue((FormTotal - Number(this.rawProductPurchaseForm.value.roundof)).toFixed(2));
+    }
   }
 
   async save() {
@@ -370,7 +377,6 @@ export class RawProductPurchaseComponent {
           ]),
           qty: new FormControl(e.qty, [Validators.required, Validators.pattern(/^\d+(\.\d{1,})?$/)]),
           total: new FormControl(e.total),
-          re_amount: new FormControl(e.re_amount, [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
           cgst_amount: new FormControl(e.cgst_amount),
           sgst_amount: new FormControl(e.sgst_amount),
           igst_amount: new FormControl(e.igst_amount),
@@ -401,6 +407,9 @@ export class RawProductPurchaseComponent {
     this.rawProductPurchaseForm.get('gst_in')?.setValue('');
     this.rawProductPurchaseForm.get('credit_days')?.setValue('');
     this.rawProductPurchaseForm.get('total')?.setValue('');
+    this.rawProductPurchaseForm.get('roundof')?.setValue('');
+    this.rawProductPurchaseForm.get('net_amount')?.setValue('');
+    this.rawProductPurchaseForm.get('action')?.setValue('');
     this.rawProductPurchaseForm.get('cuid')?.setValue(this.userID);
     this.rawProductPurchaseForm.get('companyid')?.setValue(this.companyID);
 

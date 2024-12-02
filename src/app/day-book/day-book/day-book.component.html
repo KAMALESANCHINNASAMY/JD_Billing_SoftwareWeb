@@ -55,6 +55,32 @@
                             <button type="submit" class="btn btn-info pl-4 pr-4">Search</button>
                         </div>
                     </div>
+
+                    <div *ngIf="purchaseReports.length" class="m-2">
+                        <div class="inputdiv">
+                            <mat-form-field>
+                                <mat-label>Filter by description</mat-label>
+                                <mat-select
+                                    (valueChange)="filterData(advw.value)" #advw>
+                                    <mat-form-field>
+                                        <input matInput type="text" #auval
+                                            (input)="suggest(auval.value)"
+                                            placeholder="Search...">
+                                    </mat-form-field>
+
+                                    <mat-option value='All'>
+                                        All
+                                    </mat-option>
+
+                                    <mat-option [value]="option"
+                                        *ngFor="let option of suggestions">
+                                        {{option}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
                 </div>
             </form>
 
@@ -82,7 +108,7 @@
                         </thead>
                         <tbody>
                             <tr
-                                *ngFor="let item of purchaseReports; let i = index">
+                                *ngFor="let item of filteredPurchaseReports; let i = index">
                                 <td>{{ i + 1 }}</td>
                                 <td>{{item.date}}</td>
                                 <td style="text-align: left;">{{

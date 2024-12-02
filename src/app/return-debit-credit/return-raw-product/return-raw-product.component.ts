@@ -113,8 +113,6 @@ export class ReturnRawProductComponent {
           ret_qty: new FormControl('', [Validators.required, Validators.pattern(/^\d+(\.\d{1,})?$/)]),
           total: new FormControl(e.total),
           ret_total: new FormControl(''),
-          re_amount: new FormControl(e.re_amount),
-          ret_re_amount: new FormControl('0.00', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
           cgst_amount: new FormControl(e.cgst_amount),
           ret_cgst_amount: new FormControl(''),
           sgst_amount: new FormControl(e.sgst_amount),
@@ -144,6 +142,9 @@ export class ReturnRawProductComponent {
     return_date: new FormControl(''),
     total: new FormControl(''),
     return_total: new FormControl('', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
+    return_roundof: new FormControl('', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
+    return_net_amount: new FormControl('', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
+    return_action: new FormControl(''),
     rawProduct_nested: new FormArray([]),
     cuid: new FormControl(this.userID),
     companyid: new FormControl(this.companyID),
@@ -227,8 +228,6 @@ export class ReturnRawProductComponent {
           ret_qty: new FormControl(e.ret_qty, [Validators.required, Validators.pattern(/^\d+(\.\d{1,})?$/)]),
           total: new FormControl(e.total),
           ret_total: new FormControl(e.ret_total),
-          re_amount: new FormControl(e.re_amount),
-          ret_re_amount: new FormControl(e.ret_re_amount, [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
           cgst_amount: new FormControl(e.cgst_amount),
           ret_cgst_amount: new FormControl(e.ret_cgst_amount),
           sgst_amount: new FormControl(e.sgst_amount),
@@ -273,7 +272,7 @@ export class ReturnRawProductComponent {
     const qty = Number(Control.at(i).get('ret_qty')?.value);
     Control.at(i).get('ret_total')?.setValue(String((disAmount * qty).toFixed(2)));
 
-    const sutotal = (Number(Control.at(i).get('ret_total')?.value)) + (Number(Control.at(i).get('ret_re_amount')?.value));
+    const sutotal = (Number(Control.at(i).get('ret_total')?.value));
     const gst = Number(Control.at(i).get('gst_percentage')?.value);
     const newArray = this.supplierDetailsList.filter((e) => {
       return e.supplierid == this.SupplierDebitForm.value.supplierid;
@@ -307,6 +306,13 @@ export class ReturnRawProductComponent {
 
     const FormReturnTotal = Control.value.reduce((acc: number, val: any) => (acc += Number(val.ret_net_total)), 0);
     this.SupplierDebitForm.get('return_total')?.setValue(String(FormReturnTotal.toFixed(2)));
+
+
+    if (this.SupplierDebitForm.value.return_action === '+') {
+      this.SupplierDebitForm.get('return_net_amount')?.setValue((FormReturnTotal + Number(this.SupplierDebitForm.value.return_roundof)).toFixed(2));
+    } else if (this.SupplierDebitForm.value.return_action === '-') {
+      this.SupplierDebitForm.get('return_net_amount')?.setValue((FormReturnTotal - Number(this.SupplierDebitForm.value.return_roundof)).toFixed(2));
+    }
   }
 
   async cancelClick() {
@@ -323,6 +329,9 @@ export class ReturnRawProductComponent {
     this.SupplierDebitForm.get('return_date')?.setValue('');
     this.SupplierDebitForm.get('total')?.setValue('');
     this.SupplierDebitForm.get('return_total')?.setValue('');
+    this.SupplierDebitForm.get('return_net_amount')?.setValue('');
+    this.SupplierDebitForm.get('return_roundof')?.setValue('');
+    this.SupplierDebitForm.get('return_action')?.setValue('');
     this.SupplierDebitForm.get('cuid')?.setValue(this.userID);
     this.SupplierDebitForm.get('companyid')?.setValue(this.companyID);
     this.findBillNo();
