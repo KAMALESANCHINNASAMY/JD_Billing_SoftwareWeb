@@ -100,6 +100,29 @@
                             </span>
                         </div>
                     </div>
+
+                    <div class="col-sm-6 mt-3" style="display: flex">
+                        <div class="labeldiv">
+                            <label class="pt-2" style="margin: auto">Opening
+                                Balance<span
+                                    class="text-danger">*</span></label>
+                        </div>
+                        <div class="inputdiv">
+                            <input
+                                [ngClass]="{'is-invalid':bankMasterForm.controls.balance.touched && bankMasterForm.controls.balance.errors}"
+                                class="form-control"
+                                formControlName="balance" type="text"
+                                required />
+
+                            <span class="text-danger"
+                                *ngIf="bankMasterForm.controls.balance.touched && bankMasterForm.controls.balance.errors">
+                                <div
+                                    *ngIf="bankMasterForm.controls.balance.touched && bankMasterForm.controls.balance.errors['required']">
+                                    Opening Balance is required
+                                </div>
+                            </span>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="row justify-content-center mt-3">
@@ -145,7 +168,8 @@
                         <tr *ngFor="let item of bankList; let i = index">
                             <td>{{ i + 1 }}</td>
                             <td style="text-align: left;">{{ item.bank_name }}</td>
-                            <td style="text-align: left;">{{ item.ac_holder_name}}</td>
+                            <td style="text-align: left;">{{
+                                item.ac_holder_name}}</td>
                             <td style="text-align: left;">{{ item.ac_no }}</td>
                             <td style="text-align: left;">{{ item.ifsc_code }}</td>
                             <td class="tdoption">

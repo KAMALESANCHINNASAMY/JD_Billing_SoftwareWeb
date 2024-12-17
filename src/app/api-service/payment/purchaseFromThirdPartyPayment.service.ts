@@ -22,4 +22,14 @@ export class purchaseFromThirdPartyPaymentService {
         const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }), };
         return this.http.post<any>(this.apiUrl + 'purchaseFromThirdPartyPayment/Insert_purchase_from_thirdparty_payment', value, httpOptions);
     }
+
+    getPayment(fromdate: any, todate: any, third_partyid: any, companyid: any): Observable<any[]> {
+        return this.http.get<any[]>(
+            this.apiUrl + 'purchaseFromThirdPartyPayment/get_purchase_from_thirdparty_payment?fromdate=' + fromdate + '&todate=' + todate + '&third_partyid=' + third_partyid + '&companyid=' + companyid
+        )
+    }
+
+    delete(paymentid: any): Observable<any> {
+        return this.http.delete<any>(this.apiUrl + 'purchaseFromThirdPartyPayment/delete_purchase_from_thirdparty_payment?paymentid=' + paymentid);
+    }
 }

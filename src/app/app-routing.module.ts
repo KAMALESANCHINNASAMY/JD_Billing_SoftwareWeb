@@ -109,6 +109,11 @@ const routes: Routes = [
         path: 'day-book',
         loadChildren: () =>
           import('./day-book/day-book.module').then((m) => (m.DayBookModule))
+      },
+      {
+        path:'job-handling-report',
+        loadChildren:()=>
+        import('./job-handling-report/job-handling-report.module').then((m)=>(m.JobHandlingReportModule))
       }
     ],
   },

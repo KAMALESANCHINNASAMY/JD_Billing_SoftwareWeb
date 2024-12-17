@@ -1,0 +1,21 @@
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { ConfigService } from './configuration.service';
+
+@Injectable({
+    providedIn: 'root',
+})
+export class jobHandlingReportService {
+    readonly apiUrl = this.ConfigService.BSfwUrl;
+
+    constructor(private http: HttpClient, private ConfigService: ConfigService) { }
+
+    jobInwardReport(companyid: any, third_partyid: any, fromdate: any, todate: any): Observable<any[]> {
+        return this.http.get<any[]>(this.apiUrl + 'JobHandlingReport/get_jobhandling_inward?companyid=' + companyid + '&third_partyid=' + third_partyid + '&fromdate=' + fromdate + '&todate=' + todate);
+    }
+
+    jobOutwardReport(companyid: any, third_partyid: any, fromdate: any, todate: any): Observable<any[]> {
+        return this.http.get<any[]>(this.apiUrl + 'JobHandlingReport/get_jobhandling_outward?companyid=' + companyid + '&third_partyid=' + third_partyid + '&fromdate=' + fromdate + '&todate=' + todate);
+    }
+}

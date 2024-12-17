@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
-import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NotificationsService } from 'angular2-notifications';
 import { DialogService } from 'src/app/api-service/Dialog.service';
@@ -107,27 +107,6 @@ export class SupplierMasterComponent {
     }
   }
 
-  setTwoDigitAdvance(i: number) {
-    const getCheck = this.supplierForm.get('supplieradvance') as FormArray;
-    const checkAd = getCheck.at(i).get('advanceid')?.value;
-    const checkAdAm = Number(getCheck.at(i).get('advance_amount')?.value);
-    const checkAdAval = Number(getCheck.at(i).get('aval_addvance')?.value);
-    const oadvance_amount = Number(getCheck.at(i).get('oadvance_amount')?.value);
-    if (checkAd > 0 && (oadvance_amount - checkAdAval) > checkAdAm) {
-      this.notificationSvc.warn('Invalid Advance Amount');
-      getCheck.at(i).get('advance_amount')?.setValue(oadvance_amount, { emitEvent: false });
-    }
-
-    const Control = this.supplierForm.get('supplieradvance') as FormArray;
-    const adControl = Control.at(i).get('advance_amount');
-    let value: string | number = adControl?.value || 0;
-    // Ensure value is treated as string for parseFloat
-    if (!isNaN(Number(value)) && value !== null && value !== '') {
-      value = parseFloat(value.toString()).toFixed(2).toString();
-      Control.at(i).get('advance_amount')?.setValue(value, { emitEvent: false });
-    }
-  }
-
   supplierForm = new FormGroup({
     supplierid: new FormControl(0),
     supplier_name: new FormControl(''),
@@ -139,40 +118,8 @@ export class SupplierMasterComponent {
     address: new FormControl(''),
     shipping_address: new FormControl(''),
     companyid: new FormControl(this.companyID),
-    cuid: new FormControl(this.userID),
-    supplieradvance: new FormArray([
-      new FormGroup({
-        advanceid: new FormControl(0),
-        date: new FormControl('', Validators.required),
-        advance_amount: new FormControl('0.00', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
-        oadvance_amount: new FormControl('0.00'),
-        aval_addvance: new FormControl('0.00'),
-        description: new FormControl('', Validators.required)
-      }),
-    ]),
+    cuid: new FormControl(this.userID)
   });
-
-  getCommonControls(): AbstractControl[] {
-    return (this.supplierForm.get('supplieradvance') as FormArray).controls;
-  }
-
-  addNesForm() {
-    const newControl = new FormGroup({
-      advanceid: new FormControl(0),
-      date: new FormControl('', [Validators.required]),
-      advance_amount: new FormControl('0.00', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
-      oadvance_amount: new FormControl('0.00'),
-      aval_addvance: new FormControl('0.00'),
-      description: new FormControl('', [Validators.required])
-    });
-    (this.supplierForm.get('supplieradvance') as FormArray).push(newControl);
-    this.someMethod(); // Trigger change detection
-  }
-
-  removeNesForm(index: number) {
-    (this.supplierForm.get('supplieradvance') as FormArray).removeAt(index);
-    this.someMethod(); // Trigger change detection
-  }
 
   someMethod() {
     this.cdRef.detectChanges();
@@ -231,29 +178,9 @@ export class SupplierMasterComponent {
   }
 
   async UpdateGetClick(item: any) {
-    const nestedArray = await this.sMSvc.getAdvanceList(item.supplierid).toPromise();
-    const control = <FormArray>this.supplierForm.controls['supplieradvance'];
-    while (control.length !== 0) {
-      control.removeAt(0);
-    }
-    if (control.length == 0) {
-      this.supplierForm.patchValue(item);
-      this.supplierForm.get('cuid')?.setValue(this.userID);
-      nestedArray?.forEach(async (e) => {
-        const newControl = new FormGroup({
-          advanceid: new FormControl(e.advanceid),
-          date: new FormControl(e.date, Validators.required),
-          advance_amount: new FormControl(e.advance_amount, [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
-          aval_addvance: new FormControl(e.aval_addvance),
-          oadvance_amount: new FormControl(e.advance_amount),
-          description: new FormControl(e.description, Validators.required)
-        });
-        (this.supplierForm.get('supplieradvance') as FormArray).push(
-          newControl
-        );
-        this.someMethod();
-      });
-    }
+
+    this.supplierForm.patchValue(item);
+    this.supplierForm.get('cuid')?.setValue(this.userID);
     this.scrollToTableTop();
   }
 
@@ -274,48 +201,8 @@ export class SupplierMasterComponent {
       });
   }
 
-  isDateControlInvalid(index: number): boolean {
-    const control = this.getdateControl(index);
-    return control.touched && !!control.errors;
-  }
-
-  getdateControl(index: number): FormControl {
-    const control = (this.supplierForm.get('supplieradvance') as FormArray)
-      .at(index)
-      ?.get('date') as FormControl;
-    return control;
-  }
-
-  isAmountControlInvalid(index: number): boolean {
-    const control = this.getAmountControl(index);
-    return control.touched && !!control.errors;
-  }
-
-  getAmountControl(index: number): FormControl {
-    const control = (this.supplierForm.get('supplieradvance') as FormArray)
-      .at(index)
-      ?.get('advance_amount') as FormControl;
-    return control;
-  }
-
-  isDescriptionControlInvalid(index: number): boolean {
-    const control = this.getDesControl(index);
-    return control.touched && !!control.errors;
-  }
-
-  getDesControl(index: number): FormControl {
-    const control = (this.supplierForm.get('supplieradvance') as FormArray)
-      .at(index)
-      ?.get('description') as FormControl;
-    return control;
-  }
-
   cancelClick() {
     this.supplierForm.reset();
-    const control = <FormArray>this.supplierForm.controls['supplieradvance'];
-    while (control.length !== 0) {
-      control.removeAt(0);
-    }
     this.supplierForm.get('supplierid')?.setValue(0);
     this.supplierForm.get('supplier_name')?.setValue('');
     this.supplierForm.get('mobile_no')?.setValue('');
@@ -327,7 +214,6 @@ export class SupplierMasterComponent {
     this.supplierForm.get('shipping_address')?.setValue('');
     this.supplierForm.get('companyid')?.setValue(this.companyID);
     this.supplierForm.get('cuid')?.setValue(this.userID);
-    this.addNesForm();
     this.getSupplierList();
   }
 

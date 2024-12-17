@@ -30,8 +30,7 @@ export class PaymentReportComponent {
   reportForm = new FormGroup({
     fromdate: new FormControl(''),
     todate: new FormControl(''),
-    supplierid: new FormControl(null),
-    ischq: new FormControl(false)
+    supplierid: new FormControl(null)
   });
 
   async getReport() {

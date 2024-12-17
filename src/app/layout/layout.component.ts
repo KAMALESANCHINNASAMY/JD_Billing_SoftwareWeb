@@ -258,6 +258,32 @@ export class LayoutComponent implements OnInit {
       ],
     },
     {
+      link_name: 'Job Handling Reports',
+      link: null,
+      icon: 'salesreport',
+      isselect: false,
+      value: 26,
+      sub_menu: [{
+        link_name: 'Job Handling Inward report',
+        link: 'job-handling-report/job-handling-inward-report',
+        isselect: false,
+        value: 2601
+      },
+      {
+        link_name: 'Job Handling Outward report',
+        link: 'job-handling-report/job-handling-outward-report',
+        isselect: false,
+        value: 2602
+      },
+      {
+        link_name: 'Payment report',
+        link: 'job-handling-report/job-handling-payment-report',
+        isselect: false,
+        value: 2603
+      }
+      ]
+    },
+    {
       link_name: 'Day Book',
       link: null,
       icon: 'salesreport',

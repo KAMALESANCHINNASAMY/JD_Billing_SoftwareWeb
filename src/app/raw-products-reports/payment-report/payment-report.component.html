@@ -76,23 +76,16 @@
                         </button>
                     </div>
 
-                    <div class="table-responsive col-sm-12" id="_print_section">
-                        <table style="width: 100%;"
-                            class="table table-bordered table-hover">
+                    <div class="table-responsive" id="_print_section">
+                        <table class="table table-bordered table-hover">
                             <thead class="tableheadList">
                                 <tr>
-                                    <th>S No</th>
+                                    <th>Si No</th>
                                     <th>Payment Date</th>
                                     <th>Supplier Name</th>
-                                    <th>Amount Mode</th>
-                                    <th>Payment Type</th>
-                                    <th>Cheque No</th>
-                                    <th style="text-align: right;">Cheque
-                                        Amount<span class="ml-2 mr-1"><input
-                                                type="checkbox"
-                                                formControlName="ischq"></span>
-                                    </th>
-                                    <th style="text-align: right;">Paid Amount</th>
+                                    <th>Bank Name</th>
+                                    <th>Amount</th>
+                                    <th>Description</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -102,15 +95,9 @@
                                     <td>{{ i + 1 }}</td>
                                     <td>{{getFormattedDate(item.date)}}</td>
                                     <td>{{ item.supplier_name }}</td>
-                                    <td>{{item.amount_mode | uppercase}}</td>
-
-                                    <td>{{item.payment_type}}</td>
-                                    <td>{{item.cheque_no}}</td>
-                                    <td style="text-align: right;"><span
-                                            *ngIf="reportForm.value.ischq">{{
-                                            item.c_amount
-                                            }}</span></td>
-                                    <td style="text-align: right;">{{item.deduction_amount}}</td>
+                                    <td>{{ item.bank_name }}</td>
+                                    <td>{{item.deduction_amount}}</td>
+                                    <td>{{item.description}}</td>
                                     <td class="disnon"><button
                                             class="btn btn-sm btn-danger"
                                             (click)="deleteClick(item.paymentid)">Remove</button></td>
@@ -118,11 +105,9 @@
                                 <tr>
                                     <th
                                         style="text-align: right;font-size: 17px;"
-                                        class="pr-3 head" colspan="6">Total
+                                        class="pr-3 head" colspan="5">Total
                                     </th>
-                                    <th style="text-align: right;"> <span
-                                            *ngIf="reportForm.value.ischq">{{
-                                            getChequeAmount().toFixed(2) }}</span></th>
+
                                     <th style="text-align: right;">{{
                                         paidTot().toFixed(2) }}</th>
                                 </tr>

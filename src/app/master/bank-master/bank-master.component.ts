@@ -1,5 +1,5 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NotificationsService } from 'angular2-notifications';
 import { DialogService } from 'src/app/api-service/Dialog.service';
@@ -39,6 +39,7 @@ export class BankMasterComponent {
     ac_holder_name: new FormControl(''),
     ac_no: new FormControl(''),
     ifsc_code: new FormControl(''),
+    balance: new FormControl('0.00', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
     companyid: new FormControl(this.companyID),
     cuid: new FormControl(this.userID)
   });
@@ -117,6 +118,7 @@ export class BankMasterComponent {
     this.bankMasterForm.get('ac_holder_name')?.setValue('');
     this.bankMasterForm.get('ac_no')?.setValue('');
     this.bankMasterForm.get('ifsc_code')?.setValue('');
+    this.bankMasterForm.get('balance')?.setValue('0.00');
     this.bankMasterForm.get('companyid')?.setValue(this.companyID);
     this.bankMasterForm.get('cuid')?.setValue(this.userID);
 

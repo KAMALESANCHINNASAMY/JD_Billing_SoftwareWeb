@@ -7,137 +7,6 @@
                 </div>
             </div>
             <form [formGroup]="thirdPartyPaymentsForm" (submit)="save()">
-                <div class="row ml-3 mt-2">
-                    <div class="col-sm-4" style="display: flex">
-                        <div class="labeldiv">
-                            <label class="pt-2" style="margin: auto">ThirdParty
-                                Name<span
-                                    class="text-danger">*</span></label>
-                        </div>
-                        <div class="inputdiv">
-                            <mat-form-field>
-                                <mat-label>Third Party Name</mat-label>
-                                <mat-select
-                                    (valueChange)="setthirdPartyDetails(awval.value)"
-                                    [ngClass]="{'is-invalid':thirdPartyPaymentsForm.controls.third_partyid.touched && thirdPartyPaymentsForm.controls.third_partyid.errors}"
-                                    formControlName="third_partyid" #awval
-                                    required>
-                                    <mat-form-field>
-                                        <input matInput type="text" #auval
-                                            (input)="suggest(auval.value)"
-                                            placeholder="Search...">
-                                    </mat-form-field>
-
-                                    <mat-option [value]="option.third_partyid"
-                                        *ngFor="let option of suggestions">
-                                        {{option.party_name}}
-                                    </mat-option>
-                                </mat-select>
-                            </mat-form-field>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-4 mt-1" style="display: flex">
-                        <div class="labeldiv">
-                            <label class="pt-2" style="margin: auto">Date<span
-                                    class="text-danger">*</span></label>
-                        </div>
-                        <div class="inputdiv">
-                            <input [ngClass]="{
-                    'is-invalid':
-                      thirdPartyPaymentsForm.controls.date.touched &&
-                      thirdPartyPaymentsForm.controls.date.errors
-                  }" class="form-control" formControlName="date" type="date"
-                                required />
-                        </div>
-                    </div>
-                    <div class="col-sm-4 mt-2" style="display: flex">
-                        <div class="labeldiv">
-                            <label class="pt-1" style="margin: auto">Balance</label>
-                        </div>
-                        <div class="inputdiv">
-                            <input formControlName="balance" readonly
-                                class="form-control" type="text" />
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row ml-3">
-                    <div class="col-sm-4 mt-2" style="display: flex">
-                        <div class="labeldiv">
-                            <label class="pt-2" style="margin: auto">From Which
-                                Bank</label>
-                        </div>
-                        <div class="inputdiv">
-                            <select formControlName="bankid"
-                                class="form-control" required>
-                                <option [ngValue]=0>Not From Bank</option>
-                                <option *ngFor="let bank of bankList"
-                                    [ngValue]="bank.bankid">{{bank.bank_name}}</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-4 mt-2" style="display: flex">
-                        <div class="labeldiv">
-                            <label class="pt-2" style="margin: auto">Payment
-                                Type</label>
-                        </div>
-                        <div class="inputdiv">
-                            <select formControlName="payment_type"
-                                class="form-control">
-                                <option disabled value>Please Select!</option>
-                                <option value="Cash">Cash</option>
-                                <option value="UPI">G Pay / Phone Pay / UPI</option>
-                                <option value="Cheque">Cheque</option>
-                                <option value="RTGS"> RTGS Neft</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-8 mt-3" style="display: flex;">
-                        <label class="head"> Advance Amount :</label>
-                        <div class="ml-2 mr-2"
-                            *ngFor="let advan of advanceArrayList"><input
-                                [value]="advan.advanceid"
-                                formControlName="advanceid" type="radio">
-                            <label class="head ml-1"
-                                style="font-family: sans-serif;">{{advan.aval_addvance}}</label>
-                        </div>
-                    </div>
-                </div>
-                <div class="row  ml-3 mt-3"
-                    *ngIf="thirdPartyPaymentsForm.value.payment_type == 'Cheque'">
-                    <div class="col-sm-4 mt-3" style="display: flex">
-                        <div class="labeldiv">
-                            <label class="pt-2" style="margin: auto">Cheque No</label>
-                        </div>
-                        <div class="inputdiv">
-                            <input class="form-control"
-                                formControlName="cheque_no" type="text" />
-                        </div>
-                    </div>
-                    <div class="col-sm-4 mt-3" style="display: flex">
-                        <div class="labeldiv">
-                            <label class="pt-1" style="margin: auto">Date</label>
-                        </div>
-                        <div class="inputdiv">
-                            <input formControlName="c_date" type="date"
-                                class="form-control" />
-                        </div>
-                    </div>
-                    <div class="col-sm-4 mt-3" style="display: flex">
-                        <div class="labeldiv">
-                            <label class="pt-1" style="margin: auto">Amount</label>
-                        </div>
-                        <div class="inputdiv">
-                            <input formControlName="c_amount" type="text"
-                                class="form-control" />
-                        </div>
-                    </div>
-                </div>
-
-                <hr>
 
                 <div style="display: flex;justify-content: end;">
                     <div>
@@ -156,120 +25,113 @@
                     </div>
                 </div>
 
-                <div class="row ml-3">
-                    <div style="display: flex">
-                        <div class="form-check">
-                            <input class="form-check-input"
-                                (click)="setAmountMode()"
-                                formControlName="amount_mode" value="invoice"
-                                style="height: 20px; width: 20px" type="radio" />
-                            <label class="form-check-label p-2"> Invoice Wise
-                            </label>
-                        </div>
-                        <div class="form-check ml-2">
-                            <input class="form-check-input"
-                                (click)="setAmountMode()"
-                                formControlName="amount_mode" value="total"
-                                style="height: 20px; width: 20px" type="radio" />
-                            <label class="form-check-label p-2"> Total Wise
-                            </label>
-                        </div>
-
-                        <div class="form-check ml-2">
-                            <input class="form-check-input"
-                                (click)="setAmountMode()"
-                                formControlName="amount_mode"
-                                value="Deduct from Advance"
-                                style="height: 20px; width: 20px" type="radio" />
-                            <label class="form-check-label p-2">Deduct from
-                                Advance</label>
-                        </div>
-
-                        <div
-                            *ngIf="thirdPartyPaymentsForm.value.amount_mode == 'total'"
-                            class="ml-2" style="display: flex">
-                            <label class="pt-2 head" style="min-width: 140px">Now
-                                pay Amount</label>
-                            <input [ngClass]="{
-                    'is-invalid':
-                      thirdPartyPaymentsForm.controls.n_amount.touched &&
-                      thirdPartyPaymentsForm.controls.n_amount.errors
-                  }" type="text" #namv (blur)="deductionTotalAmount(namv.value)"
-                                class="form-control"
-                                style="width: 160px;" formControlName="n_amount" />
-                            <label class="p-2 head" style="min-width: 250px">Total
-                                Amount :
-                                <span class="pl-2" style="color: orangered"><b
-                                        style="font-family: sans-serif;">{{
-                                        thirdPartyPaymentsForm.value.n_total_amount
-                                        }}</b></span></label>
-                        </div>
-
-                        <div
-                            *ngIf="thirdPartyPaymentsForm.value.amount_mode == 'Deduct from Advance'"
-                            class="ml-2"
-                            style="display: flex">
-                            <label class="pt-2 head" style="min-width: 140px">Pay
-                                from Advance</label>
-                            <input [ngClass]="{
-                    'is-invalid':
-                      thirdPartyPaymentsForm.controls.adnp_amount.touched &&
-                      thirdPartyPaymentsForm.controls.adnp_amount.errors
-                  }" type="text" #naadv
-                                (blur)="deductionAdvanceAmount(naadv.value)"
-                                class="form-control"
-                                style="width: 160px;"
-                                formControlName="adnp_amount" />
-                            <label class="p-2 head" style="min-width: 250px">Total
-                                Amount :
-                                <span class="pl-2" style="color: orangered"><b
-                                        style="font-family: sans-serif;">{{
-                                        thirdPartyPaymentsForm.value.n_total_amount
-                                        }}</b></span></label>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row pl-4 pr-4">
-                    <table class="col-sm-12 table table-hover table-bordered">
+                <div class="table-responsive">
+                    <table class="table table-hover table-bordered">
                         <thead class="tablehead">
                             <tr>
-                                <th
-                                    *ngIf="thirdPartyPaymentsForm.value.amount_mode == 'invoice'"></th>
-                                <th>SI NO</th>
-                                <th>Date</th>
-                                <th>Bill No / Description </th>
-                                <th>Amount</th>
-                                <th>Return Amount</th>
-                                <th>Total Deduction's</th>
-                                <th>Balance</th>
-                                <th>Deduction Amount</th>
+                                <th>Si No</th>
+                                <th>Name<span class="text-danger">*</span></th>
+                                <th>Date<span class="text-danger">*</span></th>
+                                <th>Bank<span class="text-danger">*</span></th>
+                                <th>Amount<span class="text-danger">*</span></th>
+                                <th>Description</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody formArrayName="thirdPartyPayment_nested">
                             <tr
                                 *ngFor="let chid of getCommonControls(); let i = index"
                                 formGroupName="{{ i }}">
-                                <td
-                                    *ngIf="thirdPartyPaymentsForm.value.amount_mode == 'invoice'">
-                                    <input (click)="setDeduction(i,$event)"
-                                        formControlName="isselect"
-                                        style="height: 19px; width: 19px"
-                                        type="checkbox" />
-                                </td>
                                 <td>{{ i + 1 }}</td>
-                                <td>{{ chid.get("date")?.value }}</td>
-                                <td>{{ chid.get("bill_no")?.value }}</td>
-                                <td>{{ chid.get("total")?.value }}</td>
-                                <td>{{ chid.get("ret_total")?.value }}</td>
-                                <td>{{ chid.get("de")?.value }}</td>
-                                <td>{{ chid.get("total_amount")?.value }}</td>
-                                <td>{{ chid.get("deduction_amount")?.value }}</td>
+                                <td>
+                                    <select formControlName="third_partyid"
+                                        class="form-control"
+                                        [ngClass]="{'is-invalid': isSupplierInvalid(i)}"
+                                        required>
+                                        <option disabled selected [ngValue]=null>Please
+                                            Select</option>
+                                        <option
+                                            *ngFor="let option of suggestions"
+                                            [ngValue]="option.third_partyid">{{option.party_name}}</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <input class="form-control" type="date"
+                                        formControlName="date"
+                                        [ngClass]="{'is-invalid': isDateInvalid(i)}"
+                                        required />
+                                </td>
+                                <td>
+                                    <select formControlName="bankid"
+                                        class="form-control" required>
+                                        <option [ngValue]=0>Not From Bank</option>
+                                        <option
+                                            *ngFor="let bank of bankList"
+                                            [ngValue]="bank.bankid">{{bank.bank_name}}</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <input class="form-control" type="text"
+                                        formControlName="amount"
+                                        [ngClass]="{'is-invalid': isAmountInvalid(i)}"
+                                        required />
+                                </td>
+                                <td>
+                                    <input class="form-control" type="text"
+                                        formControlName="description" />
+                                </td>
+                                <td><mat-icon (click)="addNesForm()"
+                                        style="color: green; cursor: pointer">add_circle</mat-icon>
+                                    <mat-icon
+                                        (click)="removeNesForm(i)"
+                                        style="color: red; cursor: pointer">remove_circle</mat-icon>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </form>
+        </mat-card-content>
+    </mat-card>
+
+    <mat-card class="matcard mt-4">
+        <mat-card-content>
+            <div class="table-responsive col-sm-12">
+                <div>
+                    <input #dayVal (change)="getReport(dayVal.value)"
+                        type="date" style="width: 200px;"
+                        class="form-control m-2" />
+                </div>
+
+                <table style="width: 100%;"
+                    class="table table-bordered table-hover">
+                    <thead class="tableheadList">
+                        <tr>
+                            <th>Si No</th>
+                            <th>Payment Date</th>
+                            <th>Customer Name</th>
+                            <th>Bank Name</th>
+                            <th>Amount</th>
+                            <th>Description</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr
+                            *ngFor="let item of thirdPartyPayment; let i = index">
+                            <td>{{ i + 1 }}</td>
+                            <td>{{getFormattedDate(item.date)}}</td>
+                            <td>{{ item.party_name }}</td>
+                            <td>{{item.bank_name}}</td>
+                            <td>{{item.deduction_amount}}</td>
+                            <td>{{item.description}}</td>
+                            <td class="disnon"><button
+                                    class="btn btn-sm btn-danger"
+                                    (click)="deleteClick(item.paymentid)">Remove</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </mat-card-content>
     </mat-card>
 </div>

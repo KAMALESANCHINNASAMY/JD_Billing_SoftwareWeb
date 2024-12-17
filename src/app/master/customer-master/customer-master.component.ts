@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, ElementRef, ViewChild } from '@angular/core';
-import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NotificationsService } from 'angular2-notifications';
 import { DialogService } from 'src/app/api-service/Dialog.service';
@@ -99,27 +99,6 @@ export class CustomerMasterComponent {
     }
   }
 
-  setTwoDigitAdvance(i: number) {
-    const getCheck = this.customerForm.get('customeradvance') as FormArray;
-    const checkAd = getCheck.at(i).get('advanceid')?.value;
-    const checkAdAm = Number(getCheck.at(i).get('advance_amount')?.value);
-    const checkAdAval = Number(getCheck.at(i).get('aval_addvance')?.value);
-    const oadvance_amount = Number(getCheck.at(i).get('oadvance_amount')?.value);
-    if (checkAd > 0 && (oadvance_amount - checkAdAval) > checkAdAm) {
-      this.notificationSvc.warn('Invalid Advance Amount');
-      getCheck.at(i).get('advance_amount')?.setValue(oadvance_amount, { emitEvent: false });
-    }
-
-    const Control = this.customerForm.get('customeradvance') as FormArray;
-    const adControl = Control.at(i).get('advance_amount');
-    let value: string | number = adControl?.value || 0;
-    // Ensure value is treated as string for parseFloat
-    if (!isNaN(Number(value)) && value !== null && value !== '') {
-      value = parseFloat(value.toString()).toFixed(2).toString();
-      Control.at(i).get('advance_amount')?.setValue(value, { emitEvent: false });
-    }
-  }
-
   preventPasteNumber(event: ClipboardEvent): void {
     const clipboardData = event.clipboardData || (window as any).clipboardData;
     const pastedText = clipboardData.getData('text');
@@ -140,40 +119,8 @@ export class CustomerMasterComponent {
     address: new FormControl(''),
     shipping_address: new FormControl(''),
     companyid: new FormControl(this.companyID),
-    cuid: new FormControl(this.userID),
-    customeradvance: new FormArray([
-      new FormGroup({
-        advanceid: new FormControl(0),
-        date: new FormControl('', Validators.required),
-        advance_amount: new FormControl('0.00', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
-        oadvance_amount: new FormControl('0.00'),
-        aval_addvance: new FormControl('0.00'),
-        description: new FormControl('', Validators.required)
-      }),
-    ]),
+    cuid: new FormControl(this.userID)
   });
-
-  getCommonControls(): AbstractControl[] {
-    return (this.customerForm.get('customeradvance') as FormArray).controls;
-  }
-
-  addNesForm() {
-    const newControl = new FormGroup({
-      advanceid: new FormControl(0),
-      date: new FormControl('', [Validators.required]),
-      advance_amount: new FormControl('0.00', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
-      oadvance_amount: new FormControl('0.00'),
-      aval_addvance: new FormControl('0.00'),
-      description: new FormControl('', [Validators.required])
-    });
-    (this.customerForm.get('customeradvance') as FormArray).push(newControl);
-    this.someMethod(); // Trigger change detection
-  }
-
-  removeNesForm(index: number) {
-    (this.customerForm.get('customeradvance') as FormArray).removeAt(index);
-    this.someMethod(); // Trigger change detection
-  }
 
   someMethod() {
     this.cdRef.detectChanges();
@@ -232,29 +179,10 @@ export class CustomerMasterComponent {
   }
 
   async UpdateGetClick(item: any) {
-    const nestedArray = await this.cMSvc.getAdvanceList(item.customerid).toPromise();
-    const control = <FormArray>this.customerForm.controls['customeradvance'];
-    while (control.length !== 0) {
-      control.removeAt(0);
-    }
-    if (control.length == 0) {
-      this.customerForm.patchValue(item);
-      this.customerForm.get('cuid')?.setValue(this.userID);
-      nestedArray?.forEach(async (e) => {
-        const newControl = new FormGroup({
-          advanceid: new FormControl(e.advanceid),
-          date: new FormControl(e.date, Validators.required),
-          advance_amount: new FormControl(e.advance_amount, [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]),
-          aval_addvance: new FormControl(e.aval_addvance),
-          oadvance_amount: new FormControl(e.advance_amount),
-          description: new FormControl(e.description, Validators.required)
-        });
-        (this.customerForm.get('customeradvance') as FormArray).push(
-          newControl
-        );
-        this.someMethod();
-      });
-    }
+
+    this.customerForm.patchValue(item);
+    this.customerForm.get('cuid')?.setValue(this.userID);
+
     this.scrollToTableTop();
   }
 
@@ -275,48 +203,8 @@ export class CustomerMasterComponent {
       });
   }
 
-  isDateControlInvalid(index: number): boolean {
-    const control = this.getdateControl(index);
-    return control.touched && !!control.errors;
-  }
-
-  getdateControl(index: number): FormControl {
-    const control = (this.customerForm.get('customeradvance') as FormArray)
-      .at(index)
-      ?.get('date') as FormControl;
-    return control;
-  }
-
-  isAmountControlInvalid(index: number): boolean {
-    const control = this.getAmountControl(index);
-    return control.touched && !!control.errors;
-  }
-
-  getAmountControl(index: number): FormControl {
-    const control = (this.customerForm.get('customeradvance') as FormArray)
-      .at(index)
-      ?.get('advance_amount') as FormControl;
-    return control;
-  }
-
-  isDescriptionControlInvalid(index: number): boolean {
-    const control = this.getDesControl(index);
-    return control.touched && !!control.errors;
-  }
-
-  getDesControl(index: number): FormControl {
-    const control = (this.customerForm.get('customeradvance') as FormArray)
-      .at(index)
-      ?.get('description') as FormControl;
-    return control;
-  }
-
   cancelClick() {
     this.customerForm.reset();
-    const control = <FormArray>this.customerForm.controls['customeradvance'];
-    while (control.length !== 0) {
-      control.removeAt(0);
-    }
     this.customerForm.get('customerid')?.setValue(0);
     this.customerForm.get('customer_name')?.setValue('');
     this.customerForm.get('mobile_no')?.setValue('');
@@ -328,7 +216,6 @@ export class CustomerMasterComponent {
     this.customerForm.get('shipping_address')?.setValue('');
     this.customerForm.get('companyid')?.setValue(this.companyID);
     this.customerForm.get('cuid')?.setValue(this.userID);
-    this.addNesForm();
     this.getCustomerList();
   }
 
