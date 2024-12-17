@@ -6,7 +6,7 @@
 
             <form [formGroup]="reportForm" (ngSubmit)="getReport()">
                 <div class="row">
-                    <div class="col-sm-3">
+                    <div class="col-sm-2">
                         <div>
                             <label>From Date <span
                                     class="text-danger">*</span></label>
@@ -18,7 +18,7 @@
                                 formControlName="fromdate" required />
                         </div>
                     </div>
-                    <div class="col-sm-3">
+                    <div class="col-sm-2">
                         <div>
                             <label>TO Date <span
                                     class="text-danger">*</span></label>
@@ -59,6 +59,34 @@
                     </div>
 
                     <div class="col-sm-3">
+                        <div class="pt-3">
+                            <div class="inputdiv">
+                                <mat-form-field>
+                                    <mat-label>Product Name</mat-label>
+                                    <mat-select
+                                        [ngClass]="{'is-invalid':reportForm.controls.productid.touched && reportForm.controls.productid.errors}"
+                                        formControlName="productid" #awval
+                                        required>
+                                        <mat-form-field>
+                                            <input matInput type="text" #proid
+                                                (input)="Productsuggest(proid.value)"
+                                                placeholder="Search...">
+                                        </mat-form-field>
+
+                                        <mat-option [value]=0>All</mat-option>
+
+                                        <mat-option
+                                            [value]="option.productid"
+                                            *ngFor="let option of Productsuggestions">
+                                            {{option.product_name}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-1">
                         <div class="pt-4 pl-4">
                             <button type="submit" class="btn btn-info pl-4 pr-4">Search</button>
                         </div>
@@ -94,7 +122,7 @@
                                 <td>{{item.date}}</td>
                                 <td>{{ item.party_name }}</td>
                                 <td>{{item.product_name}}</td>
-                                <td>{{item.qty}}</td>                                
+                                <td>{{item.qty}}</td>
                             </tr>
                             <tr>
                                 <td colspan="4" class="head">Total</td>

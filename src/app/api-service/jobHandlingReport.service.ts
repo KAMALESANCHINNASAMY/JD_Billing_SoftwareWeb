@@ -11,11 +11,11 @@ export class jobHandlingReportService {
 
     constructor(private http: HttpClient, private ConfigService: ConfigService) { }
 
-    jobInwardReport(companyid: any, third_partyid: any, fromdate: any, todate: any): Observable<any[]> {
-        return this.http.get<any[]>(this.apiUrl + 'JobHandlingReport/get_jobhandling_inward?companyid=' + companyid + '&third_partyid=' + third_partyid + '&fromdate=' + fromdate + '&todate=' + todate);
+    jobInwardReport(companyid: any, third_partyid: any, fromdate: any, todate: any, productid: any): Observable<any[]> {
+        return this.http.get<any[]>(this.apiUrl + 'JobHandlingReport/get_jobhandling_inward?companyid=' + companyid + '&third_partyid=' + third_partyid + '&fromdate=' + fromdate + '&todate=' + todate + '&productid=' + productid);
     }
 
-    jobOutwardReport(companyid: any, third_partyid: any, fromdate: any, todate: any): Observable<any[]> {
-        return this.http.get<any[]>(this.apiUrl + 'JobHandlingReport/get_jobhandling_outward?companyid=' + companyid + '&third_partyid=' + third_partyid + '&fromdate=' + fromdate + '&todate=' + todate);
+    jobOutwardReport(companyid: any, third_partyid: any, fromdate: any, todate: any, productid: any): Observable<any[]> {
+        return this.http.get<any[]>(this.apiUrl + 'JobHandlingReport/get_jobhandling_outward?companyid=' + companyid + '&third_partyid=' + third_partyid + '&fromdate=' + fromdate + '&todate=' + todate + '&productid=' + productid);
     }
 }

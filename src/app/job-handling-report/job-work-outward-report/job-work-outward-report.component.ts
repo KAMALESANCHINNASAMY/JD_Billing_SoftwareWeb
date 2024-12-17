@@ -14,6 +14,8 @@ export class JobWorkOutwardReportComponent {
   companyID: number = Number(localStorage.getItem('companyid'));
   thirdPartyDetailsList: any[] = [];
   suggestions: any[] = [];
+  productList: any[] = [];
+  Productsuggestions: any[] = [];
 
   constructor(private rpSvc: jobHandlingReportService,
     private pSvc: productMasterService,
@@ -22,6 +24,7 @@ export class JobWorkOutwardReportComponent {
 
   ngOnInit() {
     this.getThirdPartyList();
+    this.getProductList();
   }
 
   getThirdPartyList() {
@@ -38,18 +41,34 @@ export class JobWorkOutwardReportComponent {
     if (this.suggestions.length < 1) this.suggestions = this.thirdPartyDetailsList
   }
 
+  getProductList() {
+    this.pSvc.getList(this.companyID).subscribe((res) => {
+      this.productList = res;
+      this.Productsuggestions = res;
+    })
+  }
+
+  Productsuggest(value: any) {
+    this.Productsuggestions = this.productList.filter(item =>
+      item.product_name.toLowerCase().includes(value.toLowerCase())
+    );
+    if (this.Productsuggestions.length < 1) this.Productsuggestions = this.productList
+  }
+
   reportForm = new FormGroup({
     third_partyid: new FormControl(null),
     fromdate: new FormControl(''),
-    todate: new FormControl('')
+    todate: new FormControl(''),
+    productid: new FormControl(null)
   })
 
   async getReport() {
     const id = this.reportForm.value.third_partyid;
     const fromdate = this.reportForm.value.fromdate;
     const todate = this.reportForm.value.todate;
+    const proId = this.reportForm.value.productid;
     if (this.reportForm.valid) {
-      const res = await this.rpSvc.jobOutwardReport(this.companyID, id, fromdate, todate).toPromise();
+      const res = await this.rpSvc.jobOutwardReport(this.companyID, id, fromdate, todate, proId).toPromise();
       this.purchaseReports = res || [];
     }
     else {
