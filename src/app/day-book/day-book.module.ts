@@ -10,11 +10,12 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
 import { HttpClientModule } from '@angular/common/http';
 import { NgxPrintModule } from 'ngx-print';
 import { MatDialogModule } from '@angular/material/dialog';
+import { ProfitLossStatementComponent } from './profit-loss-statement/profit-loss-statement.component';
 
 
 
 @NgModule({
-  declarations: [DayBookComponent],
+  declarations: [DayBookComponent,ProfitLossStatementComponent],
   imports: [
     CommonModule, RouterModule.forChild(dayBookRoutes),
     MaterialModule,

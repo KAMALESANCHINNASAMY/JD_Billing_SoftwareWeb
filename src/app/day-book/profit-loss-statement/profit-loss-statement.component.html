@@ -1,0 +1,103 @@
+<div class="container-fluid">
+    <mat-card class="matcard mt-2">
+        <mat-card-content>
+
+            <h2 class="head">Profit & Loss statement</h2>
+
+            <form [formGroup]="reportForm" (ngSubmit)="getReport()">
+                <div class="row">
+                    <div class="col-sm-3">
+                        <div>
+                            <label>From Date <span
+                                    class="text-danger">*</span></label>
+                        </div>
+                        <div>
+                            <input type="date"
+                                [ngClass]="{'is-invalid':reportForm.controls.fromdate.touched && reportForm.controls.fromdate.errors}"
+                                class="form-control"
+                                formControlName="fromdate" required />
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div>
+                            <label>TO Date <span
+                                    class="text-danger">*</span></label>
+                        </div>
+                        <div>
+                            <input
+                                [ngClass]="{'is-invalid':reportForm.controls.todate.touched && reportForm.controls.todate.errors}"
+                                class="form-control" type="date"
+                                formControlName="todate" required />
+                        </div>
+                    </div>
+
+                    <div class="col-sm-2">
+                        <div class="pt-4 pl-4">
+                            <button type="submit" class="btn btn-info pl-4 pr-4">Search</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <div class="table-responsive mt-3">
+                <table class="table table-bordered table-striped">
+                    <thead class="tableheadList">
+                        <tr>
+                            <th>S No</th>
+                            <th style="text-align: left;">Description</th>
+                            <th
+                                style="background-color: #006A4E;text-align: right;">Income</th>
+                            <th
+                                style="background-color: #C41E3A;text-align: right;">Expense</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td style="text-align: left;">Purchase Payment</td>
+                            <td style="text-align: right;">0.00</td>
+                            <td style="text-align: right;">22000.00</td>
+                        </tr>
+
+                        <tr>
+                            <td>2</td>
+                            <td style="text-align: left;">Receipt</td>
+                            <td style="text-align: right;">100000.00</td>
+                            <td style="text-align: right;">0.00</td>
+                        </tr>
+
+                        <tr>
+                            <td>3</td>
+                            <td style="text-align: left;">Job Work Payment</td>
+                            <td style="text-align: right;">0.00</td>
+                            <td style="text-align: right;">16000.00</td>
+                        </tr>
+
+                        <tr>
+                            <td>4</td>
+                            <td style="text-align: left;">Expense</td>
+                            <td style="text-align: right;">0.00</td>
+                            <td style="text-align: right;">64000.00</td>
+                        </tr>
+
+                        <tr>
+                            <td>5</td>
+                            <td style="text-align: left;">Hand cash</td>
+                            <td style="text-align: right;">40000.00</td>
+                            <td style="text-align: right;">0.00</td>
+                        </tr>
+
+                        <tr class="tableheadList">
+                            <td colspan="2">Total - As from 2025-01-01 to
+                                2025-01-31</td>
+
+                            <th style="font-family: sans-serif;" colspan="2">38000</th>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </mat-card-content>
+    </mat-card>
+</div>

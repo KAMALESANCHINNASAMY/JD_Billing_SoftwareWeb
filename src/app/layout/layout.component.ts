@@ -284,16 +284,23 @@ export class LayoutComponent implements OnInit {
       ]
     },
     {
-      link_name: 'Day Book',
+      link_name: 'General statements',
       link: null,
       icon: 'salesreport',
       isselect: false,
       value: 25,
-      sub_menu: [{
+      sub_menu: [
+        {
         link_name: 'Day Book report',
         link: 'day-book/day-book-report',
         isselect: false,
         value: 2501
+      },
+      {
+        link_name: 'Profit & Loss Statement',
+        link: 'day-book/profit-loss-statement',
+        isselect: false,
+        value: 2502
       }
       ],
     },
