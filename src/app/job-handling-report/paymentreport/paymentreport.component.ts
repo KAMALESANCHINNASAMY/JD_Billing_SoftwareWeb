@@ -3,7 +3,6 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { NotificationsService } from 'angular2-notifications';
 import { captchaDialogService } from 'src/app/api-service/captchaDialog.service';
-import { jobHandlingReportService } from 'src/app/api-service/jobHandlingReport.service';
 import { purchaseFromThirdPartyPaymentService } from 'src/app/api-service/payment/purchaseFromThirdPartyPayment.service';
 import { thirdPartyMasterService } from 'src/app/api-service/thirdPartyMaster.service';
 
@@ -19,7 +18,7 @@ export class PaymentreportComponent {
   thirdPartyDetailsList: any[] = [];
   suggestions: any[] = [];
 
-  constructor(private rpSvc: jobHandlingReportService,
+  constructor(
     private tHMSVC: thirdPartyMasterService,
     private capDialog: captchaDialogService,
     private datePipe: DatePipe,

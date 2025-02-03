@@ -18,4 +18,8 @@ export class jobHandlingReportService {
     jobOutwardReport(companyid: any, third_partyid: any, fromdate: any, todate: any, productid: any): Observable<any[]> {
         return this.http.get<any[]>(this.apiUrl + 'JobHandlingReport/get_jobhandling_outward?companyid=' + companyid + '&third_partyid=' + third_partyid + '&fromdate=' + fromdate + '&todate=' + todate + '&productid=' + productid);
     }
+
+    getJobHandlingLedger(id: any, fromdate: any, todate: any): Observable<any[]> {
+        return this.http.get<any[]>(this.apiUrl + 'JobHandlingReport/get_purchase_from_thirdparty_legger?third_partyid=' + id + '&fromdate=' + fromdate + '&todate=' + todate);
+    }
 }

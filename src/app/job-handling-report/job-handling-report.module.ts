@@ -12,11 +12,12 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { JobWorkInwardReportComponent } from './job-work-inward-report/job-work-inward-report.component';
 import { JobWorkOutwardReportComponent } from './job-work-outward-report/job-work-outward-report.component';
 import { PaymentreportComponent } from './paymentreport/paymentreport.component';
+import { LedgerReportComponent } from './ledger-report/ledger-report.component';
 
 
 
 @NgModule({
-  declarations: [JobWorkInwardReportComponent, JobWorkOutwardReportComponent, PaymentreportComponent],
+  declarations: [JobWorkInwardReportComponent, JobWorkOutwardReportComponent, PaymentreportComponent, LedgerReportComponent],
   imports: [
     CommonModule, RouterModule.forChild(jobHandLingReportRouting),
     MaterialModule,

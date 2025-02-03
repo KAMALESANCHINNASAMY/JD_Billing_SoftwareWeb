@@ -280,6 +280,12 @@ export class LayoutComponent implements OnInit {
         link: 'job-handling-report/job-handling-payment-report',
         isselect: false,
         value: 2603
+      },
+      {
+        link_name: 'Ledger',
+        link: 'job-handling-report/job-handling-ledger',
+        isselect: false,
+        value: 2604
       }
       ]
     },
