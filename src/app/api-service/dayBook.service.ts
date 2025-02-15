@@ -15,4 +15,8 @@ export class dayBookReportService {
         return this.http.get<any[]>(this.apiUrl + 'DayBook/get_daybook_bydate?companyid=' + companyid + '&fromdate=' + fromdate + '&todate=' + todate + '&bankid='+bankid);
     }
 
+    getProfitAndLoss(companyid: any, fromdate: any, todate: any): Observable<any> {
+        return this.http.get<any>(this.apiUrl + 'DayBook/get_profit_loss?companyid=' + companyid + '&fromdate=' + fromdate + '&todate=' + todate);
+    }
+
 }

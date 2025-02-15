@@ -35,7 +35,37 @@
                 </div>
             </form>
 
-            <div class="mt-3 row">
+            <div class="mt-5 row">
+
+                <div class="table-responsive col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                    <table class="table table-bordered table-striped">
+                        <thead class="tableheadList">
+                            <tr>
+                                <th>S No</th>
+                                <th style="text-align: left;">Description</th>
+                                <th style="background-color: #006A4E;text-align: right;">Amount</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr *ngFor="let item of table_one;let i=index;">
+                                <td>{{i+1}}</td>
+                                <td style="text-align: left;">{{item.description}} up to <span
+                                        style="font-family: sans-serif;">{{item.fromdate}}</span></td>
+                                <td style="font-family: sans-serif;text-align: right;">{{item.old_amount}}</td>
+                            </tr>
+
+                            <tr class="tableheadList">
+                                <td colspan="2">Opening Balance as of <span
+                                        style="font-family: sans-serif;">{{table_one[0]?.fromdate}}</span> (Sales -
+                                    Purchases)</td>
+                                <td style="font-family: sans-serif;text-align: right;">{{getOldTot()}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+
                 <div class="table-responsive col-sm-12 col-md-12 col-lg-6 col-xl-6">
                     <table class="table table-bordered table-striped">
                         <thead class="tableheadList">
@@ -49,37 +79,22 @@
                         </thead>
 
                         <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td style="text-align: left;">Purchase</td>
-                                <td style="text-align: right;">22000.00</td>
-                                <td style="text-align: right;">2000</td>
-                                <td style="text-align: right;">20000</td>
-                            </tr>
-
-                            <tr>
-                                <td>2</td>
-                                <td style="text-align: left;">Job Work</td>
-                                <td style="text-align: right;">22000.00</td>
-                                <td style="text-align: right;">2000</td>
-                                <td style="text-align: right;">20000</td>
-                            </tr>
-
-
-                            <tr>
-                                <td>3</td>
-                                <td style="text-align: left;">Expense</td>
-                                <td style="text-align: right;">22000.00</td>
-                                <td style="text-align: right;">0</td>
-                                <td style="text-align: right;">22000</td>
+                            <tr *ngFor="let item of table_two;let i=index;">
+                                <td>{{i+1}}</td>
+                                <td style="text-align: left;">{{item.description}}</td>
+                                <td style="text-align: right;">{{item.net_amount}}</td>
+                                <td style="text-align: right;">{{item.return_net_amount}}</td>
+                                <td style="text-align: right;">{{+item.net_amount - +item.return_net_amount}}</td>
                             </tr>
 
                             <tr class="tableheadList">
-                                <td colspan="2">Total Expenses - From <span style="font-family: sans-serif;"> 2025-01-01
-                                    </span> to <span style="font-family: sans-serif;"> 2025-01-31</span></td>
-                                <td style="font-family: sans-serif;text-align: right;">66000.00</td>
-                                <td style="font-family: sans-serif;text-align: right;">4000</td>
-                                <td style="font-family: sans-serif;text-align: right;">62000</td>
+                                <td colspan="2">Total Expenses - From <span style="font-family: sans-serif;">
+                                        {{table_two[0]?.fromdate}}
+                                    </span> to <span style="font-family: sans-serif;"> {{table_two[0]?.todate}}</span>
+                                </td>
+                                <td></td>
+                                <td></td>
+                                <td style="font-family: sans-serif;text-align: right;">{{getExpenTot()}}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -98,51 +113,73 @@
                         </thead>
 
                         <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td style="text-align: left;">Sales</td>
-                                <td style="text-align: right;">42000.00</td>
-                                <td style="text-align: right;">2000</td>
-                                <td style="text-align: right;">40000</td>
-                            </tr>
-
-                            <tr>
-                                <td>2</td>
-                                <td style="text-align: left;">Hand Cash</td>
-                                <td style="text-align: right;">2000.00</td>
-                                <td style="text-align: right;">0</td>
-                                <td style="text-align: right;">2000</td>
+                            <tr *ngFor="let item of table_three;let i=index;">
+                                <td>{{i+1}}</td>
+                                <td style="text-align: left;">{{item.description}}</td>
+                                <td style="text-align: right;">{{item.net_amount}}</td>
+                                <td style="text-align: right;">{{item.return_net_amount}}</td>
+                                <td style="text-align: right;">{{+item.net_amount - +item.return_net_amount}}</td>
                             </tr>
 
                             <tr class="tableheadList">
-                                <td colspan="2">Total Income - From <span style="font-family: sans-serif;"> 2025-01-01
-                                    </span> to <span style="font-family: sans-serif;"> 2025-01-31</span></td>
-                                <td style="font-family: sans-serif;text-align: right;">44000.00</td>
-                                <td style="font-family: sans-serif;text-align: right;">2000</td>
-                                <td style="font-family: sans-serif;text-align: right;">42000</td>
+                                <td colspan="2">Total Income - From <span
+                                        style="font-family: sans-serif;">{{table_three[0]?.fromdate}}
+                                    </span> to <span style="font-family: sans-serif;"> {{table_three[0]?.todate}}</span>
+                                </td>
+                                <td style="font-family: sans-serif;text-align: right;"></td>
+                                <td style="font-family: sans-serif;text-align: right;"></td>
+                                <td style="font-family: sans-serif;text-align: right;">{{getIncomeTot()}}</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
 
-                <div class="table-responsive col-sm-12 col-md-12 col-lg-12 col-xl-8 mt-5">
+                <div class="table-responsive col-sm-12 col-md-12 col-lg-6 col-xl-6 mt-4">
                     <table class="table table-bordered table-striped">
                         <thead class="tableheadList">
                             <tr>
                                 <th>S No</th>
                                 <th style="text-align: left;">Description</th>
-                                <th style="background-color: #006A4E;">Total Income (-) Total Expenses</th>
-                                <th style="background-color: #C41E3A;text-align: right;">Amount</th>
+                                <th>Total Income (-) Total Expenses</th>
+                                <th style="background-color: #006A4E;text-align: right;">Amount</th>
                             </tr>
                         </thead>
 
                         <tbody>
                             <tr>
                                 <td>1</td>
-                                <td style="text-align: left;">Profit & Loss <span> (2025-01-01
-                                    </span> to <span style="font-family: sans-serif;"> 2025-01-31)</span></td>
-                                <td>62000.00 (-) 42000</td>
-                                <td style="text-align: right;">+ 20000</td>
+                                <td style="text-align: left;">Profit & Loss</td>
+                                <td>{{getIncomeTot()}} (-) {{getExpenTot()}}</td>
+                                <td style="text-align: right;">{{getIncomeTot() - getExpenTot()}}</td>
+                            </tr>
+
+                            <tr class="tableheadList">
+                                <td colspan="3">Profit / Loss for the selected period - From <span
+                                        style="font-family: sans-serif;">{{table_three[0]?.fromdate}}
+                                    </span> to <span style="font-family: sans-serif;"> {{table_three[0]?.todate}}</span>
+                                </td>
+                                <td style="text-align: right;font-family: sans-serif;">{{getIncomeTot() -
+                                    getExpenTot()}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="table-responsive col-sm-12 col-md-12 col-lg-12 col-xl-12 mt-4">
+                    <table class="table table-bordered table-striped">
+                        <thead class="tableheadList">
+                            <tr>
+                                <th style="text-align: left;">Description</th>
+                                <th>Opening Balance + Net Profit/Loss for the selected period</th>
+                                <th style="background-color: #006A4E;text-align: right;">Amount</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr>
+                                <td style="text-align: left;">Closing Balance</td>
+                                <td>{{getOldTot()}} (+) {{getIncomeTot() - getExpenTot()}}</td>
+                                <td style="text-align: right;">{{getOldTot() + (getIncomeTot() - getExpenTot())}}</td>
                             </tr>
                         </tbody>
                     </table>
